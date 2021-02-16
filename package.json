@@ -1,6 +1,6 @@
 {
   "name": "@lasca-inc/nocode-template-converter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Lasca Inc.",
   "license": "UNLICENSED",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
     "directory": "@lasca-inc/nocode-template-converter"
   },
   "files": [
-    "dist"
+    "dist/*"
   ],
   "scripts": {
     "build": "rm -rf dist && tsc"
