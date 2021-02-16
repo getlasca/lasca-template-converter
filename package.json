@@ -1,6 +1,6 @@
 {
   "name": "@lasca-inc/nocode-template-converter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Lasca Inc.",
   "license": "UNLICENSED",
   "main": "dist/index.js",
