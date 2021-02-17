@@ -1,5 +1,5 @@
 export interface Page {
-  breakpoint: Breakpoint
+  breakpoint?: Breakpoint
   figmaObj: any
 }
 
