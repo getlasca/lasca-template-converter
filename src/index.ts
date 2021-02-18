@@ -7,6 +7,8 @@ export default function convert(
   loops: Loop[],
   events: Event[]
 ): Output {
-  console.log("test")
-  return { template: '', css: '' }
+  const output = { template: '<div>hoge</div>', css: '' }
+  console.log("template: " + output.template)
+  console.log("css: " + output.css)
+  return output
 }
