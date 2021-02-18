@@ -8,5 +8,5 @@ test('convert', () => {
     [],
     []
   )
-  expect(output.template).toBe('')
+  expect(output.template).toBe('<div>hoge</div>')
 })

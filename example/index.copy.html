@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>nocode example</title>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/ress/dist/ress.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <!-- input your css here -->
+</head>
+
+<body>
+  <div id="app">
+  </div>
+  <script>
+    // input your template here
+    const template = '<button v-on:click="click()" class="button">You clicked me {{ count }} times.</button>'
+
+    new Vue({
+      el: '#app',
+      render: Vue.compile(template).render,
+      data: {
+        count: 0,
+      },
+      methods: {
+        click: function () {
+          this.count++;
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
