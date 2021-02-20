@@ -1,8 +1,8 @@
-import { Page, Embed, Condition, Loop, Event, Output } from './types'
-import FrameNode from './nodes/frame'
+import { Page, Embed, Condition, Loop, Event, Output } from "./types";
+import FrameNode from "./nodes/frame";
 
 export default class Builder {
-  rootNode: FrameNode
+  rootNode: FrameNode;
 
   constructor(
     page: Page,
@@ -12,14 +12,21 @@ export default class Builder {
     loops: Loop[],
     events: Event[]
   ) {
-    this.rootNode = this.parse(page, variables, embeds, conditions, loops, events)
+    this.rootNode = this.parse(
+      page,
+      variables,
+      embeds,
+      conditions,
+      loops,
+      events
+    );
   }
 
   build(): Output {
     return {
       template: this.buildTemplate(),
       css: this.buildCss(),
-    }
+    };
   }
 
   private parse(
@@ -34,13 +41,12 @@ export default class Builder {
   }
 
   private buildTemplate(): string {
-    // buildTemplate 
+    // buildTemplate
     // use children's each BaseNode.buildTemplate() method
-    return '<div>hoge</div>'
+    return "<div>hoge</div>";
   }
 
   private buildCss(): string {
-    return ""
+    return "";
   }
-
 }

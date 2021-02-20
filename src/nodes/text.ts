@@ -1,11 +1,11 @@
-import BaseNode from './base'
-import { TextStyle } from '../types'
+import BaseNode from "./base";
+import { TextStyle } from "../types";
 
 export default class TextNode extends BaseNode {
-  style: TextStyle
-  text: string
-  embedVariables: string[]
-  embedCompound?: string
+  style: TextStyle;
+  text: string;
+  embedVariables: string[];
+  embedCompound?: string;
 
   constructor(
     nodeId: string,
@@ -19,17 +19,17 @@ export default class TextNode extends BaseNode {
     eventName?: string
   ) {
     super(nodeId, conditionVariable, loopVariable, eventType, eventName);
-    this.text = text
-    this.style = style
-    this.embedVariables = embedVariables
-    this.embedCompound = embedCompound
+    this.text = text;
+    this.style = style;
+    this.embedVariables = embedVariables;
+    this.embedCompound = embedCompound;
   }
 
   buildTemplate(): string {
-    return ""
+    return "";
   }
 
   buildCss(): string {
-    return ""
+    return "";
   }
 }
