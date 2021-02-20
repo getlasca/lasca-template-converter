@@ -15,7 +15,8 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "watch": "rm -rf dist && tsc -w",
-    "test": "jest test/*"
+    "test": "jest test/*",
+    "lint": "eslint --fix 'src/**'"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",

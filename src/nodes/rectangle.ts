@@ -1,8 +1,8 @@
-import BaseNode from './base'
-import { RectangleStyle } from '../types'
+import BaseNode from "./base";
+import { RectangleStyle } from "../types";
 
 export default class RectangleNode extends BaseNode {
-  style: RectangleStyle
+  style: RectangleStyle;
 
   constructor(
     nodeId: string,
@@ -13,14 +13,14 @@ export default class RectangleNode extends BaseNode {
     eventName?: string
   ) {
     super(nodeId, conditionVariable, loopVariable, eventType, eventName);
-    this.style = style
+    this.style = style;
   }
 
   buildTemplate(): string {
-    return ""
+    return "";
   }
 
   buildCss(): string {
-    return ""
+    return "";
   }
 }

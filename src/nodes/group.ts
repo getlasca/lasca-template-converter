@@ -1,9 +1,9 @@
-import BaseNode from './base'
-import { GroupStyle } from '../types'
+import BaseNode from "./base";
+import { GroupStyle } from "../types";
 
 export default class GroupNode extends BaseNode {
-  style: GroupStyle
-  children: BaseNode[]
+  style: GroupStyle;
+  children: BaseNode[];
 
   constructor(
     nodeId: string,
@@ -15,15 +15,15 @@ export default class GroupNode extends BaseNode {
     eventName?: string
   ) {
     super(nodeId, conditionVariable, loopVariable, eventType, eventName);
-    this.style = style
-    this.children = children
+    this.style = style;
+    this.children = children;
   }
 
   buildTemplate(): string {
-    return ""
+    return "";
   }
 
   buildCss(): string {
-    return ""
+    return "";
   }
 }

@@ -1,9 +1,9 @@
-import BaseNode from './base'
-import { FrameStyle } from '../types'
+import BaseNode from "./base";
+import { FrameStyle } from "../types";
 
 export default class FrameNode extends BaseNode {
-  style: FrameStyle
-  children: BaseNode[]
+  style: FrameStyle;
+  children: BaseNode[];
 
   constructor(
     nodeId: string,
@@ -15,15 +15,15 @@ export default class FrameNode extends BaseNode {
     eventName?: string
   ) {
     super(nodeId, conditionVariable, loopVariable, eventType, eventName);
-    this.style = style
-    this.children = children
+    this.style = style;
+    this.children = children;
   }
 
   buildTemplate(): string {
-    return ""
+    return "";
   }
 
   buildCss(): string {
-    return ""
+    return "";
   }
 }
