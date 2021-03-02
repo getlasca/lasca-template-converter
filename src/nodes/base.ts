@@ -1,10 +1,9 @@
 export default abstract class BaseNode {
-  nodeId: string;
-  children: BaseNode[];
-  conditionVariable?: string;
-  loopVariable?: string;
-  eventType?: string;
-  eventName?: string;
+  nodeId: string
+  conditionVariable?: string
+  loopVariable?: string
+  eventType?: string
+  eventName?: string
 
   constructor(
     nodeId: string,

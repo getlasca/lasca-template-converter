@@ -17,7 +17,7 @@ export default class RectangleNode extends BaseNode {
   }
 
   buildTemplate(): string {
-    return "";
+    return "<div></div>"
   }
 
   buildCss(): string {

@@ -35,7 +35,7 @@ export interface Output {
   css: string;
 }
 
-interface BaseStyle {
+export interface BaseStyle {
   x: number;
   y: number;
   width: number;
