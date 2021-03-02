@@ -1,4 +1,5 @@
 import { Page, Embed, Condition, Loop, Event, Output } from './types'
+import BaseNode from './nodes/base'
 import FrameNode from './nodes/frame'
 import TextNode from './nodes/text'
 import RectangleNode from './nodes/rectangle'
@@ -55,45 +56,48 @@ export default class Builder {
     }
     const frameNode = new FrameNode(nodeId, style, [])
 
-    // TextNode
+    // RectangleNode, TextNode
     page.figmaObj.nodes[nodeId].document.children.forEach((node: any) => {
-      if (node.type === "TEXT") {
-        const textStyle = {
-          background: "a",
-          color: "a",
-          fontSize: "a",
-          fontWeight: "a",
-          fontFamily: "a",
-          x: 1,
-          y: 1,
-          width: 1,
-          height: 1,
-          opacity: 1,
-          constraintsHorizontal: "a",
-          constraintsVertical: "a"
-        }
-        const textNode = new TextNode(node.id, textStyle, node.characters, [])
-        frameNode.children.push(textNode)
+      let childNode: BaseNode;
+      let style: any;
+      switch (node.type) {
+        case "RECTANGLE":
+          style = {
+            background: "a",
+            radius: "a",
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            opacity: 1,
+            constraintsHorizontal: "a",
+            constraintsVertical: "a"
+          }
+          childNode = new RectangleNode(node.id, style);
+          break;
+        case "TEXT":
+          style = {
+            background: "a",
+            color: "a",
+            fontSize: "a",
+            fontWeight: "a",
+            fontFamily: "a",
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            opacity: 1,
+            constraintsHorizontal: "a",
+            constraintsVertical: "a"
+          }
+          childNode = new TextNode(node.id, style, node.characters, []);
+          break;
+        // Code to avoid switch statement error. There is no pattern that matches this case.
+        default:
+          childNode = new RectangleNode(node.id, style);
+          break;
       }
-    });
-
-    // RectangleNode
-    page.figmaObj.nodes[nodeId].document.children.forEach((node: any) => {
-      if (node.type === "RECTANGLE") {
-        const rectangleStyle = {
-          background: "a",
-          radius: "a",
-          x: 1,
-          y: 1,
-          width: 1,
-          height: 1,
-          opacity: 1,
-          constraintsHorizontal: "a",
-          constraintsVertical: "a"
-        }
-        const rectangleNode = new RectangleNode(node.id, rectangleStyle)
-        frameNode.children.push(rectangleNode)
-      }
+      frameNode.children.push(childNode)
     });
 
     return frameNode
