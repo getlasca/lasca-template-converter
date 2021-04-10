@@ -1,7 +1,7 @@
-name: nocode-template-converter-release
+name: package-release
 on:
   push:
-    branches:    
+    branches:
       - main
 jobs:
   release:
@@ -12,5 +12,5 @@ jobs:
       - run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.PACKAGE_TOKEN }}" >> .npmrc
         name: add auth token for npm packages
       - run: npm install && npm run build
-        name: install packages and build 
+        name: install packages and build
       - run: npm publish
