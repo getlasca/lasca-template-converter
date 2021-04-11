@@ -15,7 +15,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "watch": "rm -rf dist && tsc -w",
-    "test": "jest test/*",
+    "test": "jest test/spec/*",
     "lint": "eslint --fix 'src/**'"
   },
   "dependencies": {
