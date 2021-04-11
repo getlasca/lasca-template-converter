@@ -1,8 +1,8 @@
-import { Page, Embed, Condition, Loop, Event, Output } from './types'
-import BaseNode from './nodes/base'
-import FrameNode from './nodes/frame'
-import TextNode from './nodes/text'
-import RectangleNode from './nodes/rectangle'
+import { Page, Embed, Condition, Loop, Event, Output } from "./types";
+import BaseNode from "./nodes/base";
+import FrameNode from "./nodes/frame";
+import TextNode from "./nodes/text";
+import RectangleNode from "./nodes/rectangle";
 
 export default class Builder {
   rootNode: FrameNode;
@@ -43,7 +43,7 @@ export default class Builder {
     // set rootNode from input
 
     // FrameNode
-    const nodeId = Object.keys(page.figmaObj.nodes)[0]
+    const nodeId = Object.keys(page.figmaObj.nodes)[0];
     const style = {
       background: "a",
       x: 1,
@@ -52,9 +52,9 @@ export default class Builder {
       height: 1,
       opacity: 1,
       constraintsHorizontal: "a",
-      constraintsVertical: "a"
-    }
-    const frameNode = new FrameNode(nodeId, style, [])
+      constraintsVertical: "a",
+    };
+    const frameNode = new FrameNode(nodeId, style, []);
 
     // RectangleNode, TextNode
     page.figmaObj.nodes[nodeId].document.children.forEach((node: any) => {
@@ -71,8 +71,8 @@ export default class Builder {
             height: 1,
             opacity: 1,
             constraintsHorizontal: "a",
-            constraintsVertical: "a"
-          }
+            constraintsVertical: "a",
+          };
           childNode = new RectangleNode(node.id, style);
           break;
         case "TEXT":
@@ -88,8 +88,8 @@ export default class Builder {
             height: 1,
             opacity: 1,
             constraintsHorizontal: "a",
-            constraintsVertical: "a"
-          }
+            constraintsVertical: "a",
+          };
           childNode = new TextNode(node.id, style, node.characters, []);
           break;
         // Code to avoid switch statement error. There is no pattern that matches this case.
@@ -97,19 +97,17 @@ export default class Builder {
           childNode = new RectangleNode(node.id, style);
           break;
       }
-      frameNode.children.push(childNode)
+      frameNode.children.push(childNode);
     });
 
-    return frameNode
+    return frameNode;
   }
 
   private buildTemplate(): string {
-    // buildTemplate
-    // use children's each BaseNode.buildTemplate() method
     return this.rootNode.buildTemplate();
   }
 
   private buildCss(): string {
-    return "";
+    return this.rootNode.buildCss();
   }
 }
