@@ -30,6 +30,6 @@ export default class TextNode extends BaseNode {
   }
 
   buildCss(): string {
-    return "";
+    return `p{color:red;}`;
   }
 }

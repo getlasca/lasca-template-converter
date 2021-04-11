@@ -84,48 +84,6 @@
             },
             "characterStyleOverrides": [],
             "styleOverrideTable": {}
-          },
-          {
-            "id": "1:8",
-            "name": "この事例を見る",
-            "type": "TEXT",
-            "blendMode": "PASS_THROUGH",
-            "absoluteBoundingBox": {
-              "x": -49.987342834472656,
-              "y": -13.0,
-              "width": 98.0,
-              "height": 24.0
-            },
-            "constraints": { "vertical": "SCALE", "horizontal": "SCALE" },
-            "fills": [
-              {
-                "blendMode": "NORMAL",
-                "type": "SOLID",
-                "color": { "r": 1.0, "g": 1.0, "b": 1.0, "a": 1.0 }
-              }
-            ],
-            "strokes": [],
-            "strokeWeight": 1.0,
-            "strokeAlign": "OUTSIDE",
-            "styles": { "fill": "1:4", "text": "1:5" },
-            "effects": [],
-            "characters": "このボタンをクリックする",
-            "style": {
-              "fontFamily": "Noto Sans JP",
-              "fontPostScriptName": "NotoSansJP-Bold",
-              "fontWeight": 700,
-              "textAutoResize": "WIDTH_AND_HEIGHT",
-              "fontSize": 14.0,
-              "textAlignHorizontal": "CENTER",
-              "textAlignVertical": "TOP",
-              "letterSpacing": 0.0,
-              "lineHeightPx": 24.0,
-              "lineHeightPercent": 146.28570556640625,
-              "lineHeightPercentFontSize": 171.42857360839844,
-              "lineHeightUnit": "PIXELS"
-            },
-            "characterStyleOverrides": [],
-            "styleOverrideTable": {}
           }
         ],
         "absoluteBoundingBox": {
