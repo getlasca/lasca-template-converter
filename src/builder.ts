@@ -129,12 +129,12 @@ export default class Builder {
   private buildCss(): string {
     return this.componentNodes
       .map((node) => {
-        return this.buildBreadPointCss(node.rootNode.buildCss(), node.range);
+        return this.buildBreakPointCss(node.rootNode.buildCss(), node.range);
       })
       .join(" ");
   }
 
-  private buildBreadPointCss(css: string, range?: BreakpointRange): string {
+  private buildBreakPointCss(css: string, range?: BreakpointRange): string {
     if (range && range.max && range.min) {
       return `@media screen and (max-width: ${range.max}px) and (min-width: ${range.min}px) { ${css} }`;
     }
