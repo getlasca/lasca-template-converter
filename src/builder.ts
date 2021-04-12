@@ -123,10 +123,27 @@ export default class Builder {
   private buildTemplate(): string {
     return this.componentNodes
       .map((node) => node.rootNode.buildTemplate())
-      .join();
+      .join("");
   }
 
   private buildCss(): string {
-    return this.componentNodes.map((node) => node.rootNode.buildCss()).join();
+    return this.componentNodes
+      .map((node) => {
+        return this.buildBreadPointCss(node.rootNode.buildCss(), node.range);
+      })
+      .join(" ");
+  }
+
+  private buildBreadPointCss(css: string, range?: BreakpointRange): string {
+    if (range && range.max && range.min) {
+      return `@media screen and (max-width: ${range.max}px) and (min-width: ${range.min}px) { ${css} }`;
+    }
+    if (range && range.max) {
+      return `@media screen and (max-width: ${range.max}px) { ${css} }`;
+    }
+    if (range && range.min) {
+      return `@media screen and (min-width: ${range.min}px) { ${css} }`;
+    }
+    return css;
   }
 }
