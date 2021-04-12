@@ -1,5 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
-import crypto from "crypto";
+import { genHash } from "../util";
 
 export default abstract class BaseNode {
   nodeId: string;
@@ -21,10 +20,7 @@ export default abstract class BaseNode {
     this.loopVariable = loopVariable;
     this.eventType = eventType;
     this.eventName = eventName;
-    this.className = crypto
-      .createHash("sha256")
-      .update(uuidv4(), "utf8")
-      .digest("hex");
+    this.className = genHash();
   }
 
   abstract buildTemplate(): string;
