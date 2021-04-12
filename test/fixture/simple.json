@@ -45,7 +45,7 @@
           },
           {
             "id": "1:8",
-            "name": "この事例を見る",
+            "name": "sampleText",
             "type": "TEXT",
             "blendMode": "PASS_THROUGH",
             "absoluteBoundingBox": {
@@ -67,7 +67,7 @@
             "strokeAlign": "OUTSIDE",
             "styles": { "fill": "1:4", "text": "1:5" },
             "effects": [],
-            "characters": "この事例を見る",
+            "characters": "sampleText",
             "style": {
               "fontFamily": "Noto Sans JP",
               "fontPostScriptName": "NotoSansJP-Bold",

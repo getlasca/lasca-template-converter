@@ -1,8 +1,8 @@
-import { Page, Embed, Condition, Loop, Event, Output } from "./types";
+import { Component, Embed, Condition, Loop, Event, Output } from "./types";
 import Builder from "./builder";
 
 export default function convert(
-  page: Page,
+  component: Component,
   variables: string[],
   embeds: Embed[],
   conditions: Condition[],
@@ -10,7 +10,7 @@ export default function convert(
   events: Event[]
 ): Output {
   const output = new Builder(
-    page,
+    component,
     variables,
     embeds,
     conditions,

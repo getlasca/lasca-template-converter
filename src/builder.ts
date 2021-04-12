@@ -1,28 +1,45 @@
-import { Page, Embed, Condition, Loop, Event, Output } from "./types";
+import {
+  BreakPoint,
+  BreakpointRange,
+  Component,
+  Embed,
+  Condition,
+  Loop,
+  Event,
+  Output,
+} from "./types";
 import BaseNode from "./nodes/base";
 import FrameNode from "./nodes/frame";
 import TextNode from "./nodes/text";
 import RectangleNode from "./nodes/rectangle";
 
-export default class Builder {
+export interface ComponentNode {
   rootNode: FrameNode;
+  range?: BreakpointRange;
+}
+
+export default class Builder {
+  componentNodes: ComponentNode[] = [];
 
   constructor(
-    page: Page,
+    component: Component,
     variables: string[],
     embeds: Embed[],
     conditions: Condition[],
     loops: Loop[],
     events: Event[]
   ) {
-    this.rootNode = this.parse(
-      page,
-      variables,
-      embeds,
-      conditions,
-      loops,
-      events
-    );
+    component.breakpoints.forEach((breakPoint: BreakPoint) => {
+      const rootNode = this.parse(
+        breakPoint.figmaObj,
+        variables,
+        embeds,
+        conditions,
+        loops,
+        events
+      );
+      this.componentNodes.push({ rootNode: rootNode, range: breakPoint.range });
+    });
   }
 
   build(): Output {
@@ -33,7 +50,7 @@ export default class Builder {
   }
 
   private parse(
-    page: Page,
+    figmaObj: any,
     variables: string[],
     embeds: Embed[],
     conditions: Condition[],
@@ -43,7 +60,7 @@ export default class Builder {
     // set rootNode from input
 
     // FrameNode
-    const nodeId = Object.keys(page.figmaObj.nodes)[0];
+    const nodeId = Object.keys(figmaObj.nodes)[0];
     const style = {
       background: "a",
       x: 1,
@@ -57,7 +74,7 @@ export default class Builder {
     const frameNode = new FrameNode(nodeId, style, []);
 
     // RectangleNode, TextNode
-    page.figmaObj.nodes[nodeId].document.children.forEach((node: any) => {
+    figmaObj.nodes[nodeId].document.children.forEach((node: any) => {
       let childNode: BaseNode;
       let style: any;
       switch (node.type) {
@@ -104,10 +121,12 @@ export default class Builder {
   }
 
   private buildTemplate(): string {
-    return this.rootNode.buildTemplate();
+    return this.componentNodes
+      .map((node) => node.rootNode.buildTemplate())
+      .join();
   }
 
   private buildCss(): string {
-    return this.rootNode.buildCss();
+    return this.componentNodes.map((node) => node.rootNode.buildCss()).join();
   }
 }
