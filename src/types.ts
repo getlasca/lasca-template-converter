@@ -1,9 +1,13 @@
-export interface Page {
-  breakpoint?: Breakpoint;
+export interface Component {
+  breakpoints: BreakPoint[];
+}
+
+export interface BreakPoint {
+  range?: BreakpointRange;
   figmaObj: any;
 }
 
-export interface Breakpoint {
+export interface BreakpointRange {
   min?: number;
   max?: number;
 }
