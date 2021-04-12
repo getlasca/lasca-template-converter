@@ -1,11 +1,25 @@
-import { Component, Embed, Condition, Loop, Event, Output } from "./types";
+import {
+  BreakPoint,
+  BreakpointRange,
+  Component,
+  Embed,
+  Condition,
+  Loop,
+  Event,
+  Output,
+} from "./types";
 import BaseNode from "./nodes/base";
 import FrameNode from "./nodes/frame";
 import TextNode from "./nodes/text";
 import RectangleNode from "./nodes/rectangle";
 
-export default class Builder {
+export interface ComponentNode {
   rootNode: FrameNode;
+  range?: BreakpointRange;
+}
+
+export default class Builder {
+  componentNodes: ComponentNode[] = [];
 
   constructor(
     component: Component,
@@ -15,14 +29,17 @@ export default class Builder {
     loops: Loop[],
     events: Event[]
   ) {
-    this.rootNode = this.parse(
-      component,
-      variables,
-      embeds,
-      conditions,
-      loops,
-      events
-    );
+    component.breakpoints.forEach((breakPoint: BreakPoint) => {
+      const rootNode = this.parse(
+        breakPoint.figmaObj,
+        variables,
+        embeds,
+        conditions,
+        loops,
+        events
+      );
+      this.componentNodes.push({ rootNode: rootNode, range: breakPoint.range });
+    });
   }
 
   build(): Output {
@@ -33,7 +50,7 @@ export default class Builder {
   }
 
   private parse(
-    component: Component,
+    figmaObj: any,
     variables: string[],
     embeds: Embed[],
     conditions: Condition[],
@@ -43,7 +60,7 @@ export default class Builder {
     // set rootNode from input
 
     // FrameNode
-    const nodeId = Object.keys(component.breakpoints[0].figmaObj.nodes)[0];
+    const nodeId = Object.keys(figmaObj.nodes)[0];
     const style = {
       background: "a",
       x: 1,
@@ -57,59 +74,59 @@ export default class Builder {
     const frameNode = new FrameNode(nodeId, style, []);
 
     // RectangleNode, TextNode
-    component.breakpoints[0].figmaObj.nodes[nodeId].document.children.forEach(
-      (node: any) => {
-        let childNode: BaseNode;
-        let style: any;
-        switch (node.type) {
-          case "RECTANGLE":
-            style = {
-              background: "a",
-              radius: "a",
-              x: 1,
-              y: 1,
-              width: 1,
-              height: 1,
-              opacity: 1,
-              constraintsHorizontal: "a",
-              constraintsVertical: "a",
-            };
-            childNode = new RectangleNode(node.id, style);
-            break;
-          case "TEXT":
-            style = {
-              background: "a",
-              color: "a",
-              fontSize: "a",
-              fontWeight: "a",
-              fontFamily: "a",
-              x: 1,
-              y: 1,
-              width: 1,
-              height: 1,
-              opacity: 1,
-              constraintsHorizontal: "a",
-              constraintsVertical: "a",
-            };
-            childNode = new TextNode(node.id, style, node.characters, []);
-            break;
-          // Code to avoid switch statement error. There is no pattern that matches this case.
-          default:
-            childNode = new RectangleNode(node.id, style);
-            break;
-        }
-        frameNode.children.push(childNode);
+    figmaObj.nodes[nodeId].document.children.forEach((node: any) => {
+      let childNode: BaseNode;
+      let style: any;
+      switch (node.type) {
+        case "RECTANGLE":
+          style = {
+            background: "a",
+            radius: "a",
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            opacity: 1,
+            constraintsHorizontal: "a",
+            constraintsVertical: "a",
+          };
+          childNode = new RectangleNode(node.id, style);
+          break;
+        case "TEXT":
+          style = {
+            background: "a",
+            color: "a",
+            fontSize: "a",
+            fontWeight: "a",
+            fontFamily: "a",
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+            opacity: 1,
+            constraintsHorizontal: "a",
+            constraintsVertical: "a",
+          };
+          childNode = new TextNode(node.id, style, node.characters, []);
+          break;
+        // Code to avoid switch statement error. There is no pattern that matches this case.
+        default:
+          childNode = new RectangleNode(node.id, style);
+          break;
       }
-    );
+      frameNode.children.push(childNode);
+    });
 
     return frameNode;
   }
 
   private buildTemplate(): string {
-    return this.rootNode.buildTemplate();
+    return this.componentNodes
+      .map((node) => node.rootNode.buildTemplate())
+      .join();
   }
 
   private buildCss(): string {
-    return this.rootNode.buildCss();
+    return this.componentNodes.map((node) => node.rootNode.buildCss()).join();
   }
 }
