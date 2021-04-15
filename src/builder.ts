@@ -12,9 +12,11 @@ import BaseNode from "./nodes/base";
 import FrameNode from "./nodes/frame";
 import TextNode from "./nodes/text";
 import RectangleNode from "./nodes/rectangle";
+import { genHash } from "./util";
 
 export interface ComponentNode {
   rootNode: FrameNode;
+  breakPointId: string;
   range?: BreakpointRange;
 }
 
@@ -30,6 +32,7 @@ export default class Builder {
     events: Event[]
   ) {
     component.breakpoints.forEach((breakPoint: BreakPoint) => {
+      const breakPointId = genHash();
       const rootNode = this.parse(
         breakPoint.figmaObj,
         variables,
@@ -38,7 +41,11 @@ export default class Builder {
         loops,
         events
       );
-      this.componentNodes.push({ rootNode: rootNode, range: breakPoint.range });
+      this.componentNodes.push({
+        rootNode: rootNode,
+        range: breakPoint.range,
+        breakPointId: breakPointId,
+      });
     });
   }
 
@@ -122,27 +129,54 @@ export default class Builder {
 
   private buildTemplate(): string {
     return this.componentNodes
-      .map((node) => node.rootNode.buildTemplate())
+      .map(
+        (node) =>
+          `<div class="breakpoint-${
+            node.breakPointId
+          }">${node.rootNode.buildTemplate()}</div>`
+      )
       .join("");
   }
 
   private buildCss(): string {
     return this.componentNodes
       .map((node) => {
-        return this.buildBreakPointCss(node.rootNode.buildCss(), node.range);
+        return this.buildBreakPointCss(
+          node.rootNode.buildCss(),
+          node.breakPointId,
+          node.range
+        );
       })
       .join(" ");
   }
 
-  private buildBreakPointCss(css: string, range?: BreakpointRange): string {
+  private buildBreakPointCss(
+    css: string,
+    breakPointId: string,
+    range?: BreakpointRange
+  ): string {
     if (range && range.max && range.min) {
-      return `@media screen and (max-width: ${range.max}px) and (min-width: ${range.min}px) { ${css} }`;
+      return `@media screen and (max-width: ${range.max}px) and (min-width: ${
+        range.min
+      }px) { ${css} } @media screen and (min-width: ${
+        range.max + 1
+      }px) and (max-width: ${
+        range.min - 1
+      }px) { .breakpoint-${breakPointId} { display: none; } }`;
     }
     if (range && range.max) {
-      return `@media screen and (max-width: ${range.max}px) { ${css} }`;
+      return `@media screen and (max-width: ${
+        range.max
+      }px) { ${css} } @media screen and (min-width: ${
+        range.max + 1
+      }px) { .breakpoint-${breakPointId} { display: none; } }`;
     }
     if (range && range.min) {
-      return `@media screen and (min-width: ${range.min}px) { ${css} }`;
+      return `@media screen and (min-width: ${
+        range.min
+      }px) { ${css} } @media screen and (max-width: ${
+        range.min - 1
+      }px) { .breakpoint-${breakPointId} { display: none; } }`;
     }
     return css;
   }

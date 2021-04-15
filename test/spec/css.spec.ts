@@ -1,5 +1,6 @@
 import convert from "../../src/index";
 import { loadFixture } from "../helper";
+import * as util from "../../src/util";
 
 test("simple", () => {
   const fidmaObj = loadFixture("simple");
@@ -15,6 +16,8 @@ test("simple", () => {
 });
 
 test("two breakpoints", () => {
+  jest.spyOn(util, "genHash").mockReturnValue("dummy-hash");
+
   const fidmaObj = loadFixture("simple");
   const output = convert(
     {
@@ -30,6 +33,6 @@ test("two breakpoints", () => {
     []
   );
   expect(output.css).toBe(
-    "@media screen and (max-width: 349px) { p{color:red;} } @media screen and (min-width: 350px) { p{color:red;} }"
+    "@media screen and (max-width: 349px) { p{color:red;} } @media screen and (min-width: 350px) { .breakpoint-dummy-hash { display: none; } } @media screen and (min-width: 350px) { p{color:red;} } @media screen and (max-width: 349px) { .breakpoint-dummy-hash { display: none; } }"
   );
 });

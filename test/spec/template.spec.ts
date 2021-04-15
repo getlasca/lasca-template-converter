@@ -16,6 +16,6 @@ test("convert", () => {
     []
   );
   expect(output.template).toBe(
-    `<div><div></div><p class="class-dummy-hash">sampleText</p></div>`
+    `<div class="breakpoint-dummy-hash"><div><div></div><p class="class-dummy-hash">sampleText</p></div></div>`
   );
 });
