@@ -128,14 +128,18 @@ export default class Builder {
   }
 
   private buildTemplate(): string {
-    return this.componentNodes
-      .map(
-        (node) =>
-          `<div class="breakpoint-${
-            node.breakPointId
-          }">${node.rootNode.buildTemplate()}</div>`
-      )
-      .join("");
+    return (
+      "<div>" +
+      this.componentNodes
+        .map(
+          (node) =>
+            `<div class="breakpoint-${
+              node.breakPointId
+            }">${node.rootNode.buildTemplate()}</div>`
+        )
+        .join("") +
+      "</div>"
+    );
   }
 
   private buildCss(): string {
