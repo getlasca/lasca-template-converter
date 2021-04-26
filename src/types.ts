@@ -44,13 +44,13 @@ export interface BaseStyle {
   y: number;
   width: number;
   height: number;
-  opacity: number;
   constraintsHorizontal: string;
   constraintsVertical: string;
+  border?: Border;
 }
 
 export interface FrameStyle extends BaseStyle {
-  background: string;
+  background: Color;
 }
 
 export interface GroupStyle extends BaseStyle {
@@ -68,4 +68,17 @@ export interface TextStyle extends BaseStyle {
 export interface RectangleStyle extends BaseStyle {
   background: string;
   radius: string;
+}
+
+interface Color {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
+interface Border {
+  color: Color;
+  width: number;
+  inside: boolean;
 }

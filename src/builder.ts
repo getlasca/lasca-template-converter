@@ -12,6 +12,7 @@ import BaseNode from "./nodes/base";
 import FrameNode from "./nodes/frame";
 import TextNode from "./nodes/text";
 import RectangleNode from "./nodes/rectangle";
+import Parser from "./parser";
 import { genHash } from "./util";
 
 export interface ComponentNode {
@@ -64,56 +65,34 @@ export default class Builder {
     loops: Loop[],
     events: Event[]
   ): FrameNode {
-    const style = {
-      background: "a",
-      x: 1,
-      y: 1,
-      width: 1,
-      height: 1,
-      opacity: 1,
-      constraintsHorizontal: "a",
-      constraintsVertical: "a",
-    };
-    const rootNode = new FrameNode(figmaObj.id, style, []);
+    const parser = new Parser(
+      figmaObj.absoluteBoundingBox.x,
+      figmaObj.absoluteBoundingBox.y
+    );
+
+    const rootNode = new FrameNode(
+      figmaObj.id,
+      parser.frameStyle(figmaObj),
+      []
+    );
 
     figmaObj.children.forEach((node: any) => {
       let childNode: BaseNode;
-      let style: any;
       switch (node.type) {
         case "RECTANGLE":
-          style = {
-            background: "a",
-            radius: "a",
-            x: 1,
-            y: 1,
-            width: 1,
-            height: 1,
-            opacity: 1,
-            constraintsHorizontal: "a",
-            constraintsVertical: "a",
-          };
-          childNode = new RectangleNode(node.id, style);
+          childNode = new RectangleNode(node.id, parser.rectangleStyle(node));
           break;
         case "TEXT":
-          style = {
-            background: "a",
-            color: "a",
-            fontSize: "a",
-            fontWeight: "a",
-            fontFamily: "a",
-            x: 1,
-            y: 1,
-            width: 1,
-            height: 1,
-            opacity: 1,
-            constraintsHorizontal: "a",
-            constraintsVertical: "a",
-          };
-          childNode = new TextNode(node.id, style, node.characters, []);
+          childNode = new TextNode(
+            node.id,
+            parser.textStyle(node),
+            node.characters,
+            []
+          );
           break;
         // Code to avoid switch statement error. There is no pattern that matches this case.
         default:
-          childNode = new RectangleNode(node.id, style);
+          childNode = new RectangleNode(node.id, parser.rectangleStyle(node));
           break;
       }
       rootNode.children.push(childNode);
