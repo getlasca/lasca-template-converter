@@ -11,12 +11,29 @@ export default class Parser {
 
   frameStyle(obj: any): FrameStyle {
     return {
-      background: "a",
+      background: {
+        r: obj.fills[0].color.r,
+        g: obj.fills[0].color.g,
+        b: obj.fills[0].color.b,
+        a: obj.fills[0].color.a,
+      },
       x: 1,
       y: 1,
       width: 1,
       height: 1,
-      opacity: 1,
+      border:
+        obj.strokes.length !== 0
+          ? {
+              color: {
+                r: obj.strokes[0].color.r,
+                g: obj.strokes[0].color.g,
+                b: obj.strokes[0].color.b,
+                a: obj.strokes[0].color.a,
+              },
+              width: obj.strokeWeight,
+              inside: obj.strokeAlign === "INSIDE",
+            }
+          : undefined,
       constraintsHorizontal: "a",
       constraintsVertical: "a",
     };
@@ -29,7 +46,19 @@ export default class Parser {
       y: 1,
       width: 1,
       height: 1,
-      opacity: 1,
+      border:
+        obj.strokes.length !== 0
+          ? {
+              color: {
+                r: obj.strokes[0].color.r,
+                g: obj.strokes[0].color.g,
+                b: obj.strokes[0].color.b,
+                a: obj.strokes[0].color.a,
+              },
+              width: obj.strokeWeight,
+              inside: obj.strokeAlign === "INSIDE",
+            }
+          : undefined,
       constraintsHorizontal: "a",
       constraintsVertical: "a",
     };
@@ -43,7 +72,19 @@ export default class Parser {
       y: 1,
       width: 1,
       height: 1,
-      opacity: 1,
+      border:
+        obj.strokes.length !== 0
+          ? {
+              color: {
+                r: obj.strokes[0].color.r,
+                g: obj.strokes[0].color.g,
+                b: obj.strokes[0].color.b,
+                a: obj.strokes[0].color.a,
+              },
+              width: obj.strokeWeight,
+              inside: obj.strokeAlign === "INSIDE",
+            }
+          : undefined,
       constraintsHorizontal: "a",
       constraintsVertical: "a",
     };
@@ -60,7 +101,19 @@ export default class Parser {
       y: 1,
       width: 1,
       height: 1,
-      opacity: 1,
+      border:
+        obj.strokes.length !== 0
+          ? {
+              color: {
+                r: obj.strokes[0].color.r,
+                g: obj.strokes[0].color.g,
+                b: obj.strokes[0].color.b,
+                a: obj.strokes[0].color.a,
+              },
+              width: obj.strokeWeight,
+              inside: obj.strokeAlign === "INSIDE",
+            }
+          : undefined,
       constraintsHorizontal: "a",
       constraintsVertical: "a",
     };
