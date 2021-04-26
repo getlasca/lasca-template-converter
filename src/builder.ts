@@ -64,10 +64,6 @@ export default class Builder {
     loops: Loop[],
     events: Event[]
   ): FrameNode {
-    // set rootNode from input
-
-    // FrameNode
-    const nodeId = Object.keys(figmaObj.nodes)[0];
     const style = {
       background: "a",
       x: 1,
@@ -78,10 +74,9 @@ export default class Builder {
       constraintsHorizontal: "a",
       constraintsVertical: "a",
     };
-    const frameNode = new FrameNode(nodeId, style, []);
+    const rootNode = new FrameNode(figmaObj.id, style, []);
 
-    // RectangleNode, TextNode
-    figmaObj.nodes[nodeId].document.children.forEach((node: any) => {
+    figmaObj.children.forEach((node: any) => {
       let childNode: BaseNode;
       let style: any;
       switch (node.type) {
@@ -121,10 +116,10 @@ export default class Builder {
           childNode = new RectangleNode(node.id, style);
           break;
       }
-      frameNode.children.push(childNode);
+      rootNode.children.push(childNode);
     });
 
-    return frameNode;
+    return rootNode;
   }
 
   private buildTemplate(): string {
