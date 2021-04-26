@@ -20,7 +20,7 @@ export default class FrameNode extends BaseNode {
   }
 
   buildTemplate(): string {
-    let tag = "<div>";
+    let tag = `<div class="class-${this.className}">`;
     this.children.forEach((node: BaseNode) => {
       tag = tag + node.buildTemplate();
     });
@@ -29,10 +29,21 @@ export default class FrameNode extends BaseNode {
   }
 
   buildCss(): string {
-    let css = "";
+    let css = `.class-${this.className} { ${this.buildFrameCss()} } `;
     this.children.forEach((node: BaseNode) => {
       css = css + node.buildCss();
     });
+    return css;
+  }
+
+  private buildFrameCss(): string {
+    let css = `background-color: rgba(${this.style.background.r},${this.style.background.g},${this.style.background.b},${this.style.background.a});`;
+    if (this.style.border) {
+      css += ` border: ${this.style.border.width}px solid rgba(${this.style.border.color.r},${this.style.border.color.g},${this.style.border.color.b},${this.style.border.color.a});`;
+      if (this.style.border.inside) {
+        css += ` box-sizing: border-box;`;
+      }
+    }
     return css;
   }
 }

@@ -12,9 +12,9 @@ export default class Parser {
   frameStyle(obj: any): FrameStyle {
     return {
       background: {
-        r: obj.fills[0].color.r,
-        g: obj.fills[0].color.g,
-        b: obj.fills[0].color.b,
+        r: obj.fills[0].color.r * 255,
+        g: obj.fills[0].color.g * 255,
+        b: obj.fills[0].color.b * 255,
         a: obj.fills[0].color.a,
       },
       x: 1,
@@ -25,9 +25,9 @@ export default class Parser {
         obj.strokes.length !== 0
           ? {
               color: {
-                r: obj.strokes[0].color.r,
-                g: obj.strokes[0].color.g,
-                b: obj.strokes[0].color.b,
+                r: obj.strokes[0].color.r * 255,
+                g: obj.strokes[0].color.g * 255,
+                b: obj.strokes[0].color.b * 255,
                 a: obj.strokes[0].color.a,
               },
               width: obj.strokeWeight,
@@ -50,9 +50,9 @@ export default class Parser {
         obj.strokes.length !== 0
           ? {
               color: {
-                r: obj.strokes[0].color.r,
-                g: obj.strokes[0].color.g,
-                b: obj.strokes[0].color.b,
+                r: obj.strokes[0].color.r * 255,
+                g: obj.strokes[0].color.g * 255,
+                b: obj.strokes[0].color.b * 255,
                 a: obj.strokes[0].color.a,
               },
               width: obj.strokeWeight,
@@ -76,9 +76,9 @@ export default class Parser {
         obj.strokes.length !== 0
           ? {
               color: {
-                r: obj.strokes[0].color.r,
-                g: obj.strokes[0].color.g,
-                b: obj.strokes[0].color.b,
+                r: obj.strokes[0].color.r * 255,
+                g: obj.strokes[0].color.g * 255,
+                b: obj.strokes[0].color.b * 255,
                 a: obj.strokes[0].color.a,
               },
               width: obj.strokeWeight,
@@ -105,9 +105,9 @@ export default class Parser {
         obj.strokes.length !== 0
           ? {
               color: {
-                r: obj.strokes[0].color.r,
-                g: obj.strokes[0].color.g,
-                b: obj.strokes[0].color.b,
+                r: obj.strokes[0].color.r * 255,
+                g: obj.strokes[0].color.g * 255,
+                b: obj.strokes[0].color.b * 255,
                 a: obj.strokes[0].color.a,
               },
               width: obj.strokeWeight,
