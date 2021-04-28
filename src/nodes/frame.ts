@@ -22,16 +22,16 @@ export default class FrameNode extends BaseNode {
   buildTemplate(): string {
     let tag = `<div class="class-${this.className}">`;
     this.children.forEach((node: BaseNode) => {
-      tag = tag + node.buildTemplate();
+      tag += node.buildTemplate();
     });
-    tag = tag + "</div>";
+    tag += "</div>";
     return tag;
   }
 
   buildCss(): string {
     let css = `.class-${this.className} { ${this.buildFrameCss()} } `;
     this.children.forEach((node: BaseNode) => {
-      css = css + node.buildCss();
+      css += node.buildCss();
     });
     return css;
   }
