@@ -31,9 +31,9 @@ export default class TextNode extends BaseNode {
 
   buildCss(): string {
     let css = `color: rgba(${this.style.color.r},${this.style.color.g},${this.style.color.b},${this.style.color.a});`;
-    css += ` font-size: ${this.style.fontSize}px`;
-    css += ` font-weight: ${this.style.fontWeight}`;
-    css += ` font-family: ${this.style.fontFamily}`;
+    css += ` font-size: ${this.style.fontSize}px;`;
+    css += ` font-weight: ${this.style.fontWeight};`;
+    css += ` font-family: ${this.style.fontFamily};`;
     return `.class-${this.className} { ${css} }`;
   }
 }
