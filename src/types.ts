@@ -51,19 +51,19 @@ export interface BaseStyle {
 
 export interface FrameStyle extends BaseStyle {
   background: Color;
+  radius: number;
 }
 
 export interface TextStyle extends BaseStyle {
-  background: string;
-  color: string;
+  color: Color;
   fontSize: string;
   fontWeight: string;
   fontFamily: string;
 }
 
 export interface RectangleStyle extends BaseStyle {
-  background: string;
-  radius: string;
+  background: Color;
+  radius: number;
 }
 
 interface Color {

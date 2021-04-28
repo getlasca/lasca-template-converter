@@ -16,7 +16,7 @@ test("simple", () => {
     []
   );
   expect(output.template).toBe(
-    `<div><div class="breakpoint-dummy"><div class="class-dummy"><div></div><p class="class-dummy">sampleText</p></div></div></div>`
+    `<div><div class="breakpoint-dummy"><div class="class-dummy"><div class="class-dummy"></div><p class="class-dummy">sampleText</p></div></div></div>`
   );
 });
 
@@ -38,7 +38,7 @@ test("two breakpoints", () => {
     []
   );
   expect(output.template).toBe(
-    `<div><div class="breakpoint-dummy"><div class="class-dummy"><div></div><p class="class-dummy">sampleText</p></div></div><div class="breakpoint-dummy"><div class="class-dummy"><div></div><p class="class-dummy">sampleText</p></div></div></div>`
+    `<div><div class="breakpoint-dummy"><div class="class-dummy"><div class="class-dummy"></div><p class="class-dummy">sampleText</p></div></div><div class="breakpoint-dummy"><div class="class-dummy"><div class="class-dummy"></div><p class="class-dummy">sampleText</p></div></div></div>`
   );
 });
 
@@ -55,6 +55,6 @@ test("nested", () => {
     []
   );
   expect(output.template).toBe(
-    `<div><div class="breakpoint-dummy"><div class="class-dummy"><div class="class-dummy"><div></div></div></div></div></div>`
+    `<div><div class="breakpoint-dummy"><div class="class-dummy"><div class="class-dummy"><div class="class-dummy"></div></div></div></div></div>`
   );
 });
