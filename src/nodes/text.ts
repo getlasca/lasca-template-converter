@@ -1,4 +1,5 @@
 import BaseNode from "./base";
+import Parser from "../parser";
 import { TextStyle } from "../types";
 
 export default class TextNode extends BaseNode {
@@ -8,9 +9,8 @@ export default class TextNode extends BaseNode {
   embedCompound?: string;
 
   constructor(
-    nodeId: string,
-    style: TextStyle,
-    text: string,
+    parser: Parser,
+    figmaObj: any,
     embedVariables: string[],
     embedCompound?: string,
     conditionVariable?: string,
@@ -18,9 +18,9 @@ export default class TextNode extends BaseNode {
     eventType?: string,
     eventName?: string
   ) {
-    super(nodeId, conditionVariable, loopVariable, eventType, eventName);
-    this.text = text;
-    this.style = style;
+    super(figmaObj.id, conditionVariable, loopVariable, eventType, eventName);
+    this.text = figmaObj.characters;
+    this.style = parser.textStyle(figmaObj);
     this.embedVariables = embedVariables;
     this.embedCompound = embedCompound;
   }

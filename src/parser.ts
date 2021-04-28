@@ -1,4 +1,4 @@
-import { FrameStyle, GroupStyle, TextStyle, RectangleStyle } from "./types";
+import { BaseStyle, FrameStyle, TextStyle, RectangleStyle } from "./types";
 
 export default class Parser {
   baseX: number;
@@ -10,97 +10,39 @@ export default class Parser {
   }
 
   frameStyle(obj: any): FrameStyle {
-    return {
+    return Object.assign(this.baseStyle(obj), {
       background: {
         r: obj.fills[0].color.r * 255,
         g: obj.fills[0].color.g * 255,
         b: obj.fills[0].color.b * 255,
         a: obj.fills[0].color.a,
       },
-      x: 1,
-      y: 1,
-      width: 1,
-      height: 1,
-      border:
-        obj.strokes.length !== 0
-          ? {
-              color: {
-                r: obj.strokes[0].color.r * 255,
-                g: obj.strokes[0].color.g * 255,
-                b: obj.strokes[0].color.b * 255,
-                a: obj.strokes[0].color.a,
-              },
-              width: obj.strokeWeight,
-              inside: obj.strokeAlign === "INSIDE",
-            }
-          : undefined,
-      constraintsHorizontal: "a",
-      constraintsVertical: "a",
-    };
-  }
-
-  groupStyle(obj: any): GroupStyle {
-    return {
-      background: "a",
-      x: 1,
-      y: 1,
-      width: 1,
-      height: 1,
-      border:
-        obj.strokes.length !== 0
-          ? {
-              color: {
-                r: obj.strokes[0].color.r * 255,
-                g: obj.strokes[0].color.g * 255,
-                b: obj.strokes[0].color.b * 255,
-                a: obj.strokes[0].color.a,
-              },
-              width: obj.strokeWeight,
-              inside: obj.strokeAlign === "INSIDE",
-            }
-          : undefined,
-      constraintsHorizontal: "a",
-      constraintsVertical: "a",
-    };
+    });
   }
 
   rectangleStyle(obj: any): RectangleStyle {
-    return {
+    return Object.assign(this.baseStyle(obj), {
       background: "a",
       radius: "a",
-      x: 1,
-      y: 1,
-      width: 1,
-      height: 1,
-      border:
-        obj.strokes.length !== 0
-          ? {
-              color: {
-                r: obj.strokes[0].color.r * 255,
-                g: obj.strokes[0].color.g * 255,
-                b: obj.strokes[0].color.b * 255,
-                a: obj.strokes[0].color.a,
-              },
-              width: obj.strokeWeight,
-              inside: obj.strokeAlign === "INSIDE",
-            }
-          : undefined,
-      constraintsHorizontal: "a",
-      constraintsVertical: "a",
-    };
+    });
   }
 
   textStyle(obj: any): TextStyle {
-    return {
+    return Object.assign(this.baseStyle(obj), {
       background: "a",
       color: "a",
       fontSize: "a",
       fontWeight: "a",
       fontFamily: "a",
+    });
+  }
+
+  private baseStyle(obj: any): BaseStyle {
+    return {
       x: 1,
       y: 1,
-      width: 1,
-      height: 1,
+      width: obj.absoluteBoundingBox.width,
+      height: obj.absoluteBoundingBox.height,
       border:
         obj.strokes.length !== 0
           ? {
@@ -114,8 +56,8 @@ export default class Parser {
               inside: obj.strokeAlign === "INSIDE",
             }
           : undefined,
-      constraintsHorizontal: "a",
-      constraintsVertical: "a",
+      constraintsHorizontal: obj.constraints.horizontal,
+      constraintsVertical: obj.constraints.vertical,
     };
   }
 }

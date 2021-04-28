@@ -53,10 +53,6 @@ export interface FrameStyle extends BaseStyle {
   background: Color;
 }
 
-export interface GroupStyle extends BaseStyle {
-  background: string;
-}
-
 export interface TextStyle extends BaseStyle {
   background: string;
   color: string;

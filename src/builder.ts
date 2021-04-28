@@ -8,10 +8,7 @@ import {
   Event,
   Output,
 } from "./types";
-import BaseNode from "./nodes/base";
 import FrameNode from "./nodes/frame";
-import TextNode from "./nodes/text";
-import RectangleNode from "./nodes/rectangle";
 import Parser from "./parser";
 import { genHash } from "./util";
 
@@ -69,36 +66,7 @@ export default class Builder {
       figmaObj.absoluteBoundingBox.x,
       figmaObj.absoluteBoundingBox.y
     );
-
-    const rootNode = new FrameNode(
-      figmaObj.id,
-      parser.frameStyle(figmaObj),
-      []
-    );
-
-    figmaObj.children.forEach((node: any) => {
-      let childNode: BaseNode;
-      switch (node.type) {
-        case "RECTANGLE":
-          childNode = new RectangleNode(node.id, parser.rectangleStyle(node));
-          break;
-        case "TEXT":
-          childNode = new TextNode(
-            node.id,
-            parser.textStyle(node),
-            node.characters,
-            []
-          );
-          break;
-        // Code to avoid switch statement error. There is no pattern that matches this case.
-        default:
-          childNode = new RectangleNode(node.id, parser.rectangleStyle(node));
-          break;
-      }
-      rootNode.children.push(childNode);
-    });
-
-    return rootNode;
+    return new FrameNode(parser, figmaObj);
   }
 
   private buildTemplate(): string {

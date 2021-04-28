@@ -1,23 +1,24 @@
 import BaseNode from "./base";
+import Parser from "../parser";
 import { RectangleStyle } from "../types";
 
 export default class RectangleNode extends BaseNode {
   style: RectangleStyle;
 
   constructor(
-    nodeId: string,
-    style: RectangleStyle,
+    parser: Parser,
+    figmaObj: any,
     conditionVariable?: string,
     loopVariable?: string,
     eventType?: string,
     eventName?: string
   ) {
-    super(nodeId, conditionVariable, loopVariable, eventType, eventName);
-    this.style = style;
+    super(figmaObj.id, conditionVariable, loopVariable, eventType, eventName);
+    this.style = parser.rectangleStyle(figmaObj);
   }
 
   buildTemplate(): string {
-    return "<div></div>"
+    return "<div></div>";
   }
 
   buildCss(): string {
