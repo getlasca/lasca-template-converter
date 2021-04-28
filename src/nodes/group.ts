@@ -51,6 +51,10 @@ export default class GroupNode extends BaseNode {
   }
 
   buildCss(): string {
-    return "";
+    return this.children
+      .map((node: BaseNode) => {
+        return node.buildCss();
+      })
+      .join(" ");
   }
 }
