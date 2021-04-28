@@ -37,7 +37,7 @@ export default class FrameNode extends BaseNode {
           break;
         // Code to avoid switch statement error. There is no pattern that matches this case.
         default:
-          childNode = new RectangleNode(node.id, parser.rectangleStyle(node));
+          childNode = new RectangleNode(parser, node);
           break;
       }
       this.children.push(childNode);

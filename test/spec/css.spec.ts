@@ -3,7 +3,7 @@ import { loadFixture } from "../helper";
 import * as util from "../../src/util";
 
 test("simple", () => {
-  jest.spyOn(util, "genHash").mockReturnValue("dummy-hash");
+  jest.spyOn(util, "genHash").mockReturnValue("dummy");
 
   const fidmaObj = loadFixture("simple");
   const output = convert(
@@ -15,12 +15,12 @@ test("simple", () => {
     []
   );
   expect(output.css).toBe(
-    ".class-dummy-hash { background-color: rgba(255,255,255,1); } p{color:red;}"
+    ".class-dummy { background-color: rgba(255,255,255,1); } p{color:red;}"
   );
 });
 
 test("two breakpoints", () => {
-  jest.spyOn(util, "genHash").mockReturnValue("dummy-hash");
+  jest.spyOn(util, "genHash").mockReturnValue("dummy");
 
   const fidmaObj = loadFixture("simple");
   const output = convert(
@@ -37,6 +37,23 @@ test("two breakpoints", () => {
     []
   );
   expect(output.css).toBe(
-    "@media screen and (max-width: 349px) { .class-dummy-hash { background-color: rgba(255,255,255,1); } p{color:red;} } @media screen and (min-width: 350px) { .breakpoint-dummy-hash { display: none; } } @media screen and (min-width: 350px) { .class-dummy-hash { background-color: rgba(255,255,255,1); } p{color:red;} } @media screen and (max-width: 349px) { .breakpoint-dummy-hash { display: none; } }"
+    "@media screen and (max-width: 349px) { .class-dummy { background-color: rgba(255,255,255,1); } p{color:red;} } @media screen and (min-width: 350px) { .breakpoint-dummy { display: none; } } @media screen and (min-width: 350px) { .class-dummy { background-color: rgba(255,255,255,1); } p{color:red;} } @media screen and (max-width: 349px) { .breakpoint-dummy { display: none; } }"
+  );
+});
+
+test("nested", () => {
+  jest.spyOn(util, "genHash").mockReturnValue("dummy");
+
+  const fidmaObj = loadFixture("nested");
+  const output = convert(
+    { breakpoints: [{ figmaObj: fidmaObj }] },
+    [],
+    [],
+    [],
+    [],
+    []
+  );
+  expect(output.css).toBe(
+    ".class-dummy { background-color: rgba(255,255,255,1); } .class-dummy { background-color: rgba(0,0,0,1); } "
   );
 });
