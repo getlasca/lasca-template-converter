@@ -22,6 +22,9 @@ export default class FrameNode extends BaseNode {
     figmaObj.children.forEach((node: any) => {
       let childNode: BaseNode;
       switch (node.type) {
+        case "FRAME":
+          childNode = new FrameNode(parser, node);
+          break;
         case "RECTANGLE":
           childNode = new RectangleNode(node.id, parser.rectangleStyle(node));
           break;
