@@ -69,6 +69,9 @@ export default class FrameNode extends BaseNode {
         css += ` box-sizing: border-box;`;
       }
     }
+    if (this.style.radius !== 0) {
+      css += ` border-radius: ${this.style.radius}px;`;
+    }
     return css;
   }
 }

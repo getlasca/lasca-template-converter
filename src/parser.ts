@@ -17,13 +17,19 @@ export default class Parser {
         b: obj.fills[0].color.b * 255,
         a: obj.fills[0].color.a,
       },
+      radius: obj.cornerRadius || 0,
     });
   }
 
   rectangleStyle(obj: any): RectangleStyle {
     return Object.assign(this.baseStyle(obj), {
-      background: "a",
-      radius: "a",
+      background: {
+        r: obj.fills[0].color.r * 255,
+        g: obj.fills[0].color.g * 255,
+        b: obj.fills[0].color.b * 255,
+        a: obj.fills[0].color.a,
+      },
+      radius: obj.cornerRadius || 0,
     });
   }
 
