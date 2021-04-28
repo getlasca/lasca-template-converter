@@ -55,8 +55,7 @@ export interface FrameStyle extends BaseStyle {
 }
 
 export interface TextStyle extends BaseStyle {
-  background: string;
-  color: string;
+  color: Color;
   fontSize: string;
   fontWeight: string;
   fontFamily: string;
