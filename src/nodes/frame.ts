@@ -1,4 +1,5 @@
 import BaseNode from "./base";
+import GroupNode from "./group";
 import TextNode from "./text";
 import RectangleNode from "./rectangle";
 import Parser from "../parser";
@@ -25,16 +26,14 @@ export default class FrameNode extends BaseNode {
         case "FRAME":
           childNode = new FrameNode(parser, node);
           break;
+        case "GROUP":
+          childNode = new GroupNode(parser, node);
+          break;
         case "RECTANGLE":
-          childNode = new RectangleNode(node.id, parser.rectangleStyle(node));
+          childNode = new RectangleNode(parser, node);
           break;
         case "TEXT":
-          childNode = new TextNode(
-            node.id,
-            parser.textStyle(node),
-            node.characters,
-            []
-          );
+          childNode = new TextNode(parser, node, []);
           break;
         // Code to avoid switch statement error. There is no pattern that matches this case.
         default:
