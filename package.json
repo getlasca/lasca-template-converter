@@ -1,13 +1,12 @@
 {
   "name": "@getlasca/lasca-template-converter",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Lasca Inc.",
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:getlasca/lasca-template-converter.git",
-    "directory": "@getlasca/lasca-template-converter"
+    "url": "https://github.com/getlasca/lasca-template-converter.git"
   },
   "files": [
     "dist/*"
@@ -32,8 +31,5 @@
     "prettier": "^2.2.1",
     "ts-jest": "^26.5.1",
     "typescript": "^4.1.5"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   }
 }
