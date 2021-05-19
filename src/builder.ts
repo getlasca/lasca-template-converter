@@ -1,6 +1,5 @@
 import {
   BreakPoint,
-  BreakpointRange,
   Component,
   Embed,
   Condition,
@@ -15,7 +14,8 @@ import { genHash } from "./util";
 export interface ComponentNode {
   rootNode: FrameNode;
   breakPointId: string;
-  range?: BreakpointRange;
+  min?: number;
+  max?: number;
 }
 
 export default class Builder {
@@ -32,7 +32,7 @@ export default class Builder {
     component.breakpoints.forEach((breakPoint: BreakPoint) => {
       const breakPointId = genHash();
       const rootNode = this.parse(
-        breakPoint.figmaObj,
+        breakPoint.figma,
         variables,
         embeds,
         conditions,
@@ -41,8 +41,9 @@ export default class Builder {
       );
       this.componentNodes.push({
         rootNode: rootNode,
-        range: breakPoint.range,
         breakPointId: breakPointId,
+        min: breakPoint.min,
+        max: breakPoint.max,
       });
     });
   }
@@ -90,7 +91,8 @@ export default class Builder {
         return this.buildBreakPointCss(
           node.rootNode.buildCss(),
           node.breakPointId,
-          node.range
+          node.min,
+          node.max
         );
       })
       .join(" ");
@@ -99,29 +101,24 @@ export default class Builder {
   private buildBreakPointCss(
     css: string,
     breakPointId: string,
-    range?: BreakpointRange
+    min?: number,
+    max?: number
   ): string {
-    if (range && range.max && range.min) {
-      return `@media screen and (max-width: ${range.max}px) and (min-width: ${
-        range.min
-      }px) { ${css} } @media screen and (min-width: ${
-        range.max + 1
+    if (max && min) {
+      return `@media screen and (max-width: ${max}px) and (min-width: ${min}px) { ${css} } @media screen and (min-width: ${
+        max + 1
       }px) and (max-width: ${
-        range.min - 1
+        min - 1
       }px) { .breakpoint-${breakPointId} { display: none; } }`;
     }
-    if (range && range.max) {
-      return `@media screen and (max-width: ${
-        range.max
-      }px) { ${css} } @media screen and (min-width: ${
-        range.max + 1
+    if (max) {
+      return `@media screen and (max-width: ${max}px) { ${css} } @media screen and (min-width: ${
+        max + 1
       }px) { .breakpoint-${breakPointId} { display: none; } }`;
     }
-    if (range && range.min) {
-      return `@media screen and (min-width: ${
-        range.min
-      }px) { ${css} } @media screen and (max-width: ${
-        range.min - 1
+    if (min) {
+      return `@media screen and (min-width: ${min}px) { ${css} } @media screen and (max-width: ${
+        min - 1
       }px) { .breakpoint-${breakPointId} { display: none; } }`;
     }
     return css;

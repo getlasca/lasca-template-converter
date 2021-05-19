@@ -6,9 +6,9 @@ import { loadFixture } from "../helper";
 test("simple", () => {
   jest.spyOn(util, "genHash").mockReturnValue("dummy");
 
-  const fidmaObj = loadFixture("simple");
+  const figma = loadFixture("simple");
   const output = convert(
-    { breakpoints: [{ figmaObj: fidmaObj }] },
+    { breakpoints: [{ figma: figma }] },
     [],
     [],
     [],
@@ -23,12 +23,12 @@ test("simple", () => {
 test("two breakpoints", () => {
   jest.spyOn(util, "genHash").mockReturnValue("dummy");
 
-  const fidmaObj = loadFixture("simple");
+  const figma = loadFixture("simple");
   const output = convert(
     {
       breakpoints: [
-        { figmaObj: fidmaObj, range: { max: 349 } },
-        { figmaObj: fidmaObj, range: { min: 350 } },
+        { figma: figma, max: 349 },
+        { figma: figma, min: 350 },
       ],
     },
     [],
@@ -45,9 +45,9 @@ test("two breakpoints", () => {
 test("nested", () => {
   jest.spyOn(util, "genHash").mockReturnValue("dummy");
 
-  const fidmaObj = loadFixture("nested");
+  const figma = loadFixture("nested");
   const output = convert(
-    { breakpoints: [{ figmaObj: fidmaObj }] },
+    { breakpoints: [{ figma: figma }] },
     [],
     [],
     [],
