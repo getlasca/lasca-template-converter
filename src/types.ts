@@ -3,13 +3,9 @@ export interface Component {
 }
 
 export interface BreakPoint {
-  range?: BreakpointRange;
-  figmaObj: any;
-}
-
-export interface BreakpointRange {
   min?: number;
   max?: number;
+  figma: any;
 }
 
 export interface Embed {
