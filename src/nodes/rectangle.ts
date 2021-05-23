@@ -32,6 +32,7 @@ export default class RectangleNode extends BaseNode {
     if (this.style.radius !== 0) {
       css += ` border-radius: ${this.style.radius}px;`;
     }
+    css += this.buildBaseCss(this.style);
     return `.class-${this.className} { ${css} }`;
   }
 }

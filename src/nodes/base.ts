@@ -1,4 +1,5 @@
 import { genHash } from "../util";
+import { BaseStyle } from "../types";
 
 export default abstract class BaseNode {
   nodeId: string;
@@ -25,4 +26,17 @@ export default abstract class BaseNode {
 
   abstract buildTemplate(): string;
   abstract buildCss(): string;
+
+  protected buildBaseCss(input: BaseStyle): string {
+    let css = " position: absolute;";
+    css += ` top: ${input.y}px`;
+    css += ` width: ${input.width}px`;
+    css += ` height: ${input.height}px`;
+    if (input.constraintsHorizontal === "LEFT") {
+      css += ` left: ${input.x}px`;
+    } else if (input.constraintsHorizontal === "RIGHT") {
+      css += ` right: ${input.xFromRight}px`;
+    }
+    return css;
+  }
 }

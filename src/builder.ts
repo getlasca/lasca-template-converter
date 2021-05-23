@@ -56,7 +56,7 @@ export default class Builder {
   }
 
   private parse(
-    figmaObj: any,
+    figma: any,
     variables: string[],
     embeds: Embed[],
     conditions: Condition[],
@@ -64,10 +64,11 @@ export default class Builder {
     events: Event[]
   ): FrameNode {
     const parser = new Parser(
-      figmaObj.absoluteBoundingBox.x,
-      figmaObj.absoluteBoundingBox.y
+      figma.absoluteBoundingBox.x,
+      figma.absoluteBoundingBox.y,
+      figma.absoluteBoundingBox.width
     );
-    return new FrameNode(parser, figmaObj);
+    return new FrameNode(parser, figma);
   }
 
   private buildTemplate(): string {
