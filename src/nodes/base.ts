@@ -30,13 +30,26 @@ export default abstract class BaseNode {
   protected buildBaseCss(input: BaseStyle): string {
     let css = " position: absolute;";
     css += ` top: ${input.y}px;`;
-    css += ` width: ${input.width}px;`;
     css += ` height: ${input.height}px;`;
-    if (input.constraintsHorizontal === "LEFT") {
-      css += ` left: ${input.x}px;`;
-    } else if (input.constraintsHorizontal === "RIGHT") {
-      css += ` right: ${input.xFromRight}px;`;
+
+    switch (input.constraintsHorizontal) {
+      case "LEFT": {
+        css += ` left: ${input.x}px;`;
+        css += ` width: ${input.width}px;`;
+        break;
+      }
+      case "RIGHT": {
+        css += ` right: ${input.xFromRight}px;`;
+        css += ` width: ${input.width}px;`;
+        break;
+      }
+      case "LEFT_RIGHT": {
+        css += ` left: ${input.x}px;`;
+        css += ` right: ${input.xFromRight}px;`;
+        break;
+      }
     }
+
     return css;
   }
 }
