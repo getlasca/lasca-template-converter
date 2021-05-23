@@ -68,7 +68,7 @@ export default class Builder {
       figma.absoluteBoundingBox.y,
       figma.absoluteBoundingBox.width
     );
-    return new FrameNode(parser, figma);
+    return new FrameNode(parser, figma, true);
   }
 
   private buildTemplate(): string {

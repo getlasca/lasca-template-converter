@@ -6,25 +6,28 @@ import Parser from "../parser";
 import { FrameStyle } from "../types";
 
 export default class FrameNode extends BaseNode {
+  isRoot: boolean;
   style: FrameStyle;
   children: BaseNode[] = [];
 
   constructor(
     parser: Parser,
     figmaObj: any,
+    isRoot: boolean,
     conditionVariable?: string,
     loopVariable?: string,
     eventType?: string,
     eventName?: string
   ) {
     super(figmaObj.id, conditionVariable, loopVariable, eventType, eventName);
+    this.isRoot = isRoot;
     this.style = parser.frameStyle(figmaObj);
 
     figmaObj.children.forEach((node: any) => {
       let childNode: BaseNode;
       switch (node.type) {
         case "FRAME":
-          childNode = new FrameNode(parser, node);
+          childNode = new FrameNode(parser, node, false);
           break;
         case "GROUP":
           childNode = new GroupNode(parser, node);
@@ -62,8 +65,7 @@ export default class FrameNode extends BaseNode {
   }
 
   private buildFrameCss(): string {
-    let css = `position: relative;`;
-    css += ` background-color: rgba(${this.style.background.r},${this.style.background.g},${this.style.background.b},${this.style.background.a});`;
+    let css = `background-color: rgba(${this.style.background.r},${this.style.background.g},${this.style.background.b},${this.style.background.a});`;
     if (this.style.border) {
       css += ` border: ${this.style.border.width}px solid rgba(${this.style.border.color.r},${this.style.border.color.g},${this.style.border.color.b},${this.style.border.color.a});`;
       if (this.style.border.inside) {
@@ -72,6 +74,11 @@ export default class FrameNode extends BaseNode {
     }
     if (this.style.radius !== 0) {
       css += ` border-radius: ${this.style.radius}px;`;
+    }
+    if (this.isRoot) {
+      css += ` position: relative;`;
+    } else {
+      css += this.buildBaseCss(this.style);
     }
     return css;
   }
