@@ -14,6 +14,7 @@ export default class FrameNode extends BaseNode {
     parser: Parser,
     figma: any,
     isRoot: boolean,
+    relativeParser?: Parser,
     conditionVariable?: string,
     loopVariable?: string,
     eventType?: string,
@@ -22,31 +23,32 @@ export default class FrameNode extends BaseNode {
     super(figma.id, conditionVariable, loopVariable, eventType, eventName);
     this.isRoot = isRoot;
     this.style = parser.frameStyle(figma);
+    const childParser = relativeParser || parser;
 
     figma.children.forEach((node: any) => {
       let childNode: BaseNode;
       switch (node.type) {
         case "FRAME": {
           const relativeParser = new Parser(
-            figma.absoluteBoundingBox.x,
-            figma.absoluteBoundingBox.y,
-            figma.absoluteBoundingBox.width
+            node.absoluteBoundingBox.x,
+            node.absoluteBoundingBox.y,
+            node.absoluteBoundingBox.width
           );
-          childNode = new FrameNode(relativeParser, node, false);
+          childNode = new FrameNode(parser, node, false, relativeParser);
           break;
         }
         case "GROUP":
-          childNode = new GroupNode(parser, node);
+          childNode = new GroupNode(childParser, node);
           break;
         case "RECTANGLE":
-          childNode = new RectangleNode(parser, node);
+          childNode = new RectangleNode(childParser, node);
           break;
         case "TEXT":
-          childNode = new TextNode(parser, node, []);
+          childNode = new TextNode(childParser, node, []);
           break;
         // Code to avoid switch statement error. There is no pattern that matches this case.
         default:
-          childNode = new RectangleNode(parser, node);
+          childNode = new RectangleNode(childParser, node);
           break;
       }
       this.children.push(childNode);
