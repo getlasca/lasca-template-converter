@@ -21,7 +21,7 @@ export default class GroupNode extends BaseNode {
       let childNode: BaseNode;
       switch (node.type) {
         case "FRAME":
-          childNode = new FrameNode(parser, node);
+          childNode = new FrameNode(parser, node, false);
           break;
         case "GROUP":
           childNode = new GroupNode(parser, node);

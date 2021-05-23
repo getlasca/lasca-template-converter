@@ -34,6 +34,7 @@ export default class TextNode extends BaseNode {
     css += ` font-size: ${this.style.fontSize}px;`;
     css += ` font-weight: ${this.style.fontWeight};`;
     css += ` font-family: ${this.style.fontFamily};`;
+    css += this.buildBaseCss(this.style);
     return `.class-${this.className} { ${css} }`;
   }
 }
