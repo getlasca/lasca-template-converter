@@ -12,25 +12,25 @@ export default class FrameNode extends BaseNode {
 
   constructor(
     parser: Parser,
-    figmaObj: any,
+    figma: any,
     isRoot: boolean,
     conditionVariable?: string,
     loopVariable?: string,
     eventType?: string,
     eventName?: string
   ) {
-    super(figmaObj.id, conditionVariable, loopVariable, eventType, eventName);
+    super(figma.id, conditionVariable, loopVariable, eventType, eventName);
     this.isRoot = isRoot;
-    this.style = parser.frameStyle(figmaObj);
+    this.style = parser.frameStyle(figma);
 
-    figmaObj.children.forEach((node: any) => {
+    figma.children.forEach((node: any) => {
       let childNode: BaseNode;
       switch (node.type) {
         case "FRAME": {
           const relativeParser = new Parser(
-            node.absoluteBoundingBox.x,
-            node.absoluteBoundingBox.y,
-            node.absoluteBoundingBox.width
+            figma.absoluteBoundingBox.x,
+            figma.absoluteBoundingBox.y,
+            figma.absoluteBoundingBox.width
           );
           childNode = new FrameNode(relativeParser, node, false);
           break;
