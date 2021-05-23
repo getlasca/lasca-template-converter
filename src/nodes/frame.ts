@@ -26,9 +26,15 @@ export default class FrameNode extends BaseNode {
     figmaObj.children.forEach((node: any) => {
       let childNode: BaseNode;
       switch (node.type) {
-        case "FRAME":
-          childNode = new FrameNode(parser, node, false);
+        case "FRAME": {
+          const relativeParser = new Parser(
+            node.absoluteBoundingBox.x,
+            node.absoluteBoundingBox.y,
+            node.absoluteBoundingBox.width
+          );
+          childNode = new FrameNode(relativeParser, node, false);
           break;
+        }
         case "GROUP":
           childNode = new GroupNode(parser, node);
           break;
