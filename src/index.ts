@@ -17,7 +17,7 @@ export default function convert(
     loops,
     events
   ).build();
-  console.log("template: " + output.template);
-  console.log("css: " + output.css);
+  console.log("converter template: " + output.template);
+  console.log("converter css: " + output.css);
   return output;
 }

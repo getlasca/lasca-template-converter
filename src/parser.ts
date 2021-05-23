@@ -3,10 +3,12 @@ import { BaseStyle, FrameStyle, TextStyle, RectangleStyle } from "./types";
 export default class Parser {
   baseX: number;
   baseY: number;
+  baseWidth: number;
 
-  constructor(baseX: number, baseY: number) {
+  constructor(baseX: number, baseY: number, baseWidth: number) {
     this.baseX = baseX;
     this.baseY = baseY;
+    this.baseWidth = baseWidth;
   }
 
   frameStyle(obj: any): FrameStyle {
@@ -49,8 +51,13 @@ export default class Parser {
 
   private baseStyle(obj: any): BaseStyle {
     return {
-      x: 1,
-      y: 1,
+      x: obj.absoluteBoundingBox.x - this.baseX,
+      xFromRight:
+        this.baseWidth -
+        (obj.absoluteBoundingBox.x -
+          this.baseX +
+          obj.absoluteBoundingBox.width),
+      y: obj.absoluteBoundingBox.y - this.baseY,
       width: obj.absoluteBoundingBox.width,
       height: obj.absoluteBoundingBox.height,
       border:
