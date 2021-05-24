@@ -1,11 +1,8 @@
 import convert from "../../src/index";
-import * as util from "../../src/util";
 
 import { loadFixture } from "../helper";
 
 test("simple", () => {
-  jest.spyOn(util, "genHash").mockReturnValue("dummy");
-
   const figma = loadFixture("simple");
   const output = convert(
     { breakpoints: [{ figma: figma }] },
@@ -21,8 +18,6 @@ test("simple", () => {
 });
 
 test("two breakpoints", () => {
-  jest.spyOn(util, "genHash").mockReturnValue("dummy");
-
   const figma = loadFixture("simple");
   const output = convert(
     {
@@ -43,8 +38,6 @@ test("two breakpoints", () => {
 });
 
 test("nested", () => {
-  jest.spyOn(util, "genHash").mockReturnValue("dummy");
-
   const figma = loadFixture("nested");
   const output = convert(
     { breakpoints: [{ figma: figma }] },

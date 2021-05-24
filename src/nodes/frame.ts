@@ -3,6 +3,7 @@ import GroupNode from "./group";
 import TextNode from "./text";
 import RectangleNode from "./rectangle";
 import Parser from "../parser";
+import IdGenerator from "../helper/idGenerator";
 import { FrameStyle } from "../types";
 
 export default class FrameNode extends BaseNode {
@@ -12,6 +13,7 @@ export default class FrameNode extends BaseNode {
 
   constructor(
     parser: Parser,
+    idGenerator: IdGenerator,
     figma: any,
     isRoot: boolean,
     relativeParser?: Parser,
@@ -20,7 +22,14 @@ export default class FrameNode extends BaseNode {
     eventType?: string,
     eventName?: string
   ) {
-    super(figma.id, conditionVariable, loopVariable, eventType, eventName);
+    super(
+      figma.id,
+      idGenerator,
+      conditionVariable,
+      loopVariable,
+      eventType,
+      eventName
+    );
     this.isRoot = isRoot;
     this.style = parser.frameStyle(figma);
     const childParser = relativeParser || parser;
@@ -34,21 +43,27 @@ export default class FrameNode extends BaseNode {
             node.absoluteBoundingBox.y,
             node.absoluteBoundingBox.width
           );
-          childNode = new FrameNode(parser, node, false, relativeParser);
+          childNode = new FrameNode(
+            parser,
+            idGenerator,
+            node,
+            false,
+            relativeParser
+          );
           break;
         }
         case "GROUP":
-          childNode = new GroupNode(childParser, node);
+          childNode = new GroupNode(childParser, idGenerator, node);
           break;
         case "RECTANGLE":
-          childNode = new RectangleNode(childParser, node);
+          childNode = new RectangleNode(childParser, idGenerator, node);
           break;
         case "TEXT":
-          childNode = new TextNode(childParser, node, []);
+          childNode = new TextNode(childParser, idGenerator, node, []);
           break;
         // Code to avoid switch statement error. There is no pattern that matches this case.
         default:
-          childNode = new RectangleNode(childParser, node);
+          childNode = new RectangleNode(childParser, idGenerator, node);
           break;
       }
       this.children.push(childNode);
