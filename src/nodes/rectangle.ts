@@ -1,5 +1,6 @@
 import BaseNode from "./base";
 import Parser from "../parser";
+import IdGenerator from "../helper/idGenerator";
 import { RectangleStyle } from "../types";
 
 export default class RectangleNode extends BaseNode {
@@ -7,13 +8,21 @@ export default class RectangleNode extends BaseNode {
 
   constructor(
     parser: Parser,
+    idGenerator: IdGenerator,
     figmaObj: any,
     conditionVariable?: string,
     loopVariable?: string,
     eventType?: string,
     eventName?: string
   ) {
-    super(figmaObj.id, conditionVariable, loopVariable, eventType, eventName);
+    super(
+      figmaObj.id,
+      idGenerator,
+      conditionVariable,
+      loopVariable,
+      eventType,
+      eventName
+    );
     this.style = parser.rectangleStyle(figmaObj);
   }
 

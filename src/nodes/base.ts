@@ -1,4 +1,4 @@
-import { genHash } from "../util";
+import IdGenerator from "../helper/idGenerator";
 import { BaseStyle } from "../types";
 
 export default abstract class BaseNode {
@@ -11,6 +11,7 @@ export default abstract class BaseNode {
 
   constructor(
     nodeId: string,
+    idGenerator: IdGenerator,
     conditionVariable?: string,
     loopVariable?: string,
     eventType?: string,
@@ -21,7 +22,7 @@ export default abstract class BaseNode {
     this.loopVariable = loopVariable;
     this.eventType = eventType;
     this.eventName = eventName;
-    this.className = genHash();
+    this.className = idGenerator.getId() + "";
   }
 
   abstract buildTemplate(): string;

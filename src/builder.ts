@@ -9,7 +9,7 @@ import {
 } from "./types";
 import FrameNode from "./nodes/frame";
 import Parser from "./parser";
-import { genHash } from "./util";
+import IdGenerator from "./helper/idGenerator";
 
 export interface ComponentNode {
   rootNode: FrameNode;
@@ -29,8 +29,8 @@ export default class Builder {
     loops: Loop[],
     events: Event[]
   ) {
+    const breakPointIdGenerator = new IdGenerator();
     component.breakpoints.forEach((breakPoint: BreakPoint) => {
-      const breakPointId = genHash();
       const rootNode = this.parse(
         breakPoint.figma,
         variables,
@@ -41,7 +41,7 @@ export default class Builder {
       );
       this.componentNodes.push({
         rootNode: rootNode,
-        breakPointId: breakPointId,
+        breakPointId: breakPointIdGenerator.getId() + "",
         min: breakPoint.min,
         max: breakPoint.max,
       });
@@ -68,7 +68,8 @@ export default class Builder {
       figma.absoluteBoundingBox.y,
       figma.absoluteBoundingBox.width
     );
-    return new FrameNode(parser, figma, true);
+    const classIdGenerator = new IdGenerator();
+    return new FrameNode(parser, classIdGenerator, figma, true);
   }
 
   private buildTemplate(): string {
