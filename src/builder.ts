@@ -1,12 +1,4 @@
-import {
-  BreakPoint,
-  Component,
-  Embed,
-  Condition,
-  Loop,
-  Event,
-  Output,
-} from "./types";
+import { Breakpoint, Variable, Condition, Loop, Event, Output } from "./types";
 import FrameNode from "./nodes/frame";
 import Parser from "./parser";
 import IdGenerator from "./helper/idGenerator";
@@ -21,23 +13,15 @@ export interface ComponentNode {
 export default class Builder {
   componentNodes: ComponentNode[] = [];
 
-  constructor(
-    component: Component,
-    variables: string[],
-    embeds: Embed[],
-    conditions: Condition[],
-    loops: Loop[],
-    events: Event[]
-  ) {
+  constructor(breakpoints: Breakpoint[]) {
     const breakPointIdGenerator = new IdGenerator();
-    component.breakpoints.forEach((breakPoint: BreakPoint) => {
+    breakpoints.forEach((breakPoint: Breakpoint) => {
       const rootNode = this.parse(
         breakPoint.figma,
-        variables,
-        embeds,
-        conditions,
-        loops,
-        events
+        breakPoint.variables,
+        breakPoint.conditions,
+        breakPoint.loops,
+        breakPoint.events
       );
       this.componentNodes.push({
         rootNode: rootNode,
@@ -57,8 +41,7 @@ export default class Builder {
 
   private parse(
     figma: any,
-    variables: string[],
-    embeds: Embed[],
+    variables: Variable[],
     conditions: Condition[],
     loops: Loop[],
     events: Event[]

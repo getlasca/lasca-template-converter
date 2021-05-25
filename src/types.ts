@@ -1,22 +1,22 @@
-export interface Component {
-  breakpoints: BreakPoint[];
-}
-
-export interface BreakPoint {
+export interface Breakpoint {
   min?: number;
   max?: number;
   figma: any;
+  variables: Variable[];
+  conditions: Condition[];
+  loops: Loop[];
+  events: Event[];
 }
 
-export interface Embed {
+export interface Variable {
   nodeId: string;
-  variables: string[];
+  names: string[];
   compound?: string; // e.g. "Room: {{ room }}"
 }
 
 export interface Condition {
   nodeId: string;
-  variable: string;
+  expression: string;
 }
 
 export interface Loop {
