@@ -1,32 +1,42 @@
 import IdGenerator from "../helper/idGenerator";
-import { BaseStyle } from "../types";
+import { BaseStyle, Variable, Condition, Loop, Event } from "../types";
 
 export default abstract class BaseNode {
   nodeId: string;
   className: string;
-  conditionVariable?: string;
-  loopVariable?: string;
-  eventType?: string;
-  eventName?: string;
+  variables: Variable[];
+  conditions: Condition[];
+  loops: Loop[];
+  events: Event[];
 
   constructor(
     nodeId: string,
     idGenerator: IdGenerator,
-    conditionVariable?: string,
-    loopVariable?: string,
-    eventType?: string,
-    eventName?: string
+    variables: Variable[] = [],
+    conditions: Condition[] = [],
+    loops: Loop[] = [],
+    events: Event[] = []
   ) {
     this.nodeId = nodeId;
-    this.conditionVariable = conditionVariable;
-    this.loopVariable = loopVariable;
-    this.eventType = eventType;
-    this.eventName = eventName;
     this.className = idGenerator.getId() + "";
+    this.variables = variables;
+    this.conditions = conditions;
+    this.loops = loops;
+    this.events = events;
   }
 
   abstract buildTemplate(): string;
   abstract buildCss(): string;
+
+  protected buildCondition(): string {
+    const condition = this.conditions.find((condition) => {
+      this.nodeId === condition.nodeId;
+    });
+    if (condition) {
+      return ` v-if="${condition.expression}"`;
+    }
+    return "";
+  }
 
   protected buildBaseCss(input: BaseStyle): string {
     let css = " position: absolute;";

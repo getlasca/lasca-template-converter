@@ -1,41 +1,30 @@
 import BaseNode from "./base";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
-import { TextStyle } from "../types";
+import { TextStyle, Variable, Condition, Loop, Event } from "../types";
 
 export default class TextNode extends BaseNode {
   style: TextStyle;
   text: string;
-  embedVariables: string[];
-  embedCompound?: string;
 
   constructor(
     parser: Parser,
     idGenerator: IdGenerator,
-    figmaObj: any,
-    embedVariables: string[],
-    embedCompound?: string,
-    conditionVariable?: string,
-    loopVariable?: string,
-    eventType?: string,
-    eventName?: string
+    figma: any,
+    variables: Variable[] = [],
+    conditions: Condition[] = [],
+    loops: Loop[] = [],
+    events: Event[] = []
   ) {
-    super(
-      figmaObj.id,
-      idGenerator,
-      conditionVariable,
-      loopVariable,
-      eventType,
-      eventName
-    );
-    this.text = figmaObj.characters;
-    this.style = parser.textStyle(figmaObj);
-    this.embedVariables = embedVariables;
-    this.embedCompound = embedCompound;
+    super(figma.id, idGenerator, variables, conditions, loops, events);
+    this.text = figma.characters;
+    this.style = parser.textStyle(figma);
   }
 
   buildTemplate(): string {
-    return `<p class="class-${this.className}">${this.text}</p>`;
+    return `<p class="class-${this.className}"${this.buildCondition()}>${
+      this.text
+    }</p>`;
   }
 
   buildCss(): string {

@@ -4,7 +4,7 @@ import TextNode from "./text";
 import RectangleNode from "./rectangle";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
-import { FrameStyle } from "../types";
+import { FrameStyle, Variable, Condition, Loop, Event } from "../types";
 
 export default class FrameNode extends BaseNode {
   isRoot: boolean;
@@ -17,19 +17,12 @@ export default class FrameNode extends BaseNode {
     figma: any,
     isRoot: boolean,
     relativeParser?: Parser,
-    conditionVariable?: string,
-    loopVariable?: string,
-    eventType?: string,
-    eventName?: string
+    variables: Variable[] = [],
+    conditions: Condition[] = [],
+    loops: Loop[] = [],
+    events: Event[] = []
   ) {
-    super(
-      figma.id,
-      idGenerator,
-      conditionVariable,
-      loopVariable,
-      eventType,
-      eventName
-    );
+    super(figma.id, idGenerator, variables, conditions, loops, events);
     this.isRoot = isRoot;
     this.style = parser.frameStyle(figma);
     const childParser = relativeParser || parser;
@@ -48,22 +41,58 @@ export default class FrameNode extends BaseNode {
             idGenerator,
             node,
             false,
-            relativeParser
+            relativeParser,
+            variables,
+            conditions,
+            loops,
+            events
           );
           break;
         }
         case "GROUP":
-          childNode = new GroupNode(childParser, idGenerator, node);
+          childNode = new GroupNode(
+            childParser,
+            idGenerator,
+            node,
+            variables,
+            conditions,
+            loops,
+            events
+          );
           break;
         case "RECTANGLE":
-          childNode = new RectangleNode(childParser, idGenerator, node);
+          childNode = new RectangleNode(
+            childParser,
+            idGenerator,
+            node,
+            variables,
+            conditions,
+            loops,
+            events
+          );
           break;
         case "TEXT":
-          childNode = new TextNode(childParser, idGenerator, node, []);
+          childNode = new TextNode(
+            childParser,
+            idGenerator,
+            node,
+            variables,
+            conditions,
+            loops,
+            events
+          );
           break;
         // Code to avoid switch statement error. There is no pattern that matches this case.
         default:
-          childNode = new RectangleNode(childParser, idGenerator, node);
+          childNode = new RectangleNode(
+            childParser,
+            idGenerator,
+            node,
+            variables,
+            conditions,
+            loops,
+            events
+          );
           break;
       }
       this.children.push(childNode);
@@ -71,7 +100,7 @@ export default class FrameNode extends BaseNode {
   }
 
   buildTemplate(): string {
-    let tag = `<div class="class-${this.className}">`;
+    let tag = `<div class="class-${this.className}"${this.buildCondition()}>`;
     this.children.forEach((node: BaseNode) => {
       tag += node.buildTemplate();
     });
