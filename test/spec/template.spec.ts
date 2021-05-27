@@ -97,3 +97,26 @@ test("condition", () => {
       `</div>`
   );
 });
+
+test("event", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      variables: [],
+      conditions: [],
+      loops: [],
+      events: [{ nodeId: "1:7", eventType: "click", name: "handle" }],
+    },
+  ]);
+  expect(output.template).toBe(
+    `<div>` +
+      `<div class="breakpoint-1">` +
+      `<div class="class-1">` +
+      `<div class="class-2" v-on:click="handle"></div>` +
+      `<p class="class-3">sampleText</p>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});
