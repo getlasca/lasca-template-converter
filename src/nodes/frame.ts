@@ -109,7 +109,7 @@ export default class FrameNode extends BaseNode {
   }
 
   buildCss(): string {
-    let css = `.class-${this.className} { ${this.buildFrameCss()} } `;
+    let css = `.class-${this.className} { ${this.buildFrameCss()} }`;
     this.children.forEach((node: BaseNode) => {
       css += node.buildCss();
     });

@@ -52,7 +52,17 @@ export default class Builder {
       figma.absoluteBoundingBox.width
     );
     const classIdGenerator = new IdGenerator();
-    return new FrameNode(parser, classIdGenerator, figma, true);
+    return new FrameNode(
+      parser,
+      classIdGenerator,
+      figma,
+      true,
+      undefined,
+      variables,
+      conditions,
+      loops,
+      events
+    );
   }
 
   private buildTemplate(): string {

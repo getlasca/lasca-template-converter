@@ -8,7 +8,14 @@ test("simple", () => {
     { figma: figma, variables: [], conditions: [], loops: [], events: [] },
   ]);
   expect(output.template).toBe(
-    `<div><div class="breakpoint-dummy"><div class="class-dummy"><div class="class-dummy"></div><p class="class-dummy">sampleText</p></div></div></div>`
+    `<div>` +
+      `<div class="breakpoint-1">` +
+      `<div class="class-1">` +
+      `<div class="class-2"></div>` +
+      `<p class="class-3">sampleText</p>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
   );
 });
 
@@ -33,7 +40,20 @@ test("two breakpoints", () => {
     },
   ]);
   expect(output.template).toBe(
-    `<div><div class="breakpoint-dummy"><div class="class-dummy"><div class="class-dummy"></div><p class="class-dummy">sampleText</p></div></div><div class="breakpoint-dummy"><div class="class-dummy"><div class="class-dummy"></div><p class="class-dummy">sampleText</p></div></div></div>`
+    `<div>` +
+      `<div class="breakpoint-1">` +
+      `<div class="class-1">` +
+      `<div class="class-2"></div>` +
+      `<p class="class-3">sampleText</p>` +
+      `</div>` +
+      `</div>` +
+      `<div class="breakpoint-2">` +
+      `<div class="class-1">` +
+      `<div class="class-2"></div>` +
+      `<p class="class-3">sampleText</p>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
   );
 });
 
@@ -43,6 +63,37 @@ test("nested", () => {
     { figma: figma, variables: [], conditions: [], loops: [], events: [] },
   ]);
   expect(output.template).toBe(
-    `<div><div class="breakpoint-dummy"><div class="class-dummy"><div class="class-dummy"><div class="class-dummy"></div></div></div></div></div>`
+    `<div>` +
+      `<div class="breakpoint-1">` +
+      `<div class="class-1">` +
+      `<div class="class-2">` +
+      `<div class="class-3"></div>` +
+      `</div>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});
+
+test("condition", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      variables: [],
+      conditions: [{ nodeId: "1:7", expression: "valid" }],
+      loops: [],
+      events: [],
+    },
+  ]);
+  expect(output.template).toBe(
+    `<div>` +
+      `<div class="breakpoint-1">` +
+      `<div class="class-1">` +
+      `<div class="class-2" v-if="valid"></div>` +
+      `<p class="class-3">sampleText</p>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
   );
 });
