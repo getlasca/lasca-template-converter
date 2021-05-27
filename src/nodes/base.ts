@@ -30,7 +30,7 @@ export default abstract class BaseNode {
 
   protected buildCondition(): string {
     const condition = this.conditions.find((condition) => {
-      this.nodeId === condition.nodeId;
+      return this.nodeId === condition.nodeId;
     });
     if (condition) {
       return ` v-if="${condition.expression}"`;

@@ -74,3 +74,26 @@ test("nested", () => {
       `</div>`
   );
 });
+
+test("condition", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      variables: [],
+      conditions: [{ nodeId: "1:7", expression: "valid" }],
+      loops: [],
+      events: [],
+    },
+  ]);
+  expect(output.template).toBe(
+    `<div>` +
+      `<div class="breakpoint-1">` +
+      `<div class="class-1">` +
+      `<div class="class-2" v-if="valid"></div>` +
+      `<p class="class-3">sampleText</p>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});
