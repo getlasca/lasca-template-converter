@@ -27,7 +27,7 @@ export interface Loop {
 export interface Event {
   nodeId: string;
   name: string;
-  type: string;
+  eventType: string;
 }
 
 export interface Output {

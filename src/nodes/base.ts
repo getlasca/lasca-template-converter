@@ -38,6 +38,16 @@ export default abstract class BaseNode {
     return "";
   }
 
+  protected buildEvent(): string {
+    const event = this.events.find((event) => {
+      return this.nodeId === event.nodeId;
+    });
+    if (event) {
+      return ` v-on:${event.eventType}="${event.name}"`;
+    }
+    return "";
+  }
+
   protected buildBaseCss(input: BaseStyle): string {
     let css = " position: absolute;";
     css += ` top: ${input.y}px;`;
