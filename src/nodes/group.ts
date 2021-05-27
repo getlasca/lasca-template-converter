@@ -4,6 +4,7 @@ import TextNode from "./text";
 import RectangleNode from "./rectangle";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
+import { Variable, Condition, Loop, Event } from "../types";
 
 export default class GroupNode extends BaseNode {
   children: BaseNode[] = [];
@@ -11,39 +12,74 @@ export default class GroupNode extends BaseNode {
   constructor(
     parser: Parser,
     idGenerator: IdGenerator,
-    figmaObj: any,
-    conditionVariable?: string,
-    loopVariable?: string,
-    eventType?: string,
-    eventName?: string
+    figma: any,
+    variables: Variable[] = [],
+    conditions: Condition[] = [],
+    loops: Loop[] = [],
+    events: Event[] = []
   ) {
-    super(
-      figmaObj.id,
-      idGenerator,
-      conditionVariable,
-      loopVariable,
-      eventType,
-      eventName
-    );
+    super(figma.id, idGenerator, variables, conditions, loops, events);
 
-    figmaObj.children.forEach((node: any) => {
+    figma.children.forEach((node: any) => {
       let childNode: BaseNode;
       switch (node.type) {
         case "FRAME":
-          childNode = new FrameNode(parser, idGenerator, node, false);
+          childNode = new FrameNode(
+            parser,
+            idGenerator,
+            node,
+            false,
+            undefined,
+            variables,
+            conditions,
+            loops,
+            events
+          );
           break;
         case "GROUP":
-          childNode = new GroupNode(parser, idGenerator, node);
+          childNode = new GroupNode(
+            parser,
+            idGenerator,
+            node,
+            variables,
+            conditions,
+            loops,
+            events
+          );
           break;
         case "RECTANGLE":
-          childNode = new RectangleNode(parser, idGenerator, node);
+          childNode = new RectangleNode(
+            parser,
+            idGenerator,
+            node,
+            variables,
+            conditions,
+            loops,
+            events
+          );
           break;
         case "TEXT":
-          childNode = new TextNode(parser, idGenerator, node, []);
+          childNode = new TextNode(
+            parser,
+            idGenerator,
+            node,
+            variables,
+            conditions,
+            loops,
+            events
+          );
           break;
         // Code to avoid switch statement error. There is no pattern that matches this case.
         default:
-          childNode = new RectangleNode(parser, idGenerator, node);
+          childNode = new RectangleNode(
+            parser,
+            idGenerator,
+            node,
+            variables,
+            conditions,
+            loops,
+            events
+          );
           break;
       }
       this.children.push(childNode);
