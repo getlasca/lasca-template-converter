@@ -20,7 +20,9 @@ export default class RectangleNode extends BaseNode {
   }
 
   buildTemplate(): string {
-    return `<div class="class-${this.className}"></div>`;
+    return `<div class="class-${
+      this.className
+    }"${this.buildCondition()}></div>`;
   }
 
   buildCss(): string {

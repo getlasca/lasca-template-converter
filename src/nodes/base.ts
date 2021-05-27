@@ -28,6 +28,16 @@ export default abstract class BaseNode {
   abstract buildTemplate(): string;
   abstract buildCss(): string;
 
+  protected buildCondition(): string {
+    const condition = this.conditions.find((condition) => {
+      this.nodeId === condition.nodeId;
+    });
+    if (condition) {
+      return ` v-if="${condition.expression}"`;
+    }
+    return "";
+  }
+
   protected buildBaseCss(input: BaseStyle): string {
     let css = " position: absolute;";
     css += ` top: ${input.y}px;`;

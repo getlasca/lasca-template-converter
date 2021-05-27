@@ -87,7 +87,7 @@ export default class GroupNode extends BaseNode {
   }
 
   buildTemplate(): string {
-    let tag = "<div>";
+    let tag = `<div${this.buildCondition()}>`;
     this.children.forEach((node: BaseNode) => {
       tag += node.buildTemplate();
     });

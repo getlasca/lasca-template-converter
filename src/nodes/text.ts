@@ -22,7 +22,9 @@ export default class TextNode extends BaseNode {
   }
 
   buildTemplate(): string {
-    return `<p class="class-${this.className}">${this.text}</p>`;
+    return `<p class="class-${this.className}"${this.buildCondition()}>${
+      this.text
+    }</p>`;
   }
 
   buildCss(): string {
