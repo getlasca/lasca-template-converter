@@ -138,7 +138,7 @@ export default class FrameNode extends BaseNode {
           css += ` ${this.style.shadow.spread}px`;
         }
       }
-      css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a})`;
+      css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a});`;
     }
     if (this.style.radius !== 0) {
       css += ` border-radius: ${this.style.radius}px;`;

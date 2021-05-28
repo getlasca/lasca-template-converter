@@ -40,7 +40,7 @@ export default class TextNode extends BaseNode {
       if (this.style.shadow.blur !== 0) {
         css += ` ${this.style.shadow.blur}px`;
       }
-      css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a})`;
+      css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a});`;
     }
     css += this.buildBaseCss(this.style);
     return `.class-${this.className} { ${css} }`;
