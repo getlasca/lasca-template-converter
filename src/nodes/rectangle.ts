@@ -22,7 +22,7 @@ export default class RectangleNode extends BaseNode {
   buildTemplate(): string {
     return `<div class="class-${
       this.className
-    }"${this.buildCondition()}${this.buildEvent()}></div>`;
+    }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}></div>`;
   }
 
   buildCss(): string {

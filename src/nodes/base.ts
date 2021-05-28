@@ -42,6 +42,15 @@ export default abstract class BaseNode {
     return condition ? ` v-if="${condition.expression}"` : "";
   }
 
+  protected buildLoop(): string {
+    const loop = this.loops.find((loop) => {
+      return this.nodeId === loop.nodeId;
+    });
+    return loop
+      ? ` v-for="${loop.itemVariable} in ${loop.variable}" :key="${loop.itemVariable}.id"`
+      : "";
+  }
+
   protected buildEvent(): string {
     const event = this.events.find((event) => {
       return this.nodeId === event.nodeId;

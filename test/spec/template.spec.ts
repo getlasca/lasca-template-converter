@@ -121,6 +121,29 @@ test("condition", () => {
   );
 });
 
+test("loop", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      variables: [],
+      conditions: [],
+      loops: [{ nodeId: "1:7", itemVariable: "item", variable: "items" }],
+      events: [],
+    },
+  ]);
+  expect(output.template).toBe(
+    `<div>` +
+      `<div class="breakpoint-1">` +
+      `<div class="class-1">` +
+      `<div class="class-2" v-for="item in items" :key="item.id"></div>` +
+      `<p class="class-3">sampleText</p>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});
+
 test("event", () => {
   const figma = loadFixture("simple");
   const output = convert([
