@@ -143,8 +143,13 @@ export default class FrameNode extends BaseNode {
       }
       css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a});`;
     }
-    if (this.style.radius !== 0) {
-      css += ` border-radius: ${this.style.radius}px;`;
+    if (
+      this.style.radius.topLeft !== 0 ||
+      this.style.radius.topRight !== 0 ||
+      this.style.radius.bottomRight !== 0 ||
+      this.style.radius.bottomLeft !== 0
+    ) {
+      css += ` border-radius: ${this.style.radius.topLeft}px ${this.style.radius.topRight}px ${this.style.radius.bottomRight}px ${this.style.radius.bottomLeft}px;`;
     }
     if (this.isRoot) {
       css += ` position: relative;`;
