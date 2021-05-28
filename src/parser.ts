@@ -25,7 +25,19 @@ export default class Parser {
               a: fills[0].opacity || 1,
             }
           : undefined,
-      radius: obj.cornerRadius || 0,
+      radius: obj.rectangleCornerRadii
+        ? {
+            topLeft: obj.rectangleCornerRadii[0],
+            topRight: obj.rectangleCornerRadii[1],
+            bottomRight: obj.rectangleCornerRadii[2],
+            bottomLeft: obj.rectangleCornerRadii[3],
+          }
+        : {
+            topLeft: 0,
+            topRight: 0,
+            bottomRight: 0,
+            bottomLeft: 0,
+          },
     });
   }
 
@@ -43,7 +55,19 @@ export default class Parser {
               a: fills[0].opacity || 1,
             }
           : undefined,
-      radius: obj.cornerRadius || 0,
+      radius: obj.rectangleCornerRadii
+        ? {
+            topLeft: obj.rectangleCornerRadii[0],
+            topRight: obj.rectangleCornerRadii[1],
+            bottomRight: obj.rectangleCornerRadii[2],
+            bottomLeft: obj.rectangleCornerRadii[3],
+          }
+        : {
+            topLeft: 0,
+            topRight: 0,
+            bottomRight: 0,
+            bottomLeft: 0,
+          },
     });
   }
 
