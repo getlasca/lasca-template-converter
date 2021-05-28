@@ -21,6 +21,7 @@ export interface Condition {
 export interface Loop {
   nodeId: string;
   variable: string;
+  itemVariable: string;
 }
 
 export interface Event {

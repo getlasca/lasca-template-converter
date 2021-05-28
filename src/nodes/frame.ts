@@ -102,7 +102,7 @@ export default class FrameNode extends BaseNode {
   buildTemplate(): string {
     let tag = `<div class="class-${
       this.className
-    }"${this.buildCondition()}${this.buildEvent()}>`;
+    }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}>`;
     this.children.forEach((node: BaseNode) => {
       tag += node.buildTemplate();
     });
