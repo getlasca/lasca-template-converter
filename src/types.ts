@@ -48,7 +48,7 @@ export interface BaseStyle {
 }
 
 export interface FrameStyle extends BaseStyle {
-  background: Color;
+  background?: Color;
   radius: number;
 }
 
@@ -60,7 +60,7 @@ export interface TextStyle extends BaseStyle {
 }
 
 export interface RectangleStyle extends BaseStyle {
-  background: Color;
+  background?: Color;
   radius: number;
 }
 

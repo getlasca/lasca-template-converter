@@ -119,7 +119,10 @@ export default class FrameNode extends BaseNode {
   }
 
   private buildFrameCss(): string {
-    let css = `background-color: rgba(${this.style.background.r},${this.style.background.g},${this.style.background.b},${this.style.background.a});`;
+    let css = "";
+    if (this.style.background) {
+      css += `background-color: rgba(${this.style.background.r},${this.style.background.g},${this.style.background.b},${this.style.background.a});`;
+    }
     if (this.style.border) {
       css += ` border: ${this.style.border.width}px solid rgba(${this.style.border.color.r},${this.style.border.color.g},${this.style.border.color.b},${this.style.border.color.a});`;
       if (this.style.border.inside) {

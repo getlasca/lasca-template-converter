@@ -12,25 +12,37 @@ export default class Parser {
   }
 
   frameStyle(obj: any): FrameStyle {
+    const fills = obj.fills.filter((fill: any) => {
+      return fill.visible !== false;
+    });
     return Object.assign(this.baseStyle(obj), {
-      background: {
-        r: obj.fills[0].color.r * 255,
-        g: obj.fills[0].color.g * 255,
-        b: obj.fills[0].color.b * 255,
-        a: obj.fills[0].opacity || 1,
-      },
+      background:
+        fills.length !== 0
+          ? {
+              r: fills[0].color.r * 255,
+              g: fills[0].color.g * 255,
+              b: fills[0].color.b * 255,
+              a: fills[0].opacity || 1,
+            }
+          : undefined,
       radius: obj.cornerRadius || 0,
     });
   }
 
   rectangleStyle(obj: any): RectangleStyle {
+    const fills = obj.fills.filter((fill: any) => {
+      return fill.visible !== false;
+    });
     return Object.assign(this.baseStyle(obj), {
-      background: {
-        r: obj.fills[0].color.r * 255,
-        g: obj.fills[0].color.g * 255,
-        b: obj.fills[0].color.b * 255,
-        a: obj.fills[0].opacity || 1,
-      },
+      background:
+        fills.length !== 0
+          ? {
+              r: fills[0].color.r * 255,
+              g: fills[0].color.g * 255,
+              b: fills[0].color.b * 255,
+              a: fills[0].opacity || 1,
+            }
+          : undefined,
       radius: obj.cornerRadius || 0,
     });
   }
@@ -50,6 +62,9 @@ export default class Parser {
   }
 
   private baseStyle(obj: any): BaseStyle {
+    const strokes = obj.strokes.filter((stroke: any) => {
+      return stroke.visible !== false;
+    });
     const shadows = obj.effects.filter((effect: any) => {
       return (
         effect.visible && ["DROP_SHADOW", "INNER_SHADOW"].includes(effect.type)
@@ -67,13 +82,13 @@ export default class Parser {
       width: obj.absoluteBoundingBox.width,
       height: obj.absoluteBoundingBox.height,
       border:
-        obj.strokes.length !== 0
+        strokes.length !== 0
           ? {
               color: {
-                r: obj.strokes[0].color.r * 255,
-                g: obj.strokes[0].color.g * 255,
-                b: obj.strokes[0].color.b * 255,
-                a: obj.strokes[0].opacity || 1,
+                r: strokes[0].color.r * 255,
+                g: strokes[0].color.g * 255,
+                b: strokes[0].color.b * 255,
+                a: strokes[0].opacity || 1,
               },
               width: obj.strokeWeight,
               inside: obj.strokeAlign === "INSIDE",
