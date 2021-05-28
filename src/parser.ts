@@ -50,6 +50,12 @@ export default class Parser {
   }
 
   private baseStyle(obj: any): BaseStyle {
+    const shadows = obj.effects.filter((effect: any) => {
+      return (
+        effect.visible && ["DROP_SHADOW", "INNER_SHADOW"].includes(effect.type)
+      );
+    });
+
     return {
       x: obj.absoluteBoundingBox.x - this.baseX,
       xFromRight:
@@ -71,6 +77,22 @@ export default class Parser {
               },
               width: obj.strokeWeight,
               inside: obj.strokeAlign === "INSIDE",
+            }
+          : undefined,
+      shadow:
+        shadows.length !== 0
+          ? {
+              color: {
+                r: shadows[0].color.r * 255,
+                g: shadows[0].color.g * 255,
+                b: shadows[0].color.b * 255,
+                a: shadows[0].color.a,
+              },
+              x: shadows[0].offset.x,
+              y: shadows[0].offset.y,
+              blur: shadows[0].radius,
+              spread: shadows[0].spread || 0,
+              inner: shadows[0].type === "INNER_SHADOW",
             }
           : undefined,
       constraintsHorizontal: obj.constraints.horizontal,

@@ -33,6 +33,20 @@ export default class RectangleNode extends BaseNode {
         css += ` box-sizing: border-box;`;
       }
     }
+    if (this.style.shadow) {
+      css += ` box-shadow:`;
+      if (this.style.shadow.inner) {
+        css += ` inset`;
+      }
+      css += ` ${this.style.shadow.x}px ${this.style.shadow.y}px`;
+      if (this.style.shadow.blur !== 0) {
+        css += ` ${this.style.shadow.blur}px`;
+        if (this.style.shadow.spread !== 0) {
+          css += ` ${this.style.shadow.spread}px`;
+        }
+      }
+      css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a})`;
+    }
     if (this.style.radius !== 0) {
       css += ` border-radius: ${this.style.radius}px;`;
     }
