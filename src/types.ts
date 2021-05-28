@@ -44,6 +44,7 @@ export interface BaseStyle {
   constraintsHorizontal: string;
   constraintsVertical: string;
   border?: Border;
+  shadow?: Shadow;
 }
 
 export interface FrameStyle extends BaseStyle {
@@ -74,4 +75,13 @@ interface Border {
   color: Color;
   width: number;
   inside: boolean;
+}
+
+interface Shadow {
+  color: Color;
+  x: number;
+  y: number;
+  blur: number;
+  spread: number;
+  inner: boolean;
 }

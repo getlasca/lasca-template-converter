@@ -34,6 +34,14 @@ export default class TextNode extends BaseNode {
     css += ` font-size: ${this.style.fontSize}px;`;
     css += ` font-weight: ${this.style.fontWeight};`;
     css += ` font-family: ${this.style.fontFamily};`;
+    if (this.style.shadow && !this.style.shadow.inner) {
+      css += ` text-shadow:`;
+      css += ` ${this.style.shadow.x}px ${this.style.shadow.y}px`;
+      if (this.style.shadow.blur !== 0) {
+        css += ` ${this.style.shadow.blur}px`;
+      }
+      css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a})`;
+    }
     css += this.buildBaseCss(this.style);
     return `.class-${this.className} { ${css} }`;
   }
