@@ -24,7 +24,9 @@ export default class TextNode extends BaseNode {
   buildTemplate(): string {
     return `<p class="class-${
       this.className
-    }"${this.buildCondition()}${this.buildEvent()}>${this.text}</p>`;
+    }"${this.buildCondition()}${this.buildEvent()}>${
+      this.buildVariable() || this.text
+    }</p>`;
   }
 
   buildCss(): string {

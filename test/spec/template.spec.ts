@@ -19,7 +19,7 @@ test("simple", () => {
   );
 });
 
-test("two breakpoints", () => {
+test("breakpoints", () => {
   const figma = loadFixture("simple");
   const output = convert([
     {
@@ -69,6 +69,29 @@ test("nested", () => {
       `<div class="class-2">` +
       `<div class="class-3"></div>` +
       `</div>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});
+
+test("variable", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      variables: [{ nodeId: "1:8", expression: "count" }],
+      conditions: [],
+      loops: [],
+      events: [],
+    },
+  ]);
+  expect(output.template).toBe(
+    `<div>` +
+      `<div class="breakpoint-1">` +
+      `<div class="class-1">` +
+      `<div class="class-2"></div>` +
+      `<p class="class-3">{{ count }}</p>` +
       `</div>` +
       `</div>` +
       `</div>`

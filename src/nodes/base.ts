@@ -28,24 +28,25 @@ export default abstract class BaseNode {
   abstract buildTemplate(): string;
   abstract buildCss(): string;
 
+  protected buildVariable(): string {
+    const variable = this.variables.find((variable) => {
+      return this.nodeId === variable.nodeId;
+    });
+    return variable ? `{{ ${variable.expression} }}` : "";
+  }
+
   protected buildCondition(): string {
     const condition = this.conditions.find((condition) => {
       return this.nodeId === condition.nodeId;
     });
-    if (condition) {
-      return ` v-if="${condition.expression}"`;
-    }
-    return "";
+    return condition ? ` v-if="${condition.expression}"` : "";
   }
 
   protected buildEvent(): string {
     const event = this.events.find((event) => {
       return this.nodeId === event.nodeId;
     });
-    if (event) {
-      return ` v-on:${event.eventType}="${event.name}"`;
-    }
-    return "";
+    return event ? ` v-on:${event.eventType}="${event.name}"` : "";
   }
 
   protected buildBaseCss(input: BaseStyle): string {
