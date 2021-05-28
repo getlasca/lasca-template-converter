@@ -10,8 +10,7 @@ export interface Breakpoint {
 
 export interface Variable {
   nodeId: string;
-  names: string[];
-  compound?: string; // e.g. "Room: {{ room }}"
+  expression: string;
 }
 
 export interface Condition {
