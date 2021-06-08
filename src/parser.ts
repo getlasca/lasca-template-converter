@@ -82,6 +82,7 @@ export default class Parser {
       fontSize: obj.style.fontSize,
       fontWeight: obj.style.fontWeight,
       fontFamily: obj.style.fontFamily,
+      letterSpacing: obj.style.letterSpacing,
     });
   }
 
