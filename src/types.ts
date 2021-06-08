@@ -57,6 +57,7 @@ export interface TextStyle extends BaseStyle {
   fontSize: string;
   fontWeight: string;
   fontFamily: string;
+  letterSpacing: number;
 }
 
 export interface RectangleStyle extends BaseStyle {

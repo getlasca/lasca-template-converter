@@ -34,6 +34,9 @@ export default class TextNode extends BaseNode {
     css += ` font-size: ${this.style.fontSize}px;`;
     css += ` font-weight: ${this.style.fontWeight};`;
     css += ` font-family: ${this.style.fontFamily};`;
+    if (this.style.letterSpacing !== 0) {
+      css += ` letter-spacing: ${this.style.letterSpacing}px;`;
+    }
     if (this.style.shadow && !this.style.shadow.inner) {
       css += ` text-shadow:`;
       css += ` ${this.style.shadow.x}px ${this.style.shadow.y}px`;
