@@ -1,13 +1,9 @@
 import { BaseStyle, FrameStyle, TextStyle, RectangleStyle } from "./types";
 
 export default class Parser {
-  baseX: number;
-  baseY: number;
   baseWidth: number;
 
-  constructor(baseX: number, baseY: number, baseWidth: number) {
-    this.baseX = baseX;
-    this.baseY = baseY;
+  constructor(baseWidth: number) {
     this.baseWidth = baseWidth;
   }
 
@@ -25,19 +21,12 @@ export default class Parser {
               a: fills[0].opacity || 1,
             }
           : undefined,
-      radius: obj.rectangleCornerRadii
-        ? {
-            topLeft: obj.rectangleCornerRadii[0],
-            topRight: obj.rectangleCornerRadii[1],
-            bottomRight: obj.rectangleCornerRadii[2],
-            bottomLeft: obj.rectangleCornerRadii[3],
-          }
-        : {
-            topLeft: 0,
-            topRight: 0,
-            bottomRight: 0,
-            bottomLeft: 0,
-          },
+      radius: {
+        topLeft: obj.topLeftRadius,
+        topRight: obj.topRightRadius,
+        bottomRight: obj.bottomRightRadius,
+        bottomLeft: obj.bottomLeftRadius,
+      },
     });
   }
 
@@ -55,19 +44,12 @@ export default class Parser {
               a: fills[0].opacity || 1,
             }
           : undefined,
-      radius: obj.rectangleCornerRadii
-        ? {
-            topLeft: obj.rectangleCornerRadii[0],
-            topRight: obj.rectangleCornerRadii[1],
-            bottomRight: obj.rectangleCornerRadii[2],
-            bottomLeft: obj.rectangleCornerRadii[3],
-          }
-        : {
-            topLeft: 0,
-            topRight: 0,
-            bottomRight: 0,
-            bottomLeft: 0,
-          },
+      radius: {
+        topLeft: obj.topLeftRadius,
+        topRight: obj.topRightRadius,
+        bottomRight: obj.bottomRightRadius,
+        bottomLeft: obj.bottomLeftRadius,
+      },
     });
   }
 
@@ -79,10 +61,10 @@ export default class Parser {
         b: obj.fills[0].color.b * 255,
         a: obj.fills[0].opacity || 1,
       },
-      fontSize: obj.style.fontSize,
-      fontWeight: obj.style.fontWeight,
-      fontFamily: obj.style.fontFamily,
-      letterSpacing: obj.style.letterSpacing,
+      fontSize: obj.fontSize,
+      fontWeight: obj.fontName.style,
+      fontFamily: obj.fontName.family,
+      letterSpacing: obj.letterSpacing.value,
     });
   }
 
@@ -97,15 +79,11 @@ export default class Parser {
     });
 
     return {
-      x: obj.absoluteBoundingBox.x - this.baseX,
-      xFromRight:
-        this.baseWidth -
-        (obj.absoluteBoundingBox.x -
-          this.baseX +
-          obj.absoluteBoundingBox.width),
-      y: obj.absoluteBoundingBox.y - this.baseY,
-      width: obj.absoluteBoundingBox.width,
-      height: obj.absoluteBoundingBox.height,
+      x: obj.x,
+      xFromRight: this.baseWidth - (obj.x + obj.width),
+      y: obj.y,
+      width: obj.width,
+      height: obj.height,
       border:
         strokes.length !== 0
           ? {

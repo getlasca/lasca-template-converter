@@ -46,11 +46,7 @@ export default class Builder {
     loops: Loop[],
     events: Event[]
   ): FrameNode {
-    const parser = new Parser(
-      figma.absoluteBoundingBox.x,
-      figma.absoluteBoundingBox.y,
-      figma.absoluteBoundingBox.width
-    );
+    const parser = new Parser(figma.width);
     const classIdGenerator = new IdGenerator();
     return new FrameNode(
       parser,
