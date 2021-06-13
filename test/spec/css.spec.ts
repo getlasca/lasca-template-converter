@@ -8,8 +8,8 @@ test("simple", () => {
   ]);
   expect(output.css).toBe(
     ".class-1 { background-color: rgba(255,255,255,1); position: relative; }" +
-      ".class-2 { background-color: rgba(255,255,255,1); border-radius: 80px 80px 80px 80px; position: absolute; top: 20px; height: 40px; }" +
-      ".class-3 { color: rgba(255,255,255,1); font-size: 14px; font-weight: 700; font-family: Noto Sans JP; position: absolute; top: 60px; height: 24px; }"
+      ".class-2 { background-color: rgba(255,255,255,1); border-radius: 80px 80px 80px 80px; position: absolute; top: 140px; height: 230px; }" +
+      ".class-3 { color: rgba(0,0,0,1); font-size: 12px; font-weight: Regular; font-family: Roboto; position: absolute; top: 550px; height: 90px; }"
   );
 });
 
@@ -36,13 +36,13 @@ test("two breakpoints", () => {
   expect(output.css).toBe(
     "@media screen and (max-width: 349px) { " +
       ".class-1 { background-color: rgba(255,255,255,1); position: relative; }" +
-      ".class-2 { background-color: rgba(255,255,255,1); border-radius: 80px 80px 80px 80px; position: absolute; top: 20px; height: 40px; }" +
-      ".class-3 { color: rgba(255,255,255,1); font-size: 14px; font-weight: 700; font-family: Noto Sans JP; position: absolute; top: 60px; height: 24px; } } " +
+      ".class-2 { background-color: rgba(255,255,255,1); border-radius: 80px 80px 80px 80px; position: absolute; top: 140px; height: 230px; }" +
+      ".class-3 { color: rgba(0,0,0,1); font-size: 12px; font-weight: Regular; font-family: Roboto; position: absolute; top: 550px; height: 90px; } } " +
       "@media screen and (min-width: 350px) { .breakpoint-1 { display: none; } } " +
       "@media screen and (min-width: 350px) { " +
       ".class-1 { background-color: rgba(255,255,255,1); position: relative; }" +
-      ".class-2 { background-color: rgba(255,255,255,1); border-radius: 80px 80px 80px 80px; position: absolute; top: 20px; height: 40px; }" +
-      ".class-3 { color: rgba(255,255,255,1); font-size: 14px; font-weight: 700; font-family: Noto Sans JP; position: absolute; top: 60px; height: 24px; } } " +
+      ".class-2 { background-color: rgba(255,255,255,1); border-radius: 80px 80px 80px 80px; position: absolute; top: 140px; height: 230px; }" +
+      ".class-3 { color: rgba(0,0,0,1); font-size: 12px; font-weight: Regular; font-family: Roboto; position: absolute; top: 550px; height: 90px; } } " +
       "@media screen and (max-width: 349px) { .breakpoint-2 { display: none; } }"
   );
 });
@@ -54,7 +54,7 @@ test("nested", () => {
   ]);
   expect(output.css).toBe(
     ".class-1 { background-color: rgba(255,255,255,1); position: relative; }" +
-      ".class-2 { background-color: rgba(0,0,0,1); position: absolute; top: 60px; height: 200px; left: 0px; width: 800px; }" +
-      ".class-3 { background-color: rgba(255,255,255,1); border-radius: 80px 80px 80px 80px; position: absolute; top: -40px; height: 40px; }"
+      ".class-2 { background-color: rgba(0,0,0,1); position: absolute; top: 100px; height: 500px; left: 0px; width: 800px; }" +
+      ".class-3 { background-color: rgba(255,255,255,1); border-radius: 80px 80px 80px 80px; position: absolute; top: 120px; height: 200px; }"
   );
 });

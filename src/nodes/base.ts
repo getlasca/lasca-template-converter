@@ -64,17 +64,17 @@ export default abstract class BaseNode {
     css += ` height: ${input.height}px;`;
 
     switch (input.constraintsHorizontal) {
-      case "LEFT": {
+      case "MIN": {
         css += ` left: ${input.x}px;`;
         css += ` width: ${input.width}px;`;
         break;
       }
-      case "RIGHT": {
+      case "MAX": {
         css += ` right: ${input.xFromRight}px;`;
         css += ` width: ${input.width}px;`;
         break;
       }
-      case "LEFT_RIGHT": {
+      case "STRETCH": {
         css += ` left: ${input.x}px;`;
         css += ` right: ${input.xFromRight}px;`;
         break;
