@@ -37,6 +37,7 @@ export interface Output {
 
 export interface BaseStyle {
   x: number;
+  xFromCenter: number;
   xFromRight: number;
   y: number;
   width: number;

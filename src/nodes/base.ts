@@ -79,6 +79,15 @@ export default abstract class BaseNode {
         css += ` right: ${input.xFromRight}px;`;
         break;
       }
+      case "CENTER": {
+        css += ` left: calc(50%${
+          input.xFromCenter > 0
+            ? " - " + input.xFromCenter
+            : " + " + -1 * input.xFromCenter
+        }px);`;
+        css += ` width: ${input.width}px;`;
+        break;
+      }
     }
 
     return css;
