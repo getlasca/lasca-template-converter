@@ -39,7 +39,6 @@ export interface BaseStyle {
   x: number;
   xFromRight: number;
   y: number;
-  yFromBottom: number;
   width: number;
   height: number;
   constraintsHorizontal: string;
