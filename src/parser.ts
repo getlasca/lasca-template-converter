@@ -80,6 +80,7 @@ export default class Parser {
 
     return {
       x: obj.x,
+      xFromCenter: this.baseWidth / 2 - obj.x,
       xFromRight: this.baseWidth - (obj.x + obj.width),
       y: obj.y,
       width: obj.width,
