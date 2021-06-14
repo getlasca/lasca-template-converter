@@ -46,7 +46,7 @@ export default class Builder {
     loops: Loop[],
     events: Event[]
   ): FrameNode {
-    const parser = new Parser(figma.width);
+    const parser = new Parser(figma.width, figma.height);
     const classIdGenerator = new IdGenerator();
     return new FrameNode(
       parser,

@@ -31,7 +31,7 @@ export default class FrameNode extends BaseNode {
       let childNode: BaseNode;
       switch (node.type) {
         case "FRAME": {
-          const relativeParser = new Parser(node.width);
+          const relativeParser = new Parser(node.width, node.height);
           childNode = new FrameNode(
             parser,
             idGenerator,

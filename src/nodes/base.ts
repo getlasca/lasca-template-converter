@@ -60,8 +60,24 @@ export default abstract class BaseNode {
 
   protected buildBaseCss(input: BaseStyle): string {
     let css = " position: absolute;";
-    css += ` top: ${input.y}px;`;
-    css += ` height: ${input.height}px;`;
+
+    switch (input.constraintsVertical) {
+      case "MIN": {
+        css += ` top: ${input.y}px;`;
+        css += ` height: ${input.height}px;`;
+        break;
+      }
+      case "MAX": {
+        css += ` bottom: ${input.yFromBottom}px;`;
+        css += ` height: ${input.height}px;`;
+        break;
+      }
+      case "STRETCH": {
+        css += ` top: ${input.y}px;`;
+        css += ` bottom: ${input.yFromBottom}px;`;
+        break;
+      }
+    }
 
     switch (input.constraintsHorizontal) {
       case "MIN": {
