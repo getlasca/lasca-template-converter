@@ -11,12 +11,21 @@ export default class TextNode extends BaseNode {
     parser: Parser,
     idGenerator: IdGenerator,
     figma: any,
+    isAutoLayoutChild: boolean,
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
     events: Event[] = []
   ) {
-    super(figma.id, idGenerator, variables, conditions, loops, events);
+    super(
+      figma.id,
+      idGenerator,
+      isAutoLayoutChild,
+      variables,
+      conditions,
+      loops,
+      events
+    );
     this.text = figma.characters;
     this.style = parser.textStyle(figma);
   }

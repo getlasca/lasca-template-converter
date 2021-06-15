@@ -16,13 +16,22 @@ export default class FrameNode extends BaseNode {
     idGenerator: IdGenerator,
     figma: any,
     isRoot: boolean,
+    isAutoLayoutChild: boolean,
     relativeParser?: Parser,
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
     events: Event[] = []
   ) {
-    super(figma.id, idGenerator, variables, conditions, loops, events);
+    super(
+      figma.id,
+      idGenerator,
+      isAutoLayoutChild,
+      variables,
+      conditions,
+      loops,
+      events
+    );
     this.isRoot = isRoot;
     this.style = parser.frameStyle(figma);
     const childParser = relativeParser || parser;
@@ -37,6 +46,7 @@ export default class FrameNode extends BaseNode {
             idGenerator,
             node,
             false,
+            figma.layoutMode !== "NONE",
             relativeParser,
             variables,
             conditions,
@@ -50,6 +60,7 @@ export default class FrameNode extends BaseNode {
             childParser,
             idGenerator,
             node,
+            figma.layoutMode !== "NONE",
             variables,
             conditions,
             loops,
@@ -61,6 +72,7 @@ export default class FrameNode extends BaseNode {
             childParser,
             idGenerator,
             node,
+            figma.layoutMode !== "NONE",
             variables,
             conditions,
             loops,
@@ -72,6 +84,7 @@ export default class FrameNode extends BaseNode {
             childParser,
             idGenerator,
             node,
+            figma.layoutMode !== "NONE",
             variables,
             conditions,
             loops,
@@ -84,6 +97,7 @@ export default class FrameNode extends BaseNode {
             childParser,
             idGenerator,
             node,
+            figma.layoutMode !== "NONE",
             variables,
             conditions,
             loops,
@@ -147,10 +161,26 @@ export default class FrameNode extends BaseNode {
     ) {
       css += ` border-radius: ${this.style.radius.topLeft}px ${this.style.radius.topRight}px ${this.style.radius.bottomRight}px ${this.style.radius.bottomLeft}px;`;
     }
-    if (this.isRoot) {
-      css += ` position: relative;`;
+
+    // AutoLayout
+    if (this.style.layoutMode !== "NONE") {
+      css += ` padding-left: ${this.style.paddingLeft}px;`;
+      css += ` padding-right: ${this.style.paddingRight}px;`;
+      css += ` padding-top: ${this.style.paddingTop}px;`;
+      css += ` padding-bottom: ${this.style.paddingBottom}px;`;
+
+      if (this.style.layoutMode === "HORIZONTAL") {
+        if (this.style.primaryAxisAlignItems === "SPACE_BETWEEN") {
+          css += " display: flex;";
+          css += " justify-content: space-between;";
+        }
+      }
     } else {
-      css += this.buildBaseCss(this.style);
+      if (this.isRoot) {
+        css += ` position: relative;`;
+      } else {
+        css += this.buildBaseCss(this.style);
+      }
     }
     return css;
   }

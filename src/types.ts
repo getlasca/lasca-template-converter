@@ -42,6 +42,13 @@ export interface BaseStyle {
   y: number;
   width: number;
   height: number;
+  constraintsHorizontal: "MIN" | "CENTER" | "MAX" | "STRETCH" | "SCALE";
+  constraintsVertical: "MIN" | "CENTER" | "MAX" | "STRETCH" | "SCALE";
+  border?: Border;
+  shadow?: Shadow;
+}
+
+export interface FrameStyle extends BaseStyle {
   layoutMode: "NONE" | "HORIZONTAL" | "VERTICAL";
   primaryAxisSizingMode: "FIXED" | "AUTO";
   counterAxisSizingMode: "FIXED" | "AUTO";
@@ -52,13 +59,6 @@ export interface BaseStyle {
   paddingTop: number;
   paddingBottom: number;
   itemSpacing: number;
-  constraintsHorizontal: "MIN" | "CENTER" | "MAX" | "STRETCH" | "SCALE";
-  constraintsVertical: "MIN" | "CENTER" | "MAX" | "STRETCH" | "SCALE";
-  border?: Border;
-  shadow?: Shadow;
-}
-
-export interface FrameStyle extends BaseStyle {
   background?: Color;
   radius: Radius;
 }

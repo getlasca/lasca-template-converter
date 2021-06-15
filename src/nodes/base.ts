@@ -4,6 +4,7 @@ import { BaseStyle, Variable, Condition, Loop, Event } from "../types";
 export default abstract class BaseNode {
   nodeId: string;
   className: string;
+  isAutoLayoutChild: boolean;
   variables: Variable[];
   conditions: Condition[];
   loops: Loop[];
@@ -12,6 +13,7 @@ export default abstract class BaseNode {
   constructor(
     nodeId: string,
     idGenerator: IdGenerator,
+    isAutoLayoutChild = false,
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -19,6 +21,7 @@ export default abstract class BaseNode {
   ) {
     this.nodeId = nodeId;
     this.className = idGenerator.getId() + "";
+    this.isAutoLayoutChild = isAutoLayoutChild;
     this.variables = variables;
     this.conditions = conditions;
     this.loops = loops;
@@ -61,8 +64,10 @@ export default abstract class BaseNode {
   protected buildBaseCss(input: BaseStyle): string {
     let css = "";
 
-    if (input.layoutMode === "NONE") {
-      // Constraint
+    if (this.isAutoLayoutChild) {
+      css += ` height: ${input.height}px;`;
+      css += ` width: ${input.width}px;`;
+    } else {
       css += " position: absolute;";
       css += ` top: ${input.y}px;`;
       css += ` height: ${input.height}px;`;
@@ -93,21 +98,7 @@ export default abstract class BaseNode {
           break;
         }
       }
-    } else {
-      // AutoLayout
-      css += ` padding-left: ${input.paddingLeft}px;`;
-      css += ` padding-right: ${input.paddingRight}px;`;
-      css += ` padding-top: ${input.paddingTop}px;`;
-      css += ` padding-bottom: ${input.paddingBottom}px;`;
-
-      if (input.layoutMode === "HORIZONTAL") {
-        if (input.primaryAxisAlignItems === "SPACE_BETWEEN") {
-          css += " display: flex;";
-          css += " justify-content: space-between;";
-        }
-      }
     }
-
     return css;
   }
 }

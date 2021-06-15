@@ -12,6 +12,16 @@ export default class Parser {
       return fill.visible !== false;
     });
     return Object.assign(this.baseStyle(obj), {
+      layoutMode: obj.layoutMode,
+      primaryAxisSizingMode: obj.primaryAxisSizingMode,
+      counterAxisSizingMode: obj.counterAxisSizingMode,
+      primaryAxisAlignItems: obj.primaryAxisAlignItems,
+      counterAxisAlignItems: obj.counterAxisAlignItems,
+      paddingLeft: obj.paddingLeft,
+      paddingRight: obj.paddingRight,
+      paddingTop: obj.paddingTop,
+      paddingBottom: obj.paddingBottom,
+      itemSpacing: obj.itemSpacing,
       background:
         fills.length !== 0
           ? {
@@ -85,16 +95,6 @@ export default class Parser {
       y: obj.y,
       width: obj.width,
       height: obj.height,
-      layoutMode: obj.layoutMode,
-      primaryAxisSizingMode: obj.primaryAxisSizingMode,
-      counterAxisSizingMode: obj.counterAxisSizingMode,
-      primaryAxisAlignItems: obj.primaryAxisAlignItems,
-      counterAxisAlignItems: obj.counterAxisAlignItems,
-      paddingLeft: obj.paddingLeft,
-      paddingRight: obj.paddingRight,
-      paddingTop: obj.paddingTop,
-      paddingBottom: obj.paddingBottom,
-      itemSpacing: obj.itemSpacing,
       constraintsHorizontal: obj.constraints.horizontal,
       constraintsVertical: obj.constraints.vertical,
       border:

@@ -13,12 +13,21 @@ export default class GroupNode extends BaseNode {
     parser: Parser,
     idGenerator: IdGenerator,
     figma: any,
+    isAutoLayoutChild: boolean,
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
     events: Event[] = []
   ) {
-    super(figma.id, idGenerator, variables, conditions, loops, events);
+    super(
+      figma.id,
+      idGenerator,
+      isAutoLayoutChild,
+      variables,
+      conditions,
+      loops,
+      events
+    );
 
     figma.children.forEach((node: any) => {
       let childNode: BaseNode;
@@ -28,6 +37,7 @@ export default class GroupNode extends BaseNode {
             parser,
             idGenerator,
             node,
+            false,
             false,
             undefined,
             variables,
@@ -41,6 +51,7 @@ export default class GroupNode extends BaseNode {
             parser,
             idGenerator,
             node,
+            false,
             variables,
             conditions,
             loops,
@@ -52,6 +63,7 @@ export default class GroupNode extends BaseNode {
             parser,
             idGenerator,
             node,
+            false,
             variables,
             conditions,
             loops,
@@ -63,6 +75,7 @@ export default class GroupNode extends BaseNode {
             parser,
             idGenerator,
             node,
+            false,
             variables,
             conditions,
             loops,
@@ -75,6 +88,7 @@ export default class GroupNode extends BaseNode {
             parser,
             idGenerator,
             node,
+            false,
             variables,
             conditions,
             loops,
