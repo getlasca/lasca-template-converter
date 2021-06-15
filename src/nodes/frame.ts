@@ -121,15 +121,21 @@ export default class FrameNode extends BaseNode {
   }
 
   buildCss(): string {
-    let css = `.class-${this.className} { ${this.buildFrameCss()} }`;
+    const [mainCss, childCss] = this.buildFrameCss();
+    let css = `.class-${this.className} { ${mainCss} }`;
+    if (childCss) {
+      css += `.class-${this.className} > * { ${childCss} }`;
+    }
     this.children.forEach((node: BaseNode) => {
       css += node.buildCss();
     });
     return css;
   }
 
-  private buildFrameCss(): string {
+  private buildFrameCss(): [string, string] {
     let css = "";
+    let childCss = "";
+
     if (this.style.background) {
       css += `background-color: rgba(${this.style.background.r},${this.style.background.g},${this.style.background.b},${this.style.background.a});`;
     }
@@ -175,14 +181,18 @@ export default class FrameNode extends BaseNode {
         switch (this.style.primaryAxisAlignItems) {
           case "MIN": {
             css += " justify-content: flex-start;";
+            childCss += `margin-right: ${this.style.itemSpacing}px;`;
             break;
           }
           case "MAX": {
             css += " justify-content: flex-end;";
+            childCss += `margin-left: ${this.style.itemSpacing}px;`;
             break;
           }
           case "CENTER": {
             css += " justify-content: center;";
+            childCss += `margin-left: ${this.style.itemSpacing / 2}px;`;
+            childCss += `margin-right: ${this.style.itemSpacing / 2}px;`;
             break;
           }
           case "SPACE_BETWEEN": {
@@ -198,6 +208,6 @@ export default class FrameNode extends BaseNode {
         css += this.buildBaseCss(this.style);
       }
     }
-    return css;
+    return [css, childCss];
   }
 }
