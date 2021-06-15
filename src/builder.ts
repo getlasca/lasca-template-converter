@@ -53,6 +53,7 @@ export default class Builder {
       classIdGenerator,
       figma,
       true,
+      false,
       undefined,
       variables,
       conditions,
