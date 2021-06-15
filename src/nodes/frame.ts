@@ -170,9 +170,25 @@ export default class FrameNode extends BaseNode {
       css += ` padding-bottom: ${this.style.paddingBottom}px;`;
 
       if (this.style.layoutMode === "HORIZONTAL") {
-        if (this.style.primaryAxisAlignItems === "SPACE_BETWEEN") {
-          css += " display: flex;";
-          css += " justify-content: space-between;";
+        css += " display: flex;";
+
+        switch (this.style.primaryAxisAlignItems) {
+          case "MIN": {
+            css += " justify-content: flex-start;";
+            break;
+          }
+          case "MAX": {
+            css += " justify-content: flex-end;";
+            break;
+          }
+          case "CENTER": {
+            css += " justify-content: center;";
+            break;
+          }
+          case "SPACE_BETWEEN": {
+            css += " justify-content: space-between;";
+            break;
+          }
         }
       }
     } else {
