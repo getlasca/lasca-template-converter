@@ -59,34 +59,52 @@ export default abstract class BaseNode {
   }
 
   protected buildBaseCss(input: BaseStyle): string {
-    let css = " position: absolute;";
-    css += ` top: ${input.y}px;`;
-    css += ` height: ${input.height}px;`;
+    let css = "";
 
-    switch (input.constraintsHorizontal) {
-      case "MIN": {
-        css += ` left: ${input.x}px;`;
-        css += ` width: ${input.width}px;`;
-        break;
+    if (input.layoutMode === "NONE") {
+      // Constraint
+      css += " position: absolute;";
+      css += ` top: ${input.y}px;`;
+      css += ` height: ${input.height}px;`;
+
+      switch (input.constraintsHorizontal) {
+        case "MIN": {
+          css += ` left: ${input.x}px;`;
+          css += ` width: ${input.width}px;`;
+          break;
+        }
+        case "MAX": {
+          css += ` right: ${input.xFromRight}px;`;
+          css += ` width: ${input.width}px;`;
+          break;
+        }
+        case "STRETCH": {
+          css += ` left: ${input.x}px;`;
+          css += ` right: ${input.xFromRight}px;`;
+          break;
+        }
+        case "CENTER": {
+          css += ` left: calc(50%${
+            input.xFromCenter > 0
+              ? " - " + input.xFromCenter
+              : " + " + -1 * input.xFromCenter
+          }px);`;
+          css += ` width: ${input.width}px;`;
+          break;
+        }
       }
-      case "MAX": {
-        css += ` right: ${input.xFromRight}px;`;
-        css += ` width: ${input.width}px;`;
-        break;
-      }
-      case "STRETCH": {
-        css += ` left: ${input.x}px;`;
-        css += ` right: ${input.xFromRight}px;`;
-        break;
-      }
-      case "CENTER": {
-        css += ` left: calc(50%${
-          input.xFromCenter > 0
-            ? " - " + input.xFromCenter
-            : " + " + -1 * input.xFromCenter
-        }px);`;
-        css += ` width: ${input.width}px;`;
-        break;
+    } else {
+      // AutoLayout
+      css += ` padding-left: ${input.paddingLeft}px;`;
+      css += ` padding-right: ${input.paddingRight}px;`;
+      css += ` padding-top: ${input.paddingTop}px;`;
+      css += ` padding-bottom: ${input.paddingBottom}px;`;
+
+      if (input.layoutMode === "HORIZONTAL") {
+        if (input.primaryAxisAlignItems === "SPACE_BETWEEN") {
+          css += " display: flex;";
+          css += " justify-content: space-between;";
+        }
       }
     }
 
