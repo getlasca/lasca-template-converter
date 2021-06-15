@@ -85,6 +85,18 @@ export default class Parser {
       y: obj.y,
       width: obj.width,
       height: obj.height,
+      layoutMode: obj.layoutMode,
+      primaryAxisSizingMode: obj.primaryAxisSizingMode,
+      counterAxisSizingMode: obj.counterAxisSizingMode,
+      primaryAxisAlignItems: obj.primaryAxisAlignItems,
+      counterAxisAlignItems: obj.counterAxisAlignItems,
+      paddingLeft: obj.paddingLeft,
+      paddingRight: obj.paddingRight,
+      paddingTop: obj.paddingTop,
+      paddingBottom: obj.paddingBottom,
+      itemSpacing: obj.itemSpacing,
+      constraintsHorizontal: obj.constraints.horizontal,
+      constraintsVertical: obj.constraints.vertical,
       border:
         strokes.length !== 0
           ? {
@@ -114,8 +126,6 @@ export default class Parser {
               inner: shadows[0].type === "INNER_SHADOW",
             }
           : undefined,
-      constraintsHorizontal: obj.constraints.horizontal,
-      constraintsVertical: obj.constraints.vertical,
     };
   }
 }

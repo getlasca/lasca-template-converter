@@ -42,8 +42,18 @@ export interface BaseStyle {
   y: number;
   width: number;
   height: number;
-  constraintsHorizontal: string;
-  constraintsVertical: string;
+  layoutMode: "NONE" | "HORIZONTAL" | "VERTICAL";
+  primaryAxisSizingMode: "FIXED" | "AUTO";
+  counterAxisSizingMode: "FIXED" | "AUTO";
+  primaryAxisAlignItems: "MIN" | "CENTER" | "MAX" | "SPACE_BETWEEN";
+  counterAxisAlignItems: "MIN" | "CENTER" | "MAX";
+  paddingLeft: number;
+  paddingRight: number;
+  paddingTop: number;
+  paddingBottom: number;
+  itemSpacing: number;
+  constraintsHorizontal: "MIN" | "CENTER" | "MAX" | "STRETCH" | "SCALE";
+  constraintsVertical: "MIN" | "CENTER" | "MAX" | "STRETCH" | "SCALE";
   border?: Border;
   shadow?: Shadow;
 }
