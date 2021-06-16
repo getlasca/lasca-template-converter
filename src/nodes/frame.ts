@@ -171,52 +171,60 @@ export default class FrameNode extends BaseNode {
       css += ` padding-right: ${this.style.paddingRight}px;`;
       css += ` padding-top: ${this.style.paddingTop}px;`;
       css += ` padding-bottom: ${this.style.paddingBottom}px;`;
+      css += " display: flex;";
+      css += ` flex-direction: ${
+        this.style.layoutMode === "HORIZONTAL" ? "row" : "column"
+      };`;
 
-      if (this.style.layoutMode === "HORIZONTAL") {
-        css += " display: flex;";
-
-        switch (this.style.primaryAxisAlignItems) {
-          case "MIN": {
-            css += " justify-content: flex-start;";
-            childCss += ` .class-${this.className} > *:not(:last-of-type) { `;
-            childCss += `margin-right: ${this.style.itemSpacing}px;`;
-            childCss += " }";
-            break;
-          }
-          case "MAX": {
-            css += " justify-content: flex-end;";
-            childCss += ` .class-${this.className} > *:not(:first-of-type) { `;
-            childCss += `margin-left: ${this.style.itemSpacing}px;`;
-            childCss += " }";
-            break;
-          }
-          case "CENTER": {
-            css += " justify-content: center;";
-            childCss += ` .class-${this.className} > * { `;
-            childCss += `margin-left: ${this.style.itemSpacing / 2}px;`;
-            childCss += ` margin-right: ${this.style.itemSpacing / 2}px;`;
-            childCss += " }";
-            break;
-          }
-          case "SPACE_BETWEEN": {
-            css += " justify-content: space-between;";
-            break;
-          }
+      switch (this.style.primaryAxisAlignItems) {
+        case "MIN": {
+          css += " justify-content: flex-start;";
+          childCss += ` .class-${this.className} > *:not(:last-of-type) { `;
+          childCss += `margin-${
+            this.style.layoutMode === "HORIZONTAL" ? "right" : "bottom"
+          }: ${this.style.itemSpacing}px;`;
+          childCss += " }";
+          break;
         }
+        case "MAX": {
+          css += " justify-content: flex-end;";
+          childCss += ` .class-${this.className} > *:not(:first-of-type) { `;
+          childCss += `margin-${
+            this.style.layoutMode === "HORIZONTAL" ? "left" : "top"
+          }: ${this.style.itemSpacing}px;`;
+          childCss += " }";
+          break;
+        }
+        case "CENTER": {
+          css += " justify-content: center;";
+          childCss += ` .class-${this.className} > * { `;
+          childCss += `margin-${
+            this.style.layoutMode === "HORIZONTAL" ? "left" : "top"
+          }: ${this.style.itemSpacing / 2}px;`;
+          childCss += ` margin-${
+            this.style.layoutMode === "HORIZONTAL" ? "right" : "bottom"
+          }: ${this.style.itemSpacing / 2}px;`;
+          childCss += " }";
+          break;
+        }
+        case "SPACE_BETWEEN": {
+          css += " justify-content: space-between;";
+          break;
+        }
+      }
 
-        switch (this.style.counterAxisAlignItems) {
-          case "MIN": {
-            css += " align-items: flex-start;";
-            break;
-          }
-          case "MAX": {
-            css += " align-items: flex-end;";
-            break;
-          }
-          case "CENTER": {
-            css += " align-items: center;";
-            break;
-          }
+      switch (this.style.counterAxisAlignItems) {
+        case "MIN": {
+          css += " align-items: flex-start;";
+          break;
+        }
+        case "MAX": {
+          css += " align-items: flex-end;";
+          break;
+        }
+        case "CENTER": {
+          css += " align-items: center;";
+          break;
         }
       }
     }
