@@ -61,42 +61,49 @@ export default abstract class BaseNode {
     return event ? ` v-on:${event.eventType}="${event.name}"` : "";
   }
 
-  protected buildBaseCss(input: BaseStyle): string {
+  protected buildBaseLayoutCss(input: BaseStyle, isRoot = false): string {
     let css = "";
+
+    if (isRoot) {
+      css += ` position: relative;`;
+      css += ` height: ${input.height}px;`;
+      return css;
+    }
 
     if (this.isAutoLayoutChild) {
       css += ` height: ${input.height}px;`;
       css += ` width: ${input.width}px;`;
-    } else {
-      css += " position: absolute;";
-      css += ` top: ${input.y}px;`;
-      css += ` height: ${input.height}px;`;
+      return css;
+    }
 
-      switch (input.constraintsHorizontal) {
-        case "MIN": {
-          css += ` left: ${input.x}px;`;
-          css += ` width: ${input.width}px;`;
-          break;
-        }
-        case "MAX": {
-          css += ` right: ${input.xFromRight}px;`;
-          css += ` width: ${input.width}px;`;
-          break;
-        }
-        case "STRETCH": {
-          css += ` left: ${input.x}px;`;
-          css += ` right: ${input.xFromRight}px;`;
-          break;
-        }
-        case "CENTER": {
-          css += ` left: calc(50%${
-            input.xFromCenter > 0
-              ? " - " + input.xFromCenter
-              : " + " + -1 * input.xFromCenter
-          }px);`;
-          css += ` width: ${input.width}px;`;
-          break;
-        }
+    css += " position: absolute;";
+    css += ` top: ${input.y}px;`;
+    css += ` height: ${input.height}px;`;
+
+    switch (input.constraintsHorizontal) {
+      case "MIN": {
+        css += ` left: ${input.x}px;`;
+        css += ` width: ${input.width}px;`;
+        break;
+      }
+      case "MAX": {
+        css += ` right: ${input.xFromRight}px;`;
+        css += ` width: ${input.width}px;`;
+        break;
+      }
+      case "STRETCH": {
+        css += ` left: ${input.x}px;`;
+        css += ` right: ${input.xFromRight}px;`;
+        break;
+      }
+      case "CENTER": {
+        css += ` left: calc(50%${
+          input.xFromCenter > 0
+            ? " - " + input.xFromCenter
+            : " + " + -1 * input.xFromCenter
+        }px);`;
+        css += ` width: ${input.width}px;`;
+        break;
       }
     }
     return css;
