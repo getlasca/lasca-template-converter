@@ -97,6 +97,7 @@ export default class Parser {
       height: obj.height,
       constraintsHorizontal: obj.constraints.horizontal,
       constraintsVertical: obj.constraints.vertical,
+      layoutAlign: obj.layoutAlign,
       border:
         strokes.length !== 0
           ? {

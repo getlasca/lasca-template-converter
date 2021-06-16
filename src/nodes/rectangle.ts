@@ -10,7 +10,7 @@ export default class RectangleNode extends BaseNode {
     parser: Parser,
     idGenerator: IdGenerator,
     figma: any,
-    isAutoLayoutChild: boolean,
+    layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -19,7 +19,7 @@ export default class RectangleNode extends BaseNode {
     super(
       figma.id,
       idGenerator,
-      isAutoLayoutChild,
+      layoutModeAsChild,
       variables,
       conditions,
       loops,
