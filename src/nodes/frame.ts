@@ -203,6 +203,21 @@ export default class FrameNode extends BaseNode {
             break;
           }
         }
+
+        switch (this.style.counterAxisAlignItems) {
+          case "MIN": {
+            css += " align-items: flex-start;";
+            break;
+          }
+          case "MAX": {
+            css += " align-items: flex-end;";
+            break;
+          }
+          case "CENTER": {
+            css += " align-items: center;";
+            break;
+          }
+        }
       }
     } else {
       if (this.isRoot) {
