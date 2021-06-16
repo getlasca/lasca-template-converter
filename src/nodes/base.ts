@@ -4,7 +4,7 @@ import { BaseStyle, Variable, Condition, Loop, Event } from "../types";
 export default abstract class BaseNode {
   nodeId: string;
   className: string;
-  isAutoLayoutChild: boolean;
+  layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL";
   variables: Variable[];
   conditions: Condition[];
   loops: Loop[];
@@ -13,7 +13,7 @@ export default abstract class BaseNode {
   constructor(
     nodeId: string,
     idGenerator: IdGenerator,
-    isAutoLayoutChild = false,
+    layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL" = "NONE",
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -21,7 +21,7 @@ export default abstract class BaseNode {
   ) {
     this.nodeId = nodeId;
     this.className = idGenerator.getId() + "";
-    this.isAutoLayoutChild = isAutoLayoutChild;
+    this.layoutModeAsChild = layoutModeAsChild;
     this.variables = variables;
     this.conditions = conditions;
     this.loops = loops;
@@ -70,9 +70,13 @@ export default abstract class BaseNode {
       return css;
     }
 
-    if (this.isAutoLayoutChild) {
+    if (this.layoutModeAsChild !== "NONE") {
       css += ` height: ${input.height}px;`;
-      css += ` width: ${input.width}px;`;
+      css += ` width: ${
+        this.layoutModeAsChild === "VERTICAL" && input.layoutAlign === "STRETCH"
+          ? "100%"
+          : input.width + "px"
+      };`;
       return css;
     }
 
