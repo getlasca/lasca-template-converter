@@ -219,13 +219,9 @@ export default class FrameNode extends BaseNode {
           }
         }
       }
-    } else {
-      if (this.isRoot) {
-        css += ` position: relative;`;
-      } else {
-        css += this.buildBaseCss(this.style);
-      }
     }
+
+    css += this.buildBaseLayoutCss(this.style, this.isRoot);
     css += " }";
     return [css, childCss];
   }

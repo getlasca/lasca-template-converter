@@ -54,7 +54,7 @@ export default class TextNode extends BaseNode {
       }
       css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a});`;
     }
-    css += this.buildBaseCss(this.style);
+    css += this.buildBaseLayoutCss(this.style);
     return `.class-${this.className} { ${css} }`;
   }
 }
