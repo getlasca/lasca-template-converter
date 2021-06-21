@@ -31,11 +31,11 @@ export default class TextNode extends BaseNode {
   }
 
   buildTemplate(): string {
-    return `<p class="class-${
+    return `<span class="class-${
       this.className
     }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}>${
       this.buildVariable() || this.text
-    }</p>`;
+    }</span>`;
   }
 
   buildCss(): string {
