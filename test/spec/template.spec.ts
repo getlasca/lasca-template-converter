@@ -12,7 +12,7 @@ test("simple", () => {
       `<div class="breakpoint-1">` +
       `<div class="class-1">` +
       `<div class="class-2"></div>` +
-      `<p class="class-3">sampleText</p>` +
+      `<span class="class-3">sampleText</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -44,13 +44,13 @@ test("breakpoints", () => {
       `<div class="breakpoint-1">` +
       `<div class="class-1">` +
       `<div class="class-2"></div>` +
-      `<p class="class-3">sampleText</p>` +
+      `<span class="class-3">sampleText</span>` +
       `</div>` +
       `</div>` +
       `<div class="breakpoint-2">` +
       `<div class="class-1">` +
       `<div class="class-2"></div>` +
-      `<p class="class-3">sampleText</p>` +
+      `<span class="class-3">sampleText</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -91,7 +91,7 @@ test("variable", () => {
       `<div class="breakpoint-1">` +
       `<div class="class-1">` +
       `<div class="class-2"></div>` +
-      `<p class="class-3">{{ count }}</p>` +
+      `<span class="class-3">{{ count }}</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -114,7 +114,7 @@ test("condition", () => {
       `<div class="breakpoint-1">` +
       `<div class="class-1">` +
       `<div class="class-2" v-if="valid"></div>` +
-      `<p class="class-3">sampleText</p>` +
+      `<span class="class-3">sampleText</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -137,7 +137,7 @@ test("loop", () => {
       `<div class="breakpoint-1">` +
       `<div class="class-1">` +
       `<div class="class-2" v-for="item in items" :key="item.id"></div>` +
-      `<p class="class-3">sampleText</p>` +
+      `<span class="class-3">sampleText</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -160,7 +160,7 @@ test("event", () => {
       `<div class="breakpoint-1">` +
       `<div class="class-1">` +
       `<div class="class-2" v-on:click="handle"></div>` +
-      `<p class="class-3">sampleText</p>` +
+      `<span class="class-3">sampleText</span>` +
       `</div>` +
       `</div>` +
       `</div>`
