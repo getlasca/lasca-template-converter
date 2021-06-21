@@ -41,7 +41,7 @@ export default class TextNode extends BaseNode {
   buildCss(): string {
     let css = `color: rgba(${this.style.color.r},${this.style.color.g},${this.style.color.b},${this.style.color.a});`;
     css += ` font-size: ${this.style.fontSize}px;`;
-    css += ` font-weight: ${this.style.fontWeight};`;
+    css += ` font-weight: ${this.convertFontWeight(this.style.fontWeight)};`;
     css += ` font-family: '${this.style.fontFamily}', sans-serif;`;
     if (this.style.letterSpacing !== 0) {
       css += ` letter-spacing: ${this.style.letterSpacing}px;`;
@@ -56,5 +56,32 @@ export default class TextNode extends BaseNode {
     }
     css += this.buildBaseLayoutCss(this.style);
     return `.class-${this.className} { ${css} }`;
+  }
+
+  private convertFontWeight(weight: string): number {
+    switch (weight) {
+      case "Thin":
+        return 100;
+      case "Extra Light":
+        return 200;
+      case "Light":
+        return 300;
+      case "Regular":
+        return 400;
+      case "Normal":
+        return 400;
+      case "Medium":
+        return 500;
+      case "Semi Bold":
+        return 600;
+      case "Bold":
+        return 700;
+      case "Extra Bold":
+        return 800;
+      case "Black":
+        return 800;
+      default:
+        return 400;
+    }
   }
 }
