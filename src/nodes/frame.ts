@@ -2,6 +2,7 @@ import BaseNode from "./base";
 import GroupNode from "./group";
 import TextNode from "./text";
 import RectangleNode from "./rectangle";
+import EmptyNode from "./empty";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
 import { FrameStyle, Variable, Condition, Loop, Event } from "../types";
@@ -94,9 +95,8 @@ export default class FrameNode extends BaseNode {
             events
           );
           break;
-        // Code to avoid switch statement error. There is no pattern that matches this case.
         default:
-          childNode = new RectangleNode(
+          childNode = new EmptyNode(
             childParser,
             idGenerator,
             node,
