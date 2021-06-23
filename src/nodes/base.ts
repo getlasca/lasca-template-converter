@@ -109,6 +109,10 @@ export default abstract class BaseNode {
         css += ` width: ${input.width}px;`;
         break;
       }
+      case "SCALE": {
+        css += ` width: ${input.width}px;`;
+        break;
+      }
     }
     return css;
   }
