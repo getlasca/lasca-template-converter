@@ -85,7 +85,8 @@ export default abstract class BaseNode {
     css += ` height: ${input.height}px;`;
 
     switch (input.constraintsHorizontal) {
-      case "MIN": {
+      case "MIN":
+      case "SCALE": {
         css += ` left: ${input.x}px;`;
         css += ` width: ${input.width}px;`;
         break;
@@ -106,10 +107,6 @@ export default abstract class BaseNode {
             ? " - " + input.xFromCenter
             : " + " + -1 * input.xFromCenter
         }px);`;
-        css += ` width: ${input.width}px;`;
-        break;
-      }
-      case "SCALE": {
         css += ` width: ${input.width}px;`;
         break;
       }
