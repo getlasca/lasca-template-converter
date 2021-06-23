@@ -33,6 +33,9 @@ export default class GroupNode extends BaseNode {
       let childNode: BaseNode;
       switch (node.type) {
         case "FRAME":
+        case "COMPONENT":
+        case "COMPONENT_SET":
+        case "INSTANCE":
           childNode = new FrameNode(
             parser,
             idGenerator,

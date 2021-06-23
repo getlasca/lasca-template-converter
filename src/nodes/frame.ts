@@ -39,7 +39,10 @@ export default class FrameNode extends BaseNode {
     figma.children.forEach((node: any) => {
       let childNode: BaseNode;
       switch (node.type) {
-        case "FRAME": {
+        case "FRAME":
+        case "COMPONENT":
+        case "COMPONENT_SET":
+        case "INSTANCE":
           const relativeParser = new Parser(node.width);
           childNode = new FrameNode(
             parser,
@@ -54,7 +57,6 @@ export default class FrameNode extends BaseNode {
             events
           );
           break;
-        }
         case "GROUP":
           childNode = new GroupNode(
             childParser,
