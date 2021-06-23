@@ -42,7 +42,7 @@ export default class FrameNode extends BaseNode {
         case "FRAME":
         case "COMPONENT":
         case "COMPONENT_SET":
-        case "INSTANCE":
+        case "INSTANCE": {
           const relativeParser = new Parser(node.width);
           childNode = new FrameNode(
             parser,
@@ -57,6 +57,7 @@ export default class FrameNode extends BaseNode {
             events
           );
           break;
+        }
         case "GROUP":
           childNode = new GroupNode(
             childParser,
