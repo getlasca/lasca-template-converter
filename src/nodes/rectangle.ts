@@ -5,12 +5,14 @@ import { RectangleStyle, Variable, Condition, Loop, Event } from "../types";
 
 export default class RectangleNode extends BaseNode {
   style: RectangleStyle;
+  type: "RECTANGLE" | "ELLIPSE";
 
   constructor(
     parser: Parser,
     idGenerator: IdGenerator,
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    type: "RECTANGLE" | "ELLIPSE",
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -26,6 +28,7 @@ export default class RectangleNode extends BaseNode {
       events
     );
     this.style = parser.rectangleStyle(figma);
+    this.type = type;
   }
 
   buildTemplate(): string {
@@ -59,7 +62,9 @@ export default class RectangleNode extends BaseNode {
       }
       css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a});`;
     }
-    if (
+    if (this.type === "ELLIPSE") {
+      css += ` border-radius: 50%;`;
+    } else if (
       this.style.radius.topLeft !== 0 ||
       this.style.radius.topRight !== 0 ||
       this.style.radius.bottomRight !== 0 ||

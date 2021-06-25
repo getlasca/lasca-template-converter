@@ -63,11 +63,13 @@ export default class GroupNode extends BaseNode {
           );
           break;
         case "RECTANGLE":
+        case "ELLIPSE":
           childNode = new RectangleNode(
             parser,
             idGenerator,
             node,
             "NONE",
+            node.type,
             variables,
             conditions,
             loops,
