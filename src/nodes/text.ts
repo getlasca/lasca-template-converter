@@ -46,6 +46,9 @@ export default class TextNode extends BaseNode {
     css += ` text-align: ${this.convertTextAlignHorizontal(
       this.style.textAlignHorizontal
     )};`;
+    if (this.style.textDecoration === "UNDERLINE") {
+      css += ` text-decoration: underline;`;
+    }
     if (this.style.letterSpacing !== 0) {
       css += ` letter-spacing: ${this.style.letterSpacing}px;`;
     }

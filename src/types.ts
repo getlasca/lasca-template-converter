@@ -71,6 +71,7 @@ export interface TextStyle extends BaseStyle {
   fontFamily: string;
   letterSpacing: number;
   textAlignHorizontal: "LEFT" | "CENTER" | "RIGHT" | "JUSTIFIED";
+  textDecoration: "NONE" | "UNDERLINE" | "STRIKETHROUGH";
 }
 
 export interface RectangleStyle extends BaseStyle {
