@@ -236,7 +236,7 @@
   "layoutGrids": [],
   "paddingLeft": 40,
   "strokeAlign": "INSIDE",
-  "clipsContent": true,
+  "clipsContent": false,
   "cornerRadius": 0,
   "paddingRight": 40,
   "strokeWeight": 1,

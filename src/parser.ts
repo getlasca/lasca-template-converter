@@ -2,9 +2,13 @@ import { BaseStyle, FrameStyle, TextStyle, RectangleStyle } from "./types";
 
 export default class Parser {
   baseWidth: number;
+  fixedPositionNodeIds: string[] = [];
 
-  constructor(baseWidth: number) {
-    this.baseWidth = baseWidth;
+  constructor(node: any, isRoot = false) {
+    this.baseWidth = node.width;
+    if (isRoot) {
+      this.fixedPositionNodeIds = this.getFixedPositionIds(node);
+    }
   }
 
   frameStyle(obj: any): FrameStyle {
@@ -101,6 +105,7 @@ export default class Parser {
       constraintsHorizontal: obj.constraints.horizontal,
       constraintsVertical: obj.constraints.vertical,
       layoutAlign: obj.layoutAlign,
+      isFixedPosition: this.fixedPositionNodeIds.includes(obj.id),
       border:
         strokes.length !== 0
           ? {
@@ -131,5 +136,16 @@ export default class Parser {
             }
           : undefined,
     };
+  }
+
+  private getFixedPositionIds(node: any): string[] {
+    if (!node.numberOfFixedChildren || node.numberOfFixedChildren === 0) {
+      return [];
+    }
+    return node.children
+      .slice(-1 * node.numberOfFixedChildren)
+      .map((child: any) => {
+        return child.id;
+      });
   }
 }
