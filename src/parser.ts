@@ -32,7 +32,7 @@ export default class Parser {
               r: fills[0].color.r * 255,
               g: fills[0].color.g * 255,
               b: fills[0].color.b * 255,
-              a: fills[0].opacity || 1,
+              a: fills[0].opacity * obj.opacity,
             }
           : undefined,
       radius: {
@@ -56,7 +56,7 @@ export default class Parser {
               r: fills[0].color.r * 255,
               g: fills[0].color.g * 255,
               b: fills[0].color.b * 255,
-              a: fills[0].opacity || 1,
+              a: fills[0].opacity * obj.opacity,
             }
           : undefined,
       radius: {
@@ -74,7 +74,7 @@ export default class Parser {
         r: obj.fills[0].color.r * 255,
         g: obj.fills[0].color.g * 255,
         b: obj.fills[0].color.b * 255,
-        a: obj.fills[0].opacity || 1,
+        a: obj.fills[0].opacity * obj.opacity,
       },
       fontSize: obj.fontSize,
       fontWeight: obj.fontName.style,
