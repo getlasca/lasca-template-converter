@@ -44,7 +44,7 @@ export default class FrameNode extends BaseNode {
         case "COMPONENT":
         case "COMPONENT_SET":
         case "INSTANCE": {
-          const relativeParser = new Parser(node.width);
+          const relativeParser = new Parser(node);
           childNode = new FrameNode(
             parser,
             idGenerator,

@@ -77,10 +77,13 @@ export default abstract class BaseNode {
           ? "100%"
           : input.width + "px"
       };`;
+      if (input.isFixedPosition) {
+        css += " position: fixed;";
+      }
       return css;
     }
 
-    css += " position: absolute;";
+    css += ` position: ${input.isFixedPosition ? "fixed" : "absolute"};`;
     css += ` top: ${input.y}px;`;
     css += ` height: ${input.height}px;`;
 
