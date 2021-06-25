@@ -153,7 +153,7 @@ export default class Parser {
     return node.children
       .slice(-1 * node.numberOfFixedChildren)
       .map((child: any) => {
-        return { id: child.id, fillContainer: node.width <= child.width };
+        return { nodeId: child.id, fillContainer: node.width <= child.width };
       });
   }
 }
