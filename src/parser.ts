@@ -2,12 +2,12 @@ import { BaseStyle, FrameStyle, TextStyle, RectangleStyle } from "./types";
 
 export default class Parser {
   baseWidth: number;
-  fixedPositionNodeIds: string[] = [];
+  fixedPositionNodes: { nodeId: string; fillContainer: boolean }[] = [];
 
   constructor(node: any, isRoot = false) {
     this.baseWidth = node.width;
     if (isRoot) {
-      this.fixedPositionNodeIds = this.getFixedPositionIds(node);
+      this.fixedPositionNodes = this.getFixedPositionNodes(node);
     }
   }
 
@@ -86,6 +86,9 @@ export default class Parser {
   }
 
   private baseStyle(obj: any): BaseStyle {
+    const fixedPositionNode = this.fixedPositionNodes.find(
+      (n) => n.nodeId === obj.id
+    );
     const strokes = obj.strokes.filter((stroke: any) => {
       return stroke.visible !== false;
     });
@@ -102,10 +105,13 @@ export default class Parser {
       y: obj.y,
       width: obj.width,
       height: obj.height,
-      constraintsHorizontal: obj.constraints.horizontal,
+      constraintsHorizontal:
+        fixedPositionNode && fixedPositionNode.fillContainer
+          ? "STRETCH"
+          : obj.constraints.horizontal,
       constraintsVertical: obj.constraints.vertical,
       layoutAlign: obj.layoutAlign,
-      isFixedPosition: this.fixedPositionNodeIds.includes(obj.id),
+      isFixedPosition: !!fixedPositionNode,
       border:
         strokes.length !== 0
           ? {
@@ -138,14 +144,16 @@ export default class Parser {
     };
   }
 
-  private getFixedPositionIds(node: any): string[] {
+  private getFixedPositionNodes(
+    node: any
+  ): { nodeId: string; fillContainer: boolean }[] {
     if (!node.numberOfFixedChildren || node.numberOfFixedChildren === 0) {
       return [];
     }
     return node.children
       .slice(-1 * node.numberOfFixedChildren)
       .map((child: any) => {
-        return child.id;
+        return { id: child.id, fillContainer: node.width <= child.width };
       });
   }
 }
