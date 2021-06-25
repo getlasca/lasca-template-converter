@@ -121,7 +121,7 @@ export default class Parser {
       layoutAlign: obj.layoutAlign,
       isFixedPosition: !!fixedPositionNode,
       border:
-        strokes.length !== 0
+        obj.type !== "LINE" && strokes.length !== 0
           ? {
               color: {
                 r: strokes[0].color.r * 255,
