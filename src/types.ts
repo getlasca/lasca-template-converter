@@ -62,6 +62,7 @@ export interface FrameStyle extends BaseStyle {
   itemSpacing: number;
   background?: Color;
   radius: Radius;
+  clipsContent: boolean;
 }
 
 export interface TextStyle extends BaseStyle {

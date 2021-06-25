@@ -37,6 +37,7 @@ export default class Parser {
         bottomRight: obj.bottomRightRadius,
         bottomLeft: obj.bottomLeftRadius,
       },
+      clipsContent: obj.clipsContent,
     });
   }
 
