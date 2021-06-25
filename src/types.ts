@@ -66,10 +66,11 @@ export interface FrameStyle extends BaseStyle {
 
 export interface TextStyle extends BaseStyle {
   color: Color;
-  fontSize: string;
+  fontSize: number;
   fontWeight: string;
   fontFamily: string;
   letterSpacing: number;
+  textAlignHorizontal: "LEFT" | "CENTER" | "RIGHT" | "JUSTIFIED";
 }
 
 export interface RectangleStyle extends BaseStyle {

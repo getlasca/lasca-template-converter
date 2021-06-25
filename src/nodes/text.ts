@@ -43,6 +43,9 @@ export default class TextNode extends BaseNode {
     css += ` font-size: ${this.style.fontSize}px;`;
     css += ` font-weight: ${this.convertFontWeight(this.style.fontWeight)};`;
     css += ` font-family: '${this.style.fontFamily}', sans-serif;`;
+    css += ` text-align: ${this.convertTextAlignHorizontal(
+      this.style.textAlignHorizontal
+    )};`;
     if (this.style.letterSpacing !== 0) {
       css += ` letter-spacing: ${this.style.letterSpacing}px;`;
     }
@@ -82,6 +85,21 @@ export default class TextNode extends BaseNode {
         return 800;
       default:
         return 400;
+    }
+  }
+
+  private convertTextAlignHorizontal(align: string): string {
+    switch (align) {
+      case "LEFT":
+        return "left";
+      case "CENTER":
+        return "center";
+      case "RIGHT":
+        return "right";
+      case "JUSTIFIED":
+        return "justify";
+      default:
+        return "left";
     }
   }
 }
