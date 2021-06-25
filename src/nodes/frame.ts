@@ -73,6 +73,7 @@ export default class FrameNode extends BaseNode {
           break;
         case "RECTANGLE":
         case "ELLIPSE":
+        case "LINE":
           childNode = new RectangleNode(
             childParser,
             idGenerator,

@@ -46,9 +46,17 @@ export default class Parser {
   }
 
   rectangleStyle(obj: any): RectangleStyle {
-    const fills = obj.fills.filter((fill: any) => {
-      return fill.visible !== false;
-    });
+    let fills = [];
+    if (obj.type === "LINE") {
+      fills = obj.strokes.filter((stroke: any) => {
+        return stroke.visible !== false;
+      });
+    } else {
+      fills = obj.fills.filter((fill: any) => {
+        return fill.visible !== false;
+      });
+    }
+
     return Object.assign(this.baseStyle(obj), {
       background:
         fills.length !== 0
@@ -102,9 +110,9 @@ export default class Parser {
       x: obj.x,
       xFromCenter: this.baseWidth / 2 - obj.x,
       xFromRight: this.baseWidth - (obj.x + obj.width),
-      y: obj.y,
+      y: obj.type === "LINE" ? obj.y - obj.strokeWeight : obj.y,
       width: obj.width,
-      height: obj.height,
+      height: obj.type === "LINE" ? obj.strokeWeight : obj.height,
       constraintsHorizontal:
         fixedPositionNode && fixedPositionNode.fillContainer
           ? "STRETCH"
