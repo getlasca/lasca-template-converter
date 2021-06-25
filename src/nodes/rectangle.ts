@@ -5,14 +5,14 @@ import { RectangleStyle, Variable, Condition, Loop, Event } from "../types";
 
 export default class RectangleNode extends BaseNode {
   style: RectangleStyle;
-  type: "RECTANGLE" | "ELLIPSE";
+  type: "RECTANGLE" | "ELLIPSE" | "LINE";
 
   constructor(
     parser: Parser,
     idGenerator: IdGenerator,
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
-    type: "RECTANGLE" | "ELLIPSE",
+    type: "RECTANGLE" | "ELLIPSE" | "LINE",
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
