@@ -167,6 +167,9 @@ export default class FrameNode extends BaseNode {
     ) {
       css += ` border-radius: ${this.style.radius.topLeft}px ${this.style.radius.topRight}px ${this.style.radius.bottomRight}px ${this.style.radius.bottomLeft}px;`;
     }
+    if (this.style.clipsContent) {
+      css += " overflow: hidden;";
+    }
 
     // AutoLayout
     if (this.style.layoutMode !== "NONE") {
