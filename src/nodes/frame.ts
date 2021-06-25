@@ -174,6 +174,7 @@ export default class FrameNode extends BaseNode {
       css += ` padding-right: ${this.style.paddingRight}px;`;
       css += ` padding-top: ${this.style.paddingTop}px;`;
       css += ` padding-bottom: ${this.style.paddingBottom}px;`;
+      css += " box-sizing: border-box;";
       css += " display: flex;";
       css += ` flex-direction: ${
         this.style.layoutMode === "HORIZONTAL" ? "row" : "column"
