@@ -1,6 +1,6 @@
 {
   "name": "@lasca/template-converter",
-  "version": "0.0.51",
+  "version": "0.0.52",
   "author": "Lasca Inc.",
   "license": "MIT",
   "main": "dist/index.js",

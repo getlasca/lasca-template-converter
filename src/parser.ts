@@ -68,10 +68,10 @@ export default class Parser {
             }
           : undefined,
       radius: {
-        topLeft: obj.topLeftRadius,
-        topRight: obj.topRightRadius,
-        bottomRight: obj.bottomRightRadius,
-        bottomLeft: obj.bottomLeftRadius,
+        topLeft: obj.topLeftRadius || 0,
+        topRight: obj.topRightRadius || 0,
+        bottomRight: obj.bottomRightRadius || 0,
+        bottomLeft: obj.bottomLeftRadius || 0,
       },
     });
   }
