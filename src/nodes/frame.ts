@@ -72,11 +72,13 @@ export default class FrameNode extends BaseNode {
           );
           break;
         case "RECTANGLE":
+        case "ELLIPSE":
           childNode = new RectangleNode(
             childParser,
             idGenerator,
             node,
             figma.layoutMode,
+            node.type,
             variables,
             conditions,
             loops,
