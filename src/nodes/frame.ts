@@ -189,7 +189,7 @@ export default class FrameNode extends BaseNode {
       switch (this.style.primaryAxisAlignItems) {
         case "MIN": {
           css += " justify-content: flex-start;";
-          childCss += ` .class-${this.className} > *:not(:last-of-type) { `;
+          childCss += ` .class-${this.className} > *:not(:last-child) { `;
           childCss += `margin-${
             this.style.layoutMode === "HORIZONTAL" ? "right" : "bottom"
           }: ${this.style.itemSpacing}px;`;
