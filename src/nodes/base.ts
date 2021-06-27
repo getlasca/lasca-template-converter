@@ -85,7 +85,7 @@ export default abstract class BaseNode {
       css += ` flex: ${
         input.layoutGrow === 1
           ? "1"
-          : `0 1 ${
+          : `0 0 ${
               this.layoutModeAsChild === "HORIZONTAL"
                 ? input.width
                 : input.height
