@@ -91,9 +91,7 @@ export default abstract class BaseNode {
                 : input.height
             }px`
       };`;
-      if (input.isFixedPosition) {
-        css += " position: fixed;";
-      }
+      css += ` position: ${input.isFixedPosition ? "fixed" : "relative"};`;
       return css;
     }
 
