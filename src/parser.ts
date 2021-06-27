@@ -119,6 +119,7 @@ export default class Parser {
           : obj.constraints.horizontal,
       constraintsVertical: obj.constraints.vertical,
       layoutAlign: obj.layoutAlign,
+      layoutGrow: obj.layoutGrow,
       isFixedPosition: !!fixedPositionNode,
       border:
         obj.type !== "LINE" && strokes.length !== 0

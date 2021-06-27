@@ -45,6 +45,7 @@ export interface BaseStyle {
   constraintsHorizontal: "MIN" | "CENTER" | "MAX" | "STRETCH" | "SCALE";
   constraintsVertical: "MIN" | "CENTER" | "MAX" | "STRETCH" | "SCALE";
   layoutAlign: "STRETCH" | "INHERIT";
+  layoutGrow: number;
   isFixedPosition: boolean;
   border?: Border;
   shadow?: Shadow;
