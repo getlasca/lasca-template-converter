@@ -71,11 +71,25 @@ export default abstract class BaseNode {
     }
 
     if (this.layoutModeAsChild !== "NONE") {
-      css += ` height: ${input.height}px;`;
       css += ` width: ${
         this.layoutModeAsChild === "VERTICAL" && input.layoutAlign === "STRETCH"
           ? "100%"
           : input.width + "px"
+      };`;
+      css += ` height: ${
+        this.layoutModeAsChild === "HORIZONTAL" &&
+        input.layoutAlign === "STRETCH"
+          ? "100%"
+          : input.height + "px"
+      };`;
+      css += ` flex: ${
+        input.layoutGrow === 1
+          ? "1"
+          : `0 1 ${
+              this.layoutModeAsChild === "HORIZONTAL"
+                ? input.width
+                : input.height
+            }px`
       };`;
       if (input.isFixedPosition) {
         css += " position: fixed;";
