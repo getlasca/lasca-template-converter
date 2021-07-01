@@ -58,6 +58,9 @@ export default class TextNode extends BaseNode {
     if (this.style.letterSpacing !== 0) {
       css += ` letter-spacing: ${this.style.letterSpacing}px;`;
     }
+    if (this.style.lineHeight) {
+      css += ` line-height: ${this.style.lineHeight};`;
+    }
     if (this.style.shadow && !this.style.shadow.inner) {
       css += ` text-shadow:`;
       css += ` ${this.style.shadow.x}px ${this.style.shadow.y}px`;

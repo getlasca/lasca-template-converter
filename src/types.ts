@@ -76,6 +76,7 @@ export interface TextStyle extends BaseStyle {
   textAlignHorizontal: "LEFT" | "CENTER" | "RIGHT" | "JUSTIFIED";
   textAlignVertical: "TOP" | "CENTER" | "BOTTOM";
   textDecoration: "NONE" | "UNDERLINE" | "STRIKETHROUGH";
+  lineHeight?: string;
 }
 
 export interface RectangleStyle extends BaseStyle {
