@@ -74,6 +74,7 @@ export interface TextStyle extends BaseStyle {
   fontFamily: string;
   letterSpacing: number;
   textAlignHorizontal: "LEFT" | "CENTER" | "RIGHT" | "JUSTIFIED";
+  textAlignVertical: "TOP" | "CENTER" | "BOTTOM";
   textDecoration: "NONE" | "UNDERLINE" | "STRIKETHROUGH";
 }
 
