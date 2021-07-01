@@ -91,6 +91,12 @@ export default class Parser {
       textAlignHorizontal: obj.textAlignHorizontal,
       textAlignVertical: obj.textAlignVertical,
       textDecoration: obj.textDecoration,
+      lineHeight:
+        obj.lineHeight.unit === "AUTO"
+          ? undefined
+          : obj.lineHeight.unit === "PIXELS"
+          ? `${obj.lineHeight.value}px`
+          : `${obj.lineHeight.value}%`,
     });
   }
 
