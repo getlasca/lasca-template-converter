@@ -89,6 +89,7 @@ export default class Parser {
       fontFamily: obj.fontName.family,
       letterSpacing: obj.letterSpacing.value,
       textAlignHorizontal: obj.textAlignHorizontal,
+      textAlignVertical: obj.textAlignVertical,
       textDecoration: obj.textDecoration,
     });
   }

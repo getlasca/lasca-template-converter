@@ -46,6 +46,12 @@ export default class TextNode extends BaseNode {
     css += ` text-align: ${this.convertTextAlignHorizontal(
       this.style.textAlignHorizontal
     )};`;
+    if (this.style.textAlignVertical !== "TOP") {
+      css += ` display: flex;`;
+      css += ` align-items: ${
+        this.style.textAlignVertical === "BOTTOM" ? "flex-end" : "center"
+      };`;
+    }
     if (this.style.textDecoration === "UNDERLINE") {
       css += ` text-decoration: underline;`;
     }
