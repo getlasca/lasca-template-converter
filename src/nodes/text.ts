@@ -1,7 +1,14 @@
 import BaseNode from "./base";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
-import { TextStyle, Variable, Condition, Loop, Event } from "../types";
+import {
+  TextStyle,
+  NodeImage,
+  Variable,
+  Condition,
+  Loop,
+  Event,
+} from "../types";
 
 export default class TextNode extends BaseNode {
   style: TextStyle;
@@ -12,6 +19,7 @@ export default class TextNode extends BaseNode {
     idGenerator: IdGenerator,
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -21,6 +29,7 @@ export default class TextNode extends BaseNode {
       figma.id,
       idGenerator,
       layoutModeAsChild,
+      nodeImages,
       variables,
       conditions,
       loops,

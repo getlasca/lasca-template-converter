@@ -1,7 +1,14 @@
 import BaseNode from "./base";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
-import { RectangleStyle, Variable, Condition, Loop, Event } from "../types";
+import {
+  RectangleStyle,
+  NodeImage,
+  Variable,
+  Condition,
+  Loop,
+  Event,
+} from "../types";
 
 export default class RectangleNode extends BaseNode {
   style: RectangleStyle;
@@ -13,6 +20,7 @@ export default class RectangleNode extends BaseNode {
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
     type: "RECTANGLE" | "ELLIPSE" | "LINE",
+    nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -22,6 +30,7 @@ export default class RectangleNode extends BaseNode {
       figma.id,
       idGenerator,
       layoutModeAsChild,
+      nodeImages,
       variables,
       conditions,
       loops,

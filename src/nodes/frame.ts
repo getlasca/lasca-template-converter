@@ -5,7 +5,14 @@ import RectangleNode from "./rectangle";
 import EmptyNode from "./empty";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
-import { FrameStyle, Variable, Condition, Loop, Event } from "../types";
+import {
+  FrameStyle,
+  NodeImage,
+  Variable,
+  Condition,
+  Loop,
+  Event,
+} from "../types";
 
 export default class FrameNode extends BaseNode {
   isRoot: boolean;
@@ -19,6 +26,7 @@ export default class FrameNode extends BaseNode {
     isRoot: boolean,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
     relativeParser?: Parser,
+    nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -28,6 +36,7 @@ export default class FrameNode extends BaseNode {
       figma.id,
       idGenerator,
       layoutModeAsChild,
+      nodeImages,
       variables,
       conditions,
       loops,
@@ -52,6 +61,7 @@ export default class FrameNode extends BaseNode {
             false,
             figma.layoutMode,
             relativeParser,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -65,6 +75,7 @@ export default class FrameNode extends BaseNode {
             idGenerator,
             node,
             figma.layoutMode,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -80,6 +91,7 @@ export default class FrameNode extends BaseNode {
             node,
             figma.layoutMode,
             node.type,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -92,6 +104,7 @@ export default class FrameNode extends BaseNode {
             idGenerator,
             node,
             figma.layoutMode,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -104,6 +117,7 @@ export default class FrameNode extends BaseNode {
             idGenerator,
             node,
             figma.layoutMode,
+            nodeImages,
             variables,
             conditions,
             loops,

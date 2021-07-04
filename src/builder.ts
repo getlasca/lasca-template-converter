@@ -1,4 +1,12 @@
-import { Breakpoint, Variable, Condition, Loop, Event, Output } from "./types";
+import {
+  Breakpoint,
+  NodeImage,
+  Variable,
+  Condition,
+  Loop,
+  Event,
+  Output,
+} from "./types";
 import FrameNode from "./nodes/frame";
 import Parser from "./parser";
 import IdGenerator from "./helper/idGenerator";
@@ -18,6 +26,7 @@ export default class Builder {
     breakpoints.forEach((breakPoint: Breakpoint) => {
       const rootNode = this.parse(
         breakPoint.figma,
+        breakPoint.nodeImages,
         breakPoint.variables,
         breakPoint.conditions,
         breakPoint.loops,
@@ -41,6 +50,7 @@ export default class Builder {
 
   private parse(
     figma: any,
+    nodeImages: NodeImage[],
     variables: Variable[],
     conditions: Condition[],
     loops: Loop[],
@@ -55,6 +65,7 @@ export default class Builder {
       true,
       "NONE",
       undefined,
+      nodeImages,
       variables,
       conditions,
       loops,

@@ -2,10 +2,16 @@ export interface Breakpoint {
   min?: number;
   max?: number;
   figma: any;
+  nodeImages: NodeImage[];
   variables: Variable[];
   conditions: Condition[];
   loops: Loop[];
   events: Event[];
+}
+
+export interface NodeImage {
+  nodeId: string;
+  imageId: string;
 }
 
 export interface Variable {

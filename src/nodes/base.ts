@@ -1,10 +1,18 @@
 import IdGenerator from "../helper/idGenerator";
-import { BaseStyle, Variable, Condition, Loop, Event } from "../types";
+import {
+  BaseStyle,
+  NodeImage,
+  Variable,
+  Condition,
+  Loop,
+  Event,
+} from "../types";
 
 export default abstract class BaseNode {
   nodeId: string;
   className: string;
   layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL";
+  nodeImages: NodeImage[];
   variables: Variable[];
   conditions: Condition[];
   loops: Loop[];
@@ -14,6 +22,7 @@ export default abstract class BaseNode {
     nodeId: string,
     idGenerator: IdGenerator,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL" = "NONE",
+    nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -22,6 +31,7 @@ export default abstract class BaseNode {
     this.nodeId = nodeId;
     this.className = idGenerator.getId() + "";
     this.layoutModeAsChild = layoutModeAsChild;
+    this.nodeImages = nodeImages;
     this.variables = variables;
     this.conditions = conditions;
     this.loops = loops;

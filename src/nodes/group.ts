@@ -5,7 +5,7 @@ import RectangleNode from "./rectangle";
 import EmptyNode from "./empty";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
-import { Variable, Condition, Loop, Event } from "../types";
+import { Variable, NodeImage, Condition, Loop, Event } from "../types";
 
 export default class GroupNode extends BaseNode {
   children: BaseNode[] = [];
@@ -15,6 +15,7 @@ export default class GroupNode extends BaseNode {
     idGenerator: IdGenerator,
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -24,6 +25,7 @@ export default class GroupNode extends BaseNode {
       figma.id,
       idGenerator,
       layoutModeAsChild,
+      nodeImages,
       variables,
       conditions,
       loops,
@@ -44,6 +46,7 @@ export default class GroupNode extends BaseNode {
             false,
             "NONE",
             undefined,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -56,6 +59,7 @@ export default class GroupNode extends BaseNode {
             idGenerator,
             node,
             "NONE",
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -71,6 +75,7 @@ export default class GroupNode extends BaseNode {
             node,
             "NONE",
             node.type,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -83,6 +88,7 @@ export default class GroupNode extends BaseNode {
             idGenerator,
             node,
             "NONE",
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -95,6 +101,7 @@ export default class GroupNode extends BaseNode {
             idGenerator,
             node,
             "NONE",
+            nodeImages,
             variables,
             conditions,
             loops,
