@@ -48,8 +48,14 @@ export default class RectangleNode extends BaseNode {
 
   buildCss(): string {
     let css = "";
-    if (this.style.background) {
-      css += `background-color: rgba(${this.style.background.r},${this.style.background.g},${this.style.background.b},${this.style.background.a});`;
+    if (this.style.backgroundColor) {
+      css += `background-color: rgba(${this.style.backgroundColor.r},${this.style.backgroundColor.g},${this.style.backgroundColor.b},${this.style.backgroundColor.a});`;
+    } else if (this.style.backgroundImage) {
+      this.nodeImages.forEach((image) => {
+        if (this.nodeId === image.nodeId) {
+          css += `background-image: url(https://assets.lasca.app/node_images/node-${image.imageId}.png);`;
+        }
+      });
     }
     if (this.style.border) {
       css += ` border: ${this.style.border.width}px solid rgba(${this.style.border.color.r},${this.style.border.color.g},${this.style.border.color.b},${this.style.border.color.a});`;
