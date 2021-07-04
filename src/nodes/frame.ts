@@ -5,7 +5,14 @@ import RectangleNode from "./rectangle";
 import EmptyNode from "./empty";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
-import { FrameStyle, Variable, Condition, Loop, Event } from "../types";
+import {
+  FrameStyle,
+  NodeImage,
+  Variable,
+  Condition,
+  Loop,
+  Event,
+} from "../types";
 
 export default class FrameNode extends BaseNode {
   isRoot: boolean;
@@ -19,6 +26,7 @@ export default class FrameNode extends BaseNode {
     isRoot: boolean,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
     relativeParser?: Parser,
+    nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -28,6 +36,7 @@ export default class FrameNode extends BaseNode {
       figma.id,
       idGenerator,
       layoutModeAsChild,
+      nodeImages,
       variables,
       conditions,
       loops,
@@ -52,6 +61,7 @@ export default class FrameNode extends BaseNode {
             false,
             figma.layoutMode,
             relativeParser,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -65,6 +75,7 @@ export default class FrameNode extends BaseNode {
             idGenerator,
             node,
             figma.layoutMode,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -80,6 +91,7 @@ export default class FrameNode extends BaseNode {
             node,
             figma.layoutMode,
             node.type,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -92,6 +104,7 @@ export default class FrameNode extends BaseNode {
             idGenerator,
             node,
             figma.layoutMode,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -104,6 +117,7 @@ export default class FrameNode extends BaseNode {
             idGenerator,
             node,
             figma.layoutMode,
+            nodeImages,
             variables,
             conditions,
             loops,
@@ -139,8 +153,14 @@ export default class FrameNode extends BaseNode {
     let css = `.class-${this.className} { `;
     let childCss = "";
 
-    if (this.style.background) {
-      css += `background-color: rgba(${this.style.background.r},${this.style.background.g},${this.style.background.b},${this.style.background.a});`;
+    if (this.style.backgroundColor) {
+      css += `background-color: rgba(${this.style.backgroundColor.r},${this.style.backgroundColor.g},${this.style.backgroundColor.b},${this.style.backgroundColor.a});`;
+    } else if (this.style.backgroundImage) {
+      this.nodeImages.forEach((image) => {
+        if (this.nodeId === image.nodeId) {
+          css += `background-image: url(https://assets.lasca.app/node_images/node-${image.imageId}.png);`;
+        }
+      });
     }
     if (this.style.border) {
       css += ` border: ${this.style.border.width}px solid rgba(${this.style.border.color.r},${this.style.border.color.g},${this.style.border.color.b},${this.style.border.color.a});`;

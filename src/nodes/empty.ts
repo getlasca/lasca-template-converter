@@ -1,7 +1,7 @@
 import BaseNode from "./base";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
-import { Variable, Condition, Loop, Event } from "../types";
+import { NodeImage, Variable, Condition, Loop, Event } from "../types";
 
 export default class EmptyNode extends BaseNode {
   constructor(
@@ -9,6 +9,7 @@ export default class EmptyNode extends BaseNode {
     idGenerator: IdGenerator,
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
@@ -18,6 +19,7 @@ export default class EmptyNode extends BaseNode {
       figma.id,
       idGenerator,
       layoutModeAsChild,
+      nodeImages,
       variables,
       conditions,
       loops,

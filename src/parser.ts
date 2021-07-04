@@ -26,13 +26,19 @@ export default class Parser {
       paddingTop: obj.paddingTop,
       paddingBottom: obj.paddingBottom,
       itemSpacing: obj.itemSpacing,
-      background:
-        fills.length !== 0
+      backgroundColor:
+        fills.length !== 0 && fills[0].type === "SOLID"
           ? {
               r: fills[0].color.r * 255,
               g: fills[0].color.g * 255,
               b: fills[0].color.b * 255,
               a: fills[0].opacity * obj.opacity,
+            }
+          : undefined,
+      backgroundImage:
+        fills.length !== 0 && fills[0].type === "IMAGE"
+          ? {
+              scaleMode: fills[0].scaleMode,
             }
           : undefined,
       radius: {
@@ -58,13 +64,19 @@ export default class Parser {
     }
 
     return Object.assign(this.baseStyle(obj), {
-      background:
-        fills.length !== 0
+      backgroundColor:
+        fills.length !== 0 && fills[0].type === "SOLID"
           ? {
               r: fills[0].color.r * 255,
               g: fills[0].color.g * 255,
               b: fills[0].color.b * 255,
               a: fills[0].opacity * obj.opacity,
+            }
+          : undefined,
+      backgroundImage:
+        fills.length !== 0 && fills[0].type === "IMAGE"
+          ? {
+              scaleMode: fills[0].scaleMode,
             }
           : undefined,
       radius: {

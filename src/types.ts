@@ -2,10 +2,16 @@ export interface Breakpoint {
   min?: number;
   max?: number;
   figma: any;
+  nodeImages: NodeImage[];
   variables: Variable[];
   conditions: Condition[];
   loops: Loop[];
   events: Event[];
+}
+
+export interface NodeImage {
+  nodeId: string;
+  imageId: string;
 }
 
 export interface Variable {
@@ -62,7 +68,8 @@ export interface FrameStyle extends BaseStyle {
   paddingTop: number;
   paddingBottom: number;
   itemSpacing: number;
-  background?: Color;
+  backgroundColor?: Color;
+  backgroundImage?: BackgroundImage;
   radius: Radius;
   clipsContent: boolean;
 }
@@ -80,7 +87,8 @@ export interface TextStyle extends BaseStyle {
 }
 
 export interface RectangleStyle extends BaseStyle {
-  background?: Color;
+  backgroundColor?: Color;
+  backgroundImage?: BackgroundImage;
   radius: Radius;
 }
 
@@ -89,6 +97,10 @@ interface Color {
   g: number;
   b: number;
   a: number;
+}
+
+interface BackgroundImage {
+  scaleMode: "FILL" | "FIT" | "CROP" | "TILE";
 }
 
 interface Border {
