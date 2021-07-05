@@ -53,7 +53,18 @@ export default class RectangleNode extends BaseNode {
     } else if (this.style.backgroundImage) {
       this.nodeImages.forEach((image) => {
         if (this.nodeId === image.nodeId) {
-          css += `background-image: url(https://assets.lasca.app/node_images/node-${image.imageId}.png);`;
+          css += `background: no-repeat center center url(https://assets.lasca.app/node_images/node-${image.imageId}.png);`;
+
+          switch (this.style.backgroundImage?.scaleMode) {
+            case "FILL": {
+              css += `background-size: cover;`;
+              break;
+            }
+            case "FIT": {
+              css += `background-size: contain;`;
+              break;
+            }
+          }
         }
       });
     }
