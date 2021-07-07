@@ -14,6 +14,7 @@ import {
 
 export default class TextNode extends BaseNode {
   style: TextStyle;
+  mixedText?: MixedText;
   text: string;
 
   constructor(
@@ -40,6 +41,9 @@ export default class TextNode extends BaseNode {
       events
     );
     this.text = figma.characters;
+    this.mixedText = mixedTexts.find(
+      (mixedText) => mixedText.nodeId === this.nodeId
+    );
     this.style = parser.textStyle(figma);
   }
 
@@ -48,12 +52,8 @@ export default class TextNode extends BaseNode {
       this.className
     }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}`;
 
-    const mixedText = this.mixedTexts.find(
-      (mixedText) => mixedText.nodeId === this.nodeId
-    );
-
-    if (mixedText) {
-      const charStyles = mixedText.style.characterStyleMixed;
+    if (this.mixedText) {
+      const charStyles = this.mixedText.style.characterStyleMixed;
       let innerTag = "";
       let sliceIndex = 0;
 
@@ -103,12 +103,12 @@ export default class TextNode extends BaseNode {
       }
       css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a});`;
     }
-    css += this.buildRangeCss(this.style);
+    css += this.buildRangeCssBase(this.style);
     css += this.buildBaseLayoutCss(this.style);
     return `.class-${this.className} { ${css} }`;
   }
 
-  private buildRangeCss(style: TextRangeStyle): string {
+  private buildRangeCssBase(style: TextRangeStyle): string {
     let css = "";
     if (style.fontSize) {
       css += ` font-size: ${style.fontSize}px;`;
