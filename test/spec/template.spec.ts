@@ -5,7 +5,15 @@ import { loadFixture } from "../helper";
 test("simple", () => {
   const figma = loadFixture("simple");
   const output = convert([
-    { figma: figma, variables: [], conditions: [], loops: [], events: [] },
+    {
+      figma: figma,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [],
+      events: [],
+    },
   ]);
   expect(output.template).toBe(
     `<div>` +
@@ -25,6 +33,8 @@ test("breakpoints", () => {
     {
       figma: figma,
       max: 349,
+      mixedTexts: [],
+      nodeImages: [],
       variables: [],
       conditions: [],
       loops: [],
@@ -33,6 +43,8 @@ test("breakpoints", () => {
     {
       figma: figma,
       min: 350,
+      mixedTexts: [],
+      nodeImages: [],
       variables: [],
       conditions: [],
       loops: [],
@@ -60,7 +72,15 @@ test("breakpoints", () => {
 test("nested", () => {
   const figma = loadFixture("nested");
   const output = convert([
-    { figma: figma, variables: [], conditions: [], loops: [], events: [] },
+    {
+      figma: figma,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [],
+      events: [],
+    },
   ]);
   expect(output.template).toBe(
     `<div>` +
@@ -80,6 +100,8 @@ test("variable", () => {
   const output = convert([
     {
       figma: figma,
+      mixedTexts: [],
+      nodeImages: [],
       variables: [{ nodeId: "1:8", expression: "count" }],
       conditions: [],
       loops: [],
@@ -103,6 +125,8 @@ test("condition", () => {
   const output = convert([
     {
       figma: figma,
+      mixedTexts: [],
+      nodeImages: [],
       variables: [],
       conditions: [{ nodeId: "1:7", expression: "valid" }],
       loops: [],
@@ -126,6 +150,8 @@ test("loop", () => {
   const output = convert([
     {
       figma: figma,
+      mixedTexts: [],
+      nodeImages: [],
       variables: [],
       conditions: [],
       loops: [{ nodeId: "1:7", itemVariable: "item", variable: "items" }],
@@ -149,6 +175,8 @@ test("event", () => {
   const output = convert([
     {
       figma: figma,
+      mixedTexts: [],
+      nodeImages: [],
       variables: [],
       conditions: [],
       loops: [],

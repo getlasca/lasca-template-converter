@@ -1,6 +1,7 @@
 import IdGenerator from "../helper/idGenerator";
 import {
   BaseStyle,
+  MixedText,
   NodeImage,
   Variable,
   Condition,
@@ -12,6 +13,7 @@ export default abstract class BaseNode {
   nodeId: string;
   className: string;
   layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL";
+  mixedTexts: MixedText[];
   nodeImages: NodeImage[];
   variables: Variable[];
   conditions: Condition[];
@@ -22,6 +24,7 @@ export default abstract class BaseNode {
     nodeId: string,
     idGenerator: IdGenerator,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL" = "NONE",
+    mixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
@@ -31,6 +34,7 @@ export default abstract class BaseNode {
     this.nodeId = nodeId;
     this.className = idGenerator.getId() + "";
     this.layoutModeAsChild = layoutModeAsChild;
+    this.mixedTexts = mixedTexts;
     this.nodeImages = nodeImages;
     this.variables = variables;
     this.conditions = conditions;

@@ -2,11 +2,34 @@ export interface Breakpoint {
   min?: number;
   max?: number;
   figma: any;
+  mixedTexts: MixedText[];
   nodeImages: NodeImage[];
   variables: Variable[];
   conditions: Condition[];
   loops: Loop[];
   events: Event[];
+}
+
+export interface MixedText {
+  nodeId: string;
+  style: MixedTextStyle;
+}
+
+export interface MixedTextStyle {
+  characterStyleMixed: number[];
+  styleMixedTable: MixedTextStyleTable[];
+}
+
+export interface MixedTextStyleTable {
+  id: number;
+  fontSize?: number;
+  fontName?: any;
+  textCase?: string;
+  textDecoration?: string;
+  letterSpacing?: any;
+  lineHeight?: any;
+  fills?: any[];
+  textListOptions?: string;
 }
 
 export interface NodeImage {
@@ -74,16 +97,24 @@ export interface FrameStyle extends BaseStyle {
   clipsContent: boolean;
 }
 
-export interface TextStyle extends BaseStyle {
-  color: Color;
-  fontSize: number;
-  fontWeight: string;
-  fontFamily: string;
-  letterSpacing: number;
+export interface TextRangeStyle {
+  color?: Color;
+  fontSize?: number;
+  fontWeight?: string;
+  fontFamily?: string;
+  letterSpacing?: number;
+  textDecoration?: "NONE" | "UNDERLINE" | "STRIKETHROUGH";
+  lineHeight?: string;
+}
+
+export interface TextRangeStyleMapping {
+  styleId: number;
+  style: TextRangeStyle;
+}
+
+export interface TextStyle extends BaseStyle, TextRangeStyle {
   textAlignHorizontal: "LEFT" | "CENTER" | "RIGHT" | "JUSTIFIED";
   textAlignVertical: "TOP" | "CENTER" | "BOTTOM";
-  textDecoration: "NONE" | "UNDERLINE" | "STRIKETHROUGH";
-  lineHeight?: string;
 }
 
 export interface RectangleStyle extends BaseStyle {
