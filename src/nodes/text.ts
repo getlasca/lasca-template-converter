@@ -3,6 +3,7 @@ import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
 import {
   TextStyle,
+  TextRangeStyle,
   MixedText,
   NodeImage,
   Variable,
@@ -85,10 +86,6 @@ export default class TextNode extends BaseNode {
 
   buildCss(): string {
     let css = `white-space: pre;`;
-    css += ` color: rgba(${this.style.color.r},${this.style.color.g},${this.style.color.b},${this.style.color.a});`;
-    css += ` font-size: ${this.style.fontSize}px;`;
-    css += ` font-weight: ${this.convertFontWeight(this.style.fontWeight)};`;
-    css += ` font-family: '${this.style.fontFamily}', sans-serif;`;
     css += ` text-align: ${this.convertTextAlignHorizontal(
       this.style.textAlignHorizontal
     )};`;
@@ -98,15 +95,6 @@ export default class TextNode extends BaseNode {
         this.style.textAlignVertical === "BOTTOM" ? "flex-end" : "center"
       };`;
     }
-    if (this.style.textDecoration === "UNDERLINE") {
-      css += ` text-decoration: underline;`;
-    }
-    if (this.style.letterSpacing !== 0) {
-      css += ` letter-spacing: ${this.style.letterSpacing}px;`;
-    }
-    if (this.style.lineHeight) {
-      css += ` line-height: ${this.style.lineHeight};`;
-    }
     if (this.style.shadow && !this.style.shadow.inner) {
       css += ` text-shadow:`;
       css += ` ${this.style.shadow.x}px ${this.style.shadow.y}px`;
@@ -115,8 +103,26 @@ export default class TextNode extends BaseNode {
       }
       css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a});`;
     }
+    css += this.buildRangeCss(this.style);
     css += this.buildBaseLayoutCss(this.style);
     return `.class-${this.className} { ${css} }`;
+  }
+
+  private buildRangeCss(style: TextRangeStyle): string {
+    let css = ` font-size: ${style.fontSize}px;`;
+    css += ` color: rgba(${style.color.r},${style.color.g},${style.color.b},${style.color.a});`;
+    css += ` font-weight: ${this.convertFontWeight(style.fontWeight)};`;
+    css += ` font-family: '${style.fontFamily}', sans-serif;`;
+    if (style.textDecoration === "UNDERLINE") {
+      css += ` text-decoration: underline;`;
+    }
+    if (style.letterSpacing !== 0) {
+      css += ` letter-spacing: ${style.letterSpacing}px;`;
+    }
+    if (style.lineHeight) {
+      css += ` line-height: ${style.lineHeight};`;
+    }
+    return css;
   }
 
   private convertFontWeight(weight: string): number {
