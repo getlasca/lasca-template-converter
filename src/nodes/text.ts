@@ -4,6 +4,7 @@ import IdGenerator from "../helper/idGenerator";
 import {
   TextStyle,
   TextRangeStyle,
+  TextRangeStyleMapping,
   MixedText,
   NodeImage,
   Variable,
@@ -15,6 +16,7 @@ import {
 export default class TextNode extends BaseNode {
   style: TextStyle;
   mixedText?: MixedText;
+  textRangeStyles: TextRangeStyleMapping[] = [];
   text: string;
 
   constructor(
@@ -41,10 +43,20 @@ export default class TextNode extends BaseNode {
       events
     );
     this.text = figma.characters;
+    this.style = parser.textStyle(figma);
     this.mixedText = mixedTexts.find(
       (mixedText) => mixedText.nodeId === this.nodeId
     );
-    this.style = parser.textStyle(figma);
+    if (this.mixedText) {
+      this.textRangeStyles = this.mixedText.style.styleMixedTable.map(
+        (style) => {
+          return {
+            styleId: style.id,
+            style: parser.textRangeStyle(style),
+          };
+        }
+      );
+    }
   }
 
   buildTemplate(): string {
@@ -105,7 +117,17 @@ export default class TextNode extends BaseNode {
     }
     css += this.buildRangeCssBase(this.style);
     css += this.buildBaseLayoutCss(this.style);
-    return `.class-${this.className} { ${css} }`;
+    return `.class-${this.className} { ${css} }` + this.buildRangeCss();
+  }
+
+  private buildRangeCss(): string {
+    let css = "";
+    for (let i = 0; i < this.textRangeStyles.length; i++) {
+      css += ` .class-${this.className}-${
+        this.textRangeStyles[i].styleId
+      } { ${this.buildRangeCssBase(this.textRangeStyles[i].style)} }`;
+    }
+    return css;
   }
 
   private buildRangeCssBase(style: TextRangeStyle): string {

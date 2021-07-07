@@ -107,6 +107,11 @@ export interface TextRangeStyle {
   lineHeight?: string;
 }
 
+export interface TextRangeStyleMapping {
+  styleId: number;
+  style: TextRangeStyle;
+}
+
 export interface TextStyle extends BaseStyle, TextRangeStyle {
   textAlignHorizontal: "LEFT" | "CENTER" | "RIGHT" | "JUSTIFIED";
   textAlignVertical: "TOP" | "CENTER" | "BOTTOM";
