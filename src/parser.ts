@@ -1,4 +1,10 @@
-import { BaseStyle, FrameStyle, TextStyle, RectangleStyle } from "./types";
+import {
+  BaseStyle,
+  FrameStyle,
+  TextStyle,
+  TextRangeStyle,
+  RectangleStyle,
+} from "./types";
 
 export default class Parser {
   baseWidth: number;
@@ -97,27 +103,33 @@ export default class Parser {
   textStyle(obj: any): TextStyle {
     return {
       ...this.baseStyle(obj),
+      ...this.textRangeStyle(obj),
       ...{
-        color: {
-          r: obj.fills[0].color.r * 255,
-          g: obj.fills[0].color.g * 255,
-          b: obj.fills[0].color.b * 255,
-          a: obj.fills[0].opacity * obj.opacity,
-        },
-        fontSize: obj.fontSize,
-        fontWeight: obj.fontName.style,
-        fontFamily: obj.fontName.family,
-        letterSpacing: obj.letterSpacing.value,
         textAlignHorizontal: obj.textAlignHorizontal,
         textAlignVertical: obj.textAlignVertical,
-        textDecoration: obj.textDecoration,
-        lineHeight:
-          obj.lineHeight.unit === "AUTO"
-            ? undefined
-            : obj.lineHeight.unit === "PIXELS"
-            ? `${obj.lineHeight.value}px`
-            : `${obj.lineHeight.value}%`,
       },
+    };
+  }
+
+  textRangeStyle(obj: any): TextRangeStyle {
+    return {
+      color: {
+        r: obj.fills[0].color.r * 255,
+        g: obj.fills[0].color.g * 255,
+        b: obj.fills[0].color.b * 255,
+        a: obj.fills[0].opacity * obj.opacity,
+      },
+      fontSize: obj.fontSize,
+      fontWeight: obj.fontName.style,
+      fontFamily: obj.fontName.family,
+      letterSpacing: obj.letterSpacing.value,
+      textDecoration: obj.textDecoration,
+      lineHeight:
+        obj.lineHeight.unit === "AUTO"
+          ? undefined
+          : obj.lineHeight.unit === "PIXELS"
+          ? `${obj.lineHeight.value}px`
+          : `${obj.lineHeight.value}%`,
     };
   }
 
