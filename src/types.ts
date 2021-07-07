@@ -97,16 +97,19 @@ export interface FrameStyle extends BaseStyle {
   clipsContent: boolean;
 }
 
-export interface TextStyle extends BaseStyle {
+export interface TextRangeStyle {
   color: Color;
-  fontSize: number;
+  fontSize?: number;
   fontWeight: string;
-  fontFamily: string;
-  letterSpacing: number;
+  fontFamily?: string;
+  letterSpacing?: number;
+  textDecoration?: "NONE" | "UNDERLINE" | "STRIKETHROUGH";
+  lineHeight?: string;
+}
+
+export interface TextStyle extends BaseStyle, TextRangeStyle {
   textAlignHorizontal: "LEFT" | "CENTER" | "RIGHT" | "JUSTIFIED";
   textAlignVertical: "TOP" | "CENTER" | "BOTTOM";
-  textDecoration: "NONE" | "UNDERLINE" | "STRIKETHROUGH";
-  lineHeight?: string;
 }
 
 export interface RectangleStyle extends BaseStyle {

@@ -43,11 +43,44 @@ export default class TextNode extends BaseNode {
   }
 
   buildTemplate(): string {
-    return `<span class="class-${
+    const attr = `class="class-${
       this.className
-    }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}>${
-      this.buildVariable() || this.text
-    }</span>`;
+    }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}`;
+
+    const mixedText = this.mixedTexts.find(
+      (mixedText) => mixedText.nodeId === this.nodeId
+    );
+
+    if (mixedText) {
+      const charStyles = mixedText.style.characterStyleMixed;
+      let innerTag = "";
+      let sliceIndex = 0;
+
+      for (let i = 0; i < charStyles.length; i++) {
+        const isSwitchChar = i !== 0 && charStyles[i - 1] !== charStyles[i];
+        const isLastChar = i === charStyles.length - 1;
+
+        if (isSwitchChar) {
+          const className = `class-${this.className}-${charStyles[i - 1]}`;
+          const text = this.text.slice(sliceIndex, i);
+
+          innerTag += `<span class="${className}">${text}</span>`;
+          sliceIndex = i;
+        }
+
+        if (isLastChar) {
+          const className = `class-${this.className}-${charStyles[i]}`;
+          const text = this.text.slice(sliceIndex);
+
+          innerTag += `<span class="${className}">${text}</span>`;
+        }
+      }
+
+      // TODO: should consider embed variables
+      return `<span ${attr}>${innerTag}</span>`;
+    } else {
+      return `<span ${attr}>${this.buildVariable() || this.text}</span>`;
+    }
   }
 
   buildCss(): string {
