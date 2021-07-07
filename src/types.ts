@@ -98,9 +98,9 @@ export interface FrameStyle extends BaseStyle {
 }
 
 export interface TextRangeStyle {
-  color: Color;
+  color?: Color;
   fontSize?: number;
-  fontWeight: string;
+  fontWeight?: string;
   fontFamily?: string;
   letterSpacing?: number;
   textDecoration?: "NONE" | "UNDERLINE" | "STRIKETHROUGH";

@@ -113,19 +113,22 @@ export default class Parser {
 
   textRangeStyle(obj: any): TextRangeStyle {
     return {
-      color: {
-        r: obj.fills[0].color.r * 255,
-        g: obj.fills[0].color.g * 255,
-        b: obj.fills[0].color.b * 255,
-        a: obj.fills[0].opacity * obj.opacity,
-      },
+      color:
+        obj.fills && obj.fills.length > 0
+          ? {
+              r: obj.fills[0].color.r * 255,
+              g: obj.fills[0].color.g * 255,
+              b: obj.fills[0].color.b * 255,
+              a: obj.fills[0].opacity * obj.opacity,
+            }
+          : undefined,
       fontSize: obj.fontSize,
-      fontWeight: obj.fontName.style,
-      fontFamily: obj.fontName.family,
-      letterSpacing: obj.letterSpacing.value,
+      fontWeight: obj.fontName ? obj.fontName.style : undefined,
+      fontFamily: obj.fontName ? obj.fontName.family : undefined,
+      letterSpacing: obj.letterSpacing ? obj.letterSpacing.value : undefined,
       textDecoration: obj.textDecoration,
       lineHeight:
-        obj.lineHeight.unit === "AUTO"
+        !obj.lineHeight || obj.lineHeight.unit === "AUTO"
           ? undefined
           : obj.lineHeight.unit === "PIXELS"
           ? `${obj.lineHeight.value}px`

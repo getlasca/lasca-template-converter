@@ -109,14 +109,23 @@ export default class TextNode extends BaseNode {
   }
 
   private buildRangeCss(style: TextRangeStyle): string {
-    let css = ` font-size: ${style.fontSize}px;`;
-    css += ` color: rgba(${style.color.r},${style.color.g},${style.color.b},${style.color.a});`;
-    css += ` font-weight: ${this.convertFontWeight(style.fontWeight)};`;
-    css += ` font-family: '${style.fontFamily}', sans-serif;`;
+    let css = "";
+    if (style.fontSize) {
+      css += ` font-size: ${style.fontSize}px;`;
+    }
+    if (style.color) {
+      css += ` color: rgba(${style.color.r},${style.color.g},${style.color.b},${style.color.a});`;
+    }
+    if (style.fontWeight) {
+      css += ` font-weight: ${this.convertFontWeight(style.fontWeight)};`;
+    }
+    if (style.fontFamily) {
+      css += ` font-family: '${style.fontFamily}', sans-serif;`;
+    }
     if (style.textDecoration === "UNDERLINE") {
       css += ` text-decoration: underline;`;
     }
-    if (style.letterSpacing !== 0) {
+    if (style.letterSpacing && style.letterSpacing !== 0) {
       css += ` letter-spacing: ${style.letterSpacing}px;`;
     }
     if (style.lineHeight) {
