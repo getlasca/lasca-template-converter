@@ -3,6 +3,7 @@ import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
 import {
   TextStyle,
+  MixedText,
   NodeImage,
   Variable,
   Condition,
@@ -19,6 +20,7 @@ export default class TextNode extends BaseNode {
     idGenerator: IdGenerator,
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    mixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
@@ -29,6 +31,7 @@ export default class TextNode extends BaseNode {
       figma.id,
       idGenerator,
       layoutModeAsChild,
+      mixedTexts,
       nodeImages,
       variables,
       conditions,

@@ -3,6 +3,7 @@ import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
 import {
   RectangleStyle,
+  MixedText,
   NodeImage,
   Variable,
   Condition,
@@ -20,6 +21,7 @@ export default class RectangleNode extends BaseNode {
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
     type: "RECTANGLE" | "ELLIPSE" | "LINE",
+    mixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
@@ -30,6 +32,7 @@ export default class RectangleNode extends BaseNode {
       figma.id,
       idGenerator,
       layoutModeAsChild,
+      mixedTexts,
       nodeImages,
       variables,
       conditions,

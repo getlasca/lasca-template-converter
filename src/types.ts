@@ -2,11 +2,34 @@ export interface Breakpoint {
   min?: number;
   max?: number;
   figma: any;
+  mixedTexts: MixedText[];
   nodeImages: NodeImage[];
   variables: Variable[];
   conditions: Condition[];
   loops: Loop[];
   events: Event[];
+}
+
+export interface MixedText {
+  nodeId: string;
+  style: MixedTextStyle;
+}
+
+export interface MixedTextStyle {
+  characterStyleMixed: number[];
+  styleMixedTable: MixedTextStyleTable[];
+}
+
+export interface MixedTextStyleTable {
+  id: number;
+  fontSize?: number;
+  fontName?: any;
+  textCase?: string;
+  textDecoration?: string;
+  letterSpacing?: any;
+  lineHeight?: any;
+  fills?: any[];
+  textListOptions?: string;
 }
 
 export interface NodeImage {

@@ -5,7 +5,14 @@ import RectangleNode from "./rectangle";
 import EmptyNode from "./empty";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
-import { Variable, NodeImage, Condition, Loop, Event } from "../types";
+import {
+  MixedText,
+  NodeImage,
+  Variable,
+  Condition,
+  Loop,
+  Event,
+} from "../types";
 
 export default class GroupNode extends BaseNode {
   children: BaseNode[] = [];
@@ -15,6 +22,7 @@ export default class GroupNode extends BaseNode {
     idGenerator: IdGenerator,
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    mixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
     conditions: Condition[] = [],
@@ -25,6 +33,7 @@ export default class GroupNode extends BaseNode {
       figma.id,
       idGenerator,
       layoutModeAsChild,
+      mixedTexts,
       nodeImages,
       variables,
       conditions,
@@ -46,6 +55,7 @@ export default class GroupNode extends BaseNode {
             false,
             "NONE",
             undefined,
+            mixedTexts,
             nodeImages,
             variables,
             conditions,
@@ -59,6 +69,7 @@ export default class GroupNode extends BaseNode {
             idGenerator,
             node,
             "NONE",
+            mixedTexts,
             nodeImages,
             variables,
             conditions,
@@ -75,6 +86,7 @@ export default class GroupNode extends BaseNode {
             node,
             "NONE",
             node.type,
+            mixedTexts,
             nodeImages,
             variables,
             conditions,
@@ -88,6 +100,7 @@ export default class GroupNode extends BaseNode {
             idGenerator,
             node,
             "NONE",
+            mixedTexts,
             nodeImages,
             variables,
             conditions,
@@ -101,6 +114,7 @@ export default class GroupNode extends BaseNode {
             idGenerator,
             node,
             "NONE",
+            mixedTexts,
             nodeImages,
             variables,
             conditions,

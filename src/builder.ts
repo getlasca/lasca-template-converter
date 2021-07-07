@@ -1,5 +1,6 @@
 import {
   Breakpoint,
+  MixedText,
   NodeImage,
   Variable,
   Condition,
@@ -26,6 +27,7 @@ export default class Builder {
     breakpoints.forEach((breakPoint: Breakpoint) => {
       const rootNode = this.parse(
         breakPoint.figma,
+        breakPoint.mixedTexts,
         breakPoint.nodeImages,
         breakPoint.variables,
         breakPoint.conditions,
@@ -50,6 +52,7 @@ export default class Builder {
 
   private parse(
     figma: any,
+    MixedTexts: MixedText[],
     nodeImages: NodeImage[],
     variables: Variable[],
     conditions: Condition[],
@@ -65,6 +68,7 @@ export default class Builder {
       true,
       "NONE",
       undefined,
+      MixedTexts,
       nodeImages,
       variables,
       conditions,
