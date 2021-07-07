@@ -15,40 +15,43 @@ export default class Parser {
     const fills = obj.fills.filter((fill: any) => {
       return fill.visible !== false;
     });
-    return Object.assign(this.baseStyle(obj), {
-      layoutMode: obj.layoutMode,
-      primaryAxisSizingMode: obj.primaryAxisSizingMode,
-      counterAxisSizingMode: obj.counterAxisSizingMode,
-      primaryAxisAlignItems: obj.primaryAxisAlignItems,
-      counterAxisAlignItems: obj.counterAxisAlignItems,
-      paddingLeft: obj.paddingLeft,
-      paddingRight: obj.paddingRight,
-      paddingTop: obj.paddingTop,
-      paddingBottom: obj.paddingBottom,
-      itemSpacing: obj.itemSpacing,
-      backgroundColor:
-        fills.length !== 0 && fills[0].type === "SOLID"
-          ? {
-              r: fills[0].color.r * 255,
-              g: fills[0].color.g * 255,
-              b: fills[0].color.b * 255,
-              a: fills[0].opacity * obj.opacity,
-            }
-          : undefined,
-      backgroundImage:
-        fills.length !== 0 && fills[0].type === "IMAGE"
-          ? {
-              scaleMode: fills[0].scaleMode,
-            }
-          : undefined,
-      radius: {
-        topLeft: obj.topLeftRadius,
-        topRight: obj.topRightRadius,
-        bottomRight: obj.bottomRightRadius,
-        bottomLeft: obj.bottomLeftRadius,
+    return {
+      ...this.baseStyle(obj),
+      ...{
+        layoutMode: obj.layoutMode,
+        primaryAxisSizingMode: obj.primaryAxisSizingMode,
+        counterAxisSizingMode: obj.counterAxisSizingMode,
+        primaryAxisAlignItems: obj.primaryAxisAlignItems,
+        counterAxisAlignItems: obj.counterAxisAlignItems,
+        paddingLeft: obj.paddingLeft,
+        paddingRight: obj.paddingRight,
+        paddingTop: obj.paddingTop,
+        paddingBottom: obj.paddingBottom,
+        itemSpacing: obj.itemSpacing,
+        backgroundColor:
+          fills.length !== 0 && fills[0].type === "SOLID"
+            ? {
+                r: fills[0].color.r * 255,
+                g: fills[0].color.g * 255,
+                b: fills[0].color.b * 255,
+                a: fills[0].opacity * obj.opacity,
+              }
+            : undefined,
+        backgroundImage:
+          fills.length !== 0 && fills[0].type === "IMAGE"
+            ? {
+                scaleMode: fills[0].scaleMode,
+              }
+            : undefined,
+        radius: {
+          topLeft: obj.topLeftRadius,
+          topRight: obj.topRightRadius,
+          bottomRight: obj.bottomRightRadius,
+          bottomLeft: obj.bottomLeftRadius,
+        },
+        clipsContent: obj.clipsContent,
       },
-      clipsContent: obj.clipsContent,
-    });
+    };
   }
 
   rectangleStyle(obj: any): RectangleStyle {
@@ -63,53 +66,59 @@ export default class Parser {
       });
     }
 
-    return Object.assign(this.baseStyle(obj), {
-      backgroundColor:
-        fills.length !== 0 && fills[0].type === "SOLID"
-          ? {
-              r: fills[0].color.r * 255,
-              g: fills[0].color.g * 255,
-              b: fills[0].color.b * 255,
-              a: fills[0].opacity * obj.opacity,
-            }
-          : undefined,
-      backgroundImage:
-        fills.length !== 0 && fills[0].type === "IMAGE"
-          ? {
-              scaleMode: fills[0].scaleMode,
-            }
-          : undefined,
-      radius: {
-        topLeft: obj.topLeftRadius || 0,
-        topRight: obj.topRightRadius || 0,
-        bottomRight: obj.bottomRightRadius || 0,
-        bottomLeft: obj.bottomLeftRadius || 0,
+    return {
+      ...this.baseStyle(obj),
+      ...{
+        backgroundColor:
+          fills.length !== 0 && fills[0].type === "SOLID"
+            ? {
+                r: fills[0].color.r * 255,
+                g: fills[0].color.g * 255,
+                b: fills[0].color.b * 255,
+                a: fills[0].opacity * obj.opacity,
+              }
+            : undefined,
+        backgroundImage:
+          fills.length !== 0 && fills[0].type === "IMAGE"
+            ? {
+                scaleMode: fills[0].scaleMode,
+              }
+            : undefined,
+        radius: {
+          topLeft: obj.topLeftRadius || 0,
+          topRight: obj.topRightRadius || 0,
+          bottomRight: obj.bottomRightRadius || 0,
+          bottomLeft: obj.bottomLeftRadius || 0,
+        },
       },
-    });
+    };
   }
 
   textStyle(obj: any): TextStyle {
-    return Object.assign(this.baseStyle(obj), {
-      color: {
-        r: obj.fills[0].color.r * 255,
-        g: obj.fills[0].color.g * 255,
-        b: obj.fills[0].color.b * 255,
-        a: obj.fills[0].opacity * obj.opacity,
+    return {
+      ...this.baseStyle(obj),
+      ...{
+        color: {
+          r: obj.fills[0].color.r * 255,
+          g: obj.fills[0].color.g * 255,
+          b: obj.fills[0].color.b * 255,
+          a: obj.fills[0].opacity * obj.opacity,
+        },
+        fontSize: obj.fontSize,
+        fontWeight: obj.fontName.style,
+        fontFamily: obj.fontName.family,
+        letterSpacing: obj.letterSpacing.value,
+        textAlignHorizontal: obj.textAlignHorizontal,
+        textAlignVertical: obj.textAlignVertical,
+        textDecoration: obj.textDecoration,
+        lineHeight:
+          obj.lineHeight.unit === "AUTO"
+            ? undefined
+            : obj.lineHeight.unit === "PIXELS"
+            ? `${obj.lineHeight.value}px`
+            : `${obj.lineHeight.value}%`,
       },
-      fontSize: obj.fontSize,
-      fontWeight: obj.fontName.style,
-      fontFamily: obj.fontName.family,
-      letterSpacing: obj.letterSpacing.value,
-      textAlignHorizontal: obj.textAlignHorizontal,
-      textAlignVertical: obj.textAlignVertical,
-      textDecoration: obj.textDecoration,
-      lineHeight:
-        obj.lineHeight.unit === "AUTO"
-          ? undefined
-          : obj.lineHeight.unit === "PIXELS"
-          ? `${obj.lineHeight.value}px`
-          : `${obj.lineHeight.value}%`,
-    });
+    };
   }
 
   private baseStyle(obj: any): BaseStyle {
