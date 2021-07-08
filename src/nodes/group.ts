@@ -109,7 +109,7 @@ export default class GroupNode extends BaseNode {
             events
           );
           break;
-        case "Vector":
+        case "VECTOR":
           childNode = new VectorNode(
             parser,
             idGenerator,
