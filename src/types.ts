@@ -123,6 +123,8 @@ export interface RectangleStyle extends BaseStyle {
   radius: Radius;
 }
 
+export type VectorStyle = BaseStyle;
+
 interface Color {
   r: number;
   g: number;

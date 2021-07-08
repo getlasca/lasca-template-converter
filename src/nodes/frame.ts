@@ -2,6 +2,7 @@ import BaseNode from "./base";
 import GroupNode from "./group";
 import TextNode from "./text";
 import RectangleNode from "./rectangle";
+import VectorNode from "./vector";
 import EmptyNode from "./empty";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
@@ -106,6 +107,20 @@ export default class FrameNode extends BaseNode {
           break;
         case "TEXT":
           childNode = new TextNode(
+            childParser,
+            idGenerator,
+            node,
+            figma.layoutMode,
+            mixedTexts,
+            nodeImages,
+            variables,
+            conditions,
+            loops,
+            events
+          );
+          break;
+        case "Vector":
+          childNode = new VectorNode(
             childParser,
             idGenerator,
             node,

@@ -4,6 +4,7 @@ import {
   TextStyle,
   TextRangeStyle,
   RectangleStyle,
+  VectorStyle,
 } from "./types";
 
 export default class Parser {
@@ -136,6 +137,10 @@ export default class Parser {
           ? `${obj.lineHeight.value}px`
           : `${obj.lineHeight.value}%`,
     };
+  }
+
+  vectorStyle(obj: any): VectorStyle {
+    return this.baseStyle(obj);
   }
 
   private baseStyle(obj: any): BaseStyle {
