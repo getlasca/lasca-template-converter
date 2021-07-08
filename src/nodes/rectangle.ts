@@ -54,22 +54,23 @@ export default class RectangleNode extends BaseNode {
     if (this.style.backgroundColor) {
       css += `background-color: rgba(${this.style.backgroundColor.r},${this.style.backgroundColor.g},${this.style.backgroundColor.b},${this.style.backgroundColor.a});`;
     } else if (this.style.backgroundImage) {
-      this.nodeImages.forEach((image) => {
-        if (this.nodeId === image.nodeId) {
-          css += `background: no-repeat center center url(https://assets.lasca.app/node_images/node-${image.imageId}.png);`;
+      const image = this.nodeImages.find(
+        (image) => this.nodeId === image.nodeId
+      );
+      if (image) {
+        css += `background: no-repeat center center url(https://assets.lasca.app/node_images/node-${image.imageId}.png);`;
 
-          switch (this.style.backgroundImage?.scaleMode) {
-            case "FILL": {
-              css += `background-size: cover;`;
-              break;
-            }
-            case "FIT": {
-              css += `background-size: contain;`;
-              break;
-            }
+        switch (this.style.backgroundImage?.scaleMode) {
+          case "FILL": {
+            css += `background-size: cover;`;
+            break;
+          }
+          case "FIT": {
+            css += `background-size: contain;`;
+            break;
           }
         }
-      });
+      }
     }
     if (this.style.border) {
       css += ` border: ${this.style.border.width}px solid rgba(${this.style.border.color.r},${this.style.border.color.g},${this.style.border.color.b},${this.style.border.color.a});`;

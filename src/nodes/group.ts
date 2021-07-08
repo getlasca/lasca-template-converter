@@ -2,6 +2,7 @@ import BaseNode from "./base";
 import FrameNode from "./frame";
 import TextNode from "./text";
 import RectangleNode from "./rectangle";
+import VectorNode from "./vector";
 import EmptyNode from "./empty";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
@@ -96,6 +97,20 @@ export default class GroupNode extends BaseNode {
           break;
         case "TEXT":
           childNode = new TextNode(
+            parser,
+            idGenerator,
+            node,
+            "NONE",
+            mixedTexts,
+            nodeImages,
+            variables,
+            conditions,
+            loops,
+            events
+          );
+          break;
+        case "Vector":
+          childNode = new VectorNode(
             parser,
             idGenerator,
             node,
