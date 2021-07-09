@@ -96,6 +96,12 @@ export default class RectangleNode extends BaseNode {
     if (shadowsCss.length > 0) {
       css += ` box-shadow:${shadowsCss.join(",")};`;
     }
+    if (this.style.layerBlur) {
+      css += ` filter: blur(${this.style.layerBlur.radius}px);`;
+    }
+    if (this.style.backgroundBlur) {
+      css += ` backdrop-filter: blur(${this.style.backgroundBlur.radius}px);`;
+    }
     if (this.type === "ELLIPSE") {
       css += ` border-radius: 50%;`;
     } else if (

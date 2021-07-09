@@ -78,6 +78,8 @@ export interface BaseStyle {
   isFixedPosition: boolean;
   border?: Border;
   shadows: Shadow[];
+  layerBlur?: Blur;
+  backgroundBlur?: Blur;
 }
 
 export interface FrameStyle extends BaseStyle {
@@ -151,6 +153,10 @@ interface Shadow {
   blur: number;
   spread: number;
   inner: boolean;
+}
+
+interface Blur {
+  radius: number;
 }
 
 interface Radius {

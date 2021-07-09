@@ -220,6 +220,12 @@ export default class FrameNode extends BaseNode {
     if (shadowsCss.length > 0) {
       css += ` box-shadow:${shadowsCss.join(",")};`;
     }
+    if (this.style.layerBlur) {
+      css += ` filter: blur(${this.style.layerBlur.radius}px);`;
+    }
+    if (this.style.backgroundBlur) {
+      css += ` backdrop-filter: blur(${this.style.backgroundBlur.radius}px);`;
+    }
     if (
       this.style.radius.topLeft !== 0 ||
       this.style.radius.topRight !== 0 ||
