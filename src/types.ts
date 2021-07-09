@@ -103,6 +103,7 @@ export interface TextRangeStyle {
   fontWeight?: string;
   fontFamily?: string;
   letterSpacing?: string;
+  textCase?: "ORIGINAL" | "UPPER" | "LOWER" | "TITLE";
   textDecoration?: "NONE" | "UNDERLINE" | "STRIKETHROUGH";
   lineHeight?: string;
 }

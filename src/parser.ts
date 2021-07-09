@@ -135,6 +135,7 @@ export default class Parser {
             ? `${obj.letterSpacing.value}px`
             : `${obj.letterSpacing.value / 100}em`
           : undefined,
+      textCase: obj.textCase,
       textDecoration: obj.textDecoration,
       lineHeight:
         obj.lineHeight && obj.lineHeight.unit !== "AUTO"

@@ -147,6 +147,15 @@ export default class TextNode extends BaseNode {
     if (style.fontFamily) {
       css += ` font-family: '${style.fontFamily}', sans-serif;`;
     }
+    if (style.textCase && style.textCase !== "ORIGINAL") {
+      css += ` text-transform: ${
+        style.textCase === "UPPER"
+          ? "uppercase"
+          : style.textCase === "LOWER"
+          ? "lowercase"
+          : "capitalize"
+      };`;
+    }
     if (style.textDecoration && style.textDecoration !== "NONE") {
       css += ` text-decoration: ${
         style.textDecoration === "UNDERLINE" ? "underline" : "line-through"
