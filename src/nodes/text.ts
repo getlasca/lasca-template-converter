@@ -117,7 +117,7 @@ export default class TextNode extends BaseNode {
         if (shadow.blur !== 0) {
           shadowCss += ` ${shadow.blur}px`;
         }
-        shadowCss += ` rgba(${shadow.color.r},${shadow.color.g},${shadow.color.b},${shadow.color.a});`;
+        shadowCss += ` rgba(${shadow.color.r},${shadow.color.g},${shadow.color.b},${shadow.color.a})`;
         return shadowCss;
       });
     if (shadowsCss.length > 0) {

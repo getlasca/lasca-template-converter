@@ -90,7 +90,7 @@ export default class RectangleNode extends BaseNode {
           shadowCss += ` ${shadow.spread}px`;
         }
       }
-      shadowCss += ` rgba(${shadow.color.r},${shadow.color.g},${shadow.color.b},${shadow.color.a});`;
+      shadowCss += ` rgba(${shadow.color.r},${shadow.color.g},${shadow.color.b},${shadow.color.a})`;
       return shadowCss;
     });
     if (shadowsCss.length > 0) {
