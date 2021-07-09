@@ -102,7 +102,7 @@ export interface TextRangeStyle {
   fontSize?: number;
   fontWeight?: string;
   fontFamily?: string;
-  letterSpacing?: number;
+  letterSpacing?: string;
   textDecoration?: "NONE" | "UNDERLINE" | "STRIKETHROUGH";
   lineHeight?: string;
 }

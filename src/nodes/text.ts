@@ -147,8 +147,8 @@ export default class TextNode extends BaseNode {
     if (style.textDecoration === "UNDERLINE") {
       css += ` text-decoration: underline;`;
     }
-    if (style.letterSpacing && style.letterSpacing !== 0) {
-      css += ` letter-spacing: ${style.letterSpacing}px;`;
+    if (style.letterSpacing) {
+      css += ` letter-spacing: ${style.letterSpacing};`;
     }
     if (style.lineHeight) {
       css += ` line-height: ${style.lineHeight};`;
