@@ -38,9 +38,9 @@ export default class Parser {
         backgroundColor:
           fills.length !== 0 && fills[0].type === "SOLID"
             ? {
-                r: fills[0].color.r * 255,
-                g: fills[0].color.g * 255,
-                b: fills[0].color.b * 255,
+                r: Math.round(fills[0].color.r * 255),
+                g: Math.round(fills[0].color.g * 255),
+                b: Math.round(fills[0].color.b * 255),
                 a: fills[0].opacity * obj.opacity,
               }
             : undefined,
@@ -79,9 +79,9 @@ export default class Parser {
         backgroundColor:
           fills.length !== 0 && fills[0].type === "SOLID"
             ? {
-                r: fills[0].color.r * 255,
-                g: fills[0].color.g * 255,
-                b: fills[0].color.b * 255,
+                r: Math.round(fills[0].color.r * 255),
+                g: Math.round(fills[0].color.g * 255),
+                b: Math.round(fills[0].color.b * 255),
                 a: fills[0].opacity * obj.opacity,
               }
             : undefined,
@@ -118,9 +118,9 @@ export default class Parser {
       color:
         obj.fills && obj.fills.length > 0
           ? {
-              r: obj.fills[0].color.r * 255,
-              g: obj.fills[0].color.g * 255,
-              b: obj.fills[0].color.b * 255,
+              r: Math.round(obj.fills[0].color.r * 255),
+              g: Math.round(obj.fills[0].color.g * 255),
+              b: Math.round(obj.fills[0].color.b * 255),
               a: obj.opacity
                 ? obj.fills[0].opacity * obj.opacity
                 : obj.fills[0].opacity, // obj.opacity is undefined in case of mixed text
@@ -182,9 +182,9 @@ export default class Parser {
         obj.type !== "LINE" && strokes.length !== 0
           ? {
               color: {
-                r: strokes[0].color.r * 255,
-                g: strokes[0].color.g * 255,
-                b: strokes[0].color.b * 255,
+                r: Math.round(strokes[0].color.r * 255),
+                g: Math.round(strokes[0].color.g * 255),
+                b: Math.round(strokes[0].color.b * 255),
                 a: strokes[0].opacity || 1,
               },
               width: obj.strokeWeight,
@@ -195,9 +195,9 @@ export default class Parser {
         shadows.length !== 0
           ? {
               color: {
-                r: shadows[0].color.r * 255,
-                g: shadows[0].color.g * 255,
-                b: shadows[0].color.b * 255,
+                r: Math.round(shadows[0].color.r * 255),
+                g: Math.round(shadows[0].color.g * 255),
+                b: Math.round(shadows[0].color.b * 255),
                 a: shadows[0].color.a,
               },
               x: shadows[0].offset.x,
