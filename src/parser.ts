@@ -130,7 +130,7 @@ export default class Parser {
       fontFamily: obj.fontName ? obj.fontName.family : undefined,
       letterSpacing:
         obj.letterSpacing && obj.letterSpacing.value !== 0
-          ? obj.lineHeight.unit === "PIXELS"
+          ? obj.letterSpacing.unit === "PIXELS"
             ? `${obj.letterSpacing.value}px`
             : `${obj.letterSpacing.value / 100}em`
           : undefined,
