@@ -203,19 +203,11 @@ export default class FrameNode extends BaseNode {
       }
     }
     const shadowsCss = this.style.shadows.map((shadow) => {
-      let shadowCss = "";
-      if (shadow.inner) {
-        shadowCss += ` inset`;
-      }
-      shadowCss += ` ${shadow.x}px ${shadow.y}px`;
-      if (shadow.blur !== 0) {
-        shadowCss += ` ${shadow.blur}px`;
-        if (shadow.spread !== 0) {
-          shadowCss += ` ${shadow.spread}px`;
-        }
-      }
-      shadowCss += ` rgba(${shadow.color.r},${shadow.color.g},${shadow.color.b},${shadow.color.a})`;
-      return shadowCss;
+      return `${shadow.inner ? " inset" : ""} ${shadow.x}px ${shadow.y}px ${
+        shadow.blur
+      }px ${shadow.spread}px rgba(${shadow.color.r},${shadow.color.g},${
+        shadow.color.b
+      },${shadow.color.a})`;
     });
     if (shadowsCss.length > 0) {
       css += ` box-shadow:${shadowsCss.join(",")};`;

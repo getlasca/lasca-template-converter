@@ -158,9 +158,9 @@ export default class Parser {
       return stroke.visible !== false;
     });
     const shadows = obj.effects.filter((effect: any) => {
-      return (
-        effect.visible && ["DROP_SHADOW", "INNER_SHADOW"].includes(effect.type)
-      );
+      const effectTypes =
+        obj.type === "TEXT" ? ["DROP_SHADOW"] : ["DROP_SHADOW", "INNER_SHADOW"]; // CSS has no text inner shadow expression.
+      return effect.visible && effectTypes.includes(effect.type);
     });
     const layerBlur = obj.effects.find((effect: any) => {
       return effect.visible && effect.type === "LAYER_BLUR";
