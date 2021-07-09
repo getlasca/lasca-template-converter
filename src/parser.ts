@@ -162,6 +162,12 @@ export default class Parser {
         effect.visible && ["DROP_SHADOW", "INNER_SHADOW"].includes(effect.type)
       );
     });
+    const layerBlur = obj.effects.find((effect: any) => {
+      return effect.visible && effect.type === "LAYER_BLUR";
+    });
+    const backgroundBlur = obj.effects.find((effect: any) => {
+      return effect.visible && effect.type === "BACKGROUND_BLUR";
+    });
 
     return {
       x: obj.x,
@@ -206,6 +212,16 @@ export default class Parser {
           inner: shadow.type === "INNER_SHADOW",
         };
       }),
+      layerBlur: layerBlur
+        ? {
+            radius: layerBlur.radius,
+          }
+        : undefined,
+      backgroundBlur: backgroundBlur
+        ? {
+            radius: backgroundBlur.radius,
+          }
+        : undefined,
     };
   }
 

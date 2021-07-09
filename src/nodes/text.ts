@@ -123,6 +123,12 @@ export default class TextNode extends BaseNode {
     if (shadowsCss.length > 0) {
       css += ` text-shadow:${shadowsCss.join(",")};`;
     }
+    if (this.style.layerBlur) {
+      css += ` filter: blur(${this.style.layerBlur.radius}px);`;
+    }
+    if (this.style.backgroundBlur) {
+      css += ` backdrop-filter: blur(${this.style.backgroundBlur.radius}px);`;
+    }
     css += this.buildRangeCssBase(this.style);
     css += this.buildBaseLayoutCss(this.style);
     return `.class-${this.className} { ${css} }` + this.buildRangeCss();
