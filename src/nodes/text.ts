@@ -101,6 +101,9 @@ export default class TextNode extends BaseNode {
     css += ` text-align: ${this.convertTextAlignHorizontal(
       this.style.textAlignHorizontal
     )};`;
+    if (this.style.textIndent !== 0) {
+      css += ` text-indent: ${this.style.textIndent}px;`;
+    }
     if (this.style.textAlignVertical !== "TOP") {
       css += ` display: flex;`;
       css += ` align-items: ${
@@ -144,8 +147,19 @@ export default class TextNode extends BaseNode {
     if (style.fontFamily) {
       css += ` font-family: '${style.fontFamily}', sans-serif;`;
     }
-    if (style.textDecoration === "UNDERLINE") {
-      css += ` text-decoration: underline;`;
+    if (style.textCase && style.textCase !== "ORIGINAL") {
+      css += ` text-transform: ${
+        style.textCase === "UPPER"
+          ? "uppercase"
+          : style.textCase === "LOWER"
+          ? "lowercase"
+          : "capitalize"
+      };`;
+    }
+    if (style.textDecoration && style.textDecoration !== "NONE") {
+      css += ` text-decoration: ${
+        style.textDecoration === "UNDERLINE" ? "underline" : "line-through"
+      };`;
     }
     if (style.letterSpacing) {
       css += ` letter-spacing: ${style.letterSpacing};`;

@@ -103,6 +103,7 @@ export interface TextRangeStyle {
   fontWeight?: string;
   fontFamily?: string;
   letterSpacing?: string;
+  textCase?: "ORIGINAL" | "UPPER" | "LOWER" | "TITLE";
   textDecoration?: "NONE" | "UNDERLINE" | "STRIKETHROUGH";
   lineHeight?: string;
 }
@@ -115,6 +116,7 @@ export interface TextRangeStyleMapping {
 export interface TextStyle extends BaseStyle, TextRangeStyle {
   textAlignHorizontal: "LEFT" | "CENTER" | "RIGHT" | "JUSTIFIED";
   textAlignVertical: "TOP" | "CENTER" | "BOTTOM";
+  textIndent: number;
 }
 
 export interface RectangleStyle extends BaseStyle {
