@@ -101,6 +101,9 @@ export default class TextNode extends BaseNode {
     css += ` text-align: ${this.convertTextAlignHorizontal(
       this.style.textAlignHorizontal
     )};`;
+    if (this.style.textIndent !== 0) {
+      css += ` text-indent: ${this.style.textIndent}px;`;
+    }
     if (this.style.textAlignVertical !== "TOP") {
       css += ` display: flex;`;
       css += ` align-items: ${

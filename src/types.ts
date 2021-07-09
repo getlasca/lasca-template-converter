@@ -115,6 +115,7 @@ export interface TextRangeStyleMapping {
 export interface TextStyle extends BaseStyle, TextRangeStyle {
   textAlignHorizontal: "LEFT" | "CENTER" | "RIGHT" | "JUSTIFIED";
   textAlignVertical: "TOP" | "CENTER" | "BOTTOM";
+  textIndent: number;
 }
 
 export interface RectangleStyle extends BaseStyle {

@@ -108,6 +108,7 @@ export default class Parser {
       ...{
         textAlignHorizontal: obj.textAlignHorizontal,
         textAlignVertical: obj.textAlignVertical,
+        textIndent: obj.paragraphIndent,
       },
     };
   }
