@@ -128,14 +128,19 @@ export default class Parser {
       fontSize: obj.fontSize,
       fontWeight: obj.fontName ? obj.fontName.style : undefined,
       fontFamily: obj.fontName ? obj.fontName.family : undefined,
-      letterSpacing: obj.letterSpacing ? obj.letterSpacing.value : undefined,
+      letterSpacing:
+        obj.letterSpacing && obj.letterSpacing.value !== 0
+          ? obj.lineHeight.unit === "PIXELS"
+            ? `${obj.letterSpacing.value}px`
+            : `${obj.letterSpacing.value / 100}em`
+          : undefined,
       textDecoration: obj.textDecoration,
       lineHeight:
-        !obj.lineHeight || obj.lineHeight.unit === "AUTO"
-          ? undefined
-          : obj.lineHeight.unit === "PIXELS"
-          ? `${obj.lineHeight.value}px`
-          : `${obj.lineHeight.value}%`,
+        obj.lineHeight && obj.lineHeight.unit !== "AUTO"
+          ? obj.lineHeight.unit === "PIXELS"
+            ? `${obj.lineHeight.value}px`
+            : `${obj.lineHeight.value}%`
+          : undefined,
     };
   }
 
