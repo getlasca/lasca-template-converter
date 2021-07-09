@@ -77,7 +77,7 @@ export interface BaseStyle {
   layoutGrow: number;
   isFixedPosition: boolean;
   border?: Border;
-  shadow?: Shadow;
+  shadows: Shadow[];
 }
 
 export interface FrameStyle extends BaseStyle {

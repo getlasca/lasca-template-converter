@@ -191,22 +191,21 @@ export default class Parser {
               inside: obj.strokeAlign === "INSIDE",
             }
           : undefined,
-      shadow:
-        shadows.length !== 0
-          ? {
-              color: {
-                r: Math.round(shadows[0].color.r * 255),
-                g: Math.round(shadows[0].color.g * 255),
-                b: Math.round(shadows[0].color.b * 255),
-                a: shadows[0].color.a,
-              },
-              x: shadows[0].offset.x,
-              y: shadows[0].offset.y,
-              blur: shadows[0].radius,
-              spread: shadows[0].spread || 0,
-              inner: shadows[0].type === "INNER_SHADOW",
-            }
-          : undefined,
+      shadows: shadows.map((shadow: any) => {
+        return {
+          color: {
+            r: Math.round(shadow.color.r * 255),
+            g: Math.round(shadow.color.g * 255),
+            b: Math.round(shadow.color.b * 255),
+            a: shadow.color.a,
+          },
+          x: shadow.offset.x,
+          y: shadow.offset.y,
+          blur: shadow.radius,
+          spread: shadow.spread || 0,
+          inner: shadow.type === "INNER_SHADOW",
+        };
+      }),
     };
   }
 

@@ -78,19 +78,23 @@ export default class RectangleNode extends BaseNode {
         css += ` box-sizing: border-box;`;
       }
     }
-    if (this.style.shadow) {
-      css += ` box-shadow:`;
-      if (this.style.shadow.inner) {
-        css += ` inset`;
+    const shadowsCss = this.style.shadows.map((shadow) => {
+      let shadowCss = "";
+      if (shadow.inner) {
+        shadowCss += ` inset`;
       }
-      css += ` ${this.style.shadow.x}px ${this.style.shadow.y}px`;
-      if (this.style.shadow.blur !== 0) {
-        css += ` ${this.style.shadow.blur}px`;
-        if (this.style.shadow.spread !== 0) {
-          css += ` ${this.style.shadow.spread}px`;
+      shadowCss += ` ${shadow.x}px ${shadow.y}px`;
+      if (shadow.blur !== 0) {
+        shadowCss += ` ${shadow.blur}px`;
+        if (shadow.spread !== 0) {
+          shadowCss += ` ${shadow.spread}px`;
         }
       }
-      css += ` rgba(${this.style.shadow.color.r},${this.style.shadow.color.g},${this.style.shadow.color.b},${this.style.shadow.color.a});`;
+      shadowCss += ` rgba(${shadow.color.r},${shadow.color.g},${shadow.color.b},${shadow.color.a});`;
+      return shadowCss;
+    });
+    if (shadowsCss.length > 0) {
+      css += ` box-shadow:${shadowsCss.join(",")};`;
     }
     if (this.type === "ELLIPSE") {
       css += ` border-radius: 50%;`;
