@@ -144,8 +144,10 @@ export default class TextNode extends BaseNode {
     if (style.fontFamily) {
       css += ` font-family: '${style.fontFamily}', sans-serif;`;
     }
-    if (style.textDecoration === "UNDERLINE") {
-      css += ` text-decoration: underline;`;
+    if (style.textDecoration && style.textDecoration !== "NONE") {
+      css += ` text-decoration: ${
+        style.textDecoration === "UNDERLINE" ? "underline" : "line-through"
+      };`;
     }
     if (style.letterSpacing) {
       css += ` letter-spacing: ${style.letterSpacing};`;
