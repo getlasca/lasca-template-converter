@@ -111,12 +111,11 @@ export default class TextNode extends BaseNode {
       };`;
     }
     const shadowsCss = this.style.shadows.map((shadow) => {
-      let shadowCss = ` ${shadow.x}px ${shadow.y}px`;
-      if (shadow.blur !== 0) {
-        shadowCss += ` ${shadow.blur}px`;
-      }
-      shadowCss += ` rgba(${shadow.color.r},${shadow.color.g},${shadow.color.b},${shadow.color.a})`;
-      return shadowCss;
+      return ` ${shadow.x}px ${shadow.y}px${
+        shadow.blur === 0 ? "" : ` ${shadow.blur}px`
+      } rgba(${shadow.color.r},${shadow.color.g},${shadow.color.b},${
+        shadow.color.a
+      })`;
     });
     if (shadowsCss.length > 0) {
       css += ` text-shadow:${shadowsCss.join(",")};`;
