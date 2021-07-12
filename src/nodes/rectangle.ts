@@ -99,7 +99,7 @@ export default class RectangleNode extends BaseNode {
             this.style.backgroundGradient &&
             this.style.backgroundGradient.type === "GRADIENT_ANGULAR"
               ? Math.round(stop.position * 360 * 100) / 100 + "deg"
-              : stop.position * 100 + "%"
+              : Math.round(stop.position * 100 * 100) / 100 + "%"
           }`;
         })
         .join(",");
