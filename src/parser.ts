@@ -91,6 +91,32 @@ export default class Parser {
                 scaleMode: fills[0].scaleMode,
               }
             : undefined,
+        backgroundGradient:
+          fills.length !== 0 &&
+          [
+            "GRADIENT_LINEAR",
+            "GRADIENT_RADIAL",
+            "GRADIENT_ANGULAR",
+            "GRADIENT_DIAMOND",
+          ].includes(fills[0].type)
+            ? {
+                type:
+                  fills[0].type === "GRADIENT_DIAMOND"
+                    ? "GRADIENT_RADIAL"
+                    : fills[0].type,
+                gradientStops: fills[0].gradientStops.map((stop: any) => {
+                  return {
+                    color: {
+                      r: Math.round(stop.color.r * 255),
+                      g: Math.round(stop.color.g * 255),
+                      b: Math.round(stop.color.b * 255),
+                      a: stop.color.a * obj.opacity,
+                    },
+                    position: stop.position,
+                  };
+                }),
+              }
+            : undefined,
         radius: {
           topLeft: obj.topLeftRadius || 0,
           topRight: obj.topRightRadius || 0,
