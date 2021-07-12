@@ -71,6 +71,8 @@ export interface BaseStyle {
   y: number;
   width: number;
   height: number;
+  isWidthAuto: boolean;
+  isHeightAuto: boolean;
   constraintsHorizontal: "MIN" | "CENTER" | "MAX" | "STRETCH" | "SCALE";
   constraintsVertical: "MIN" | "CENTER" | "MAX" | "STRETCH" | "SCALE";
   layoutAlign: "STRETCH" | "INHERIT";
@@ -119,6 +121,7 @@ export interface TextRangeStyleMapping {
 export interface TextStyle extends BaseStyle, TextRangeStyle {
   textAlignHorizontal: "LEFT" | "CENTER" | "RIGHT" | "JUSTIFIED";
   textAlignVertical: "TOP" | "CENTER" | "BOTTOM";
+  wrapped: boolean;
   textIndent: number;
 }
 

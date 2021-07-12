@@ -160,6 +160,7 @@ export default class Parser {
       ...{
         textAlignHorizontal: obj.textAlignHorizontal,
         textAlignVertical: obj.textAlignVertical,
+        wrapped: obj.textAutoResize !== "WIDTH_AND_HEIGHT",
         textIndent: obj.paragraphIndent,
       },
     };
@@ -228,6 +229,9 @@ export default class Parser {
       y: obj.type === "LINE" ? obj.y - obj.strokeWeight : obj.y,
       width: obj.width,
       height: obj.type === "LINE" ? obj.strokeWeight : obj.height,
+      isWidthAuto:
+        obj.type === "TEXT" && obj.textAutoResize === "WIDTH_AND_HEIGHT",
+      isHeightAuto: obj.type === "TEXT" && obj.textAutoResize === "HEIGHT",
       constraintsHorizontal:
         fixedPositionNode && fixedPositionNode.fillContainer
           ? "STRETCH"
