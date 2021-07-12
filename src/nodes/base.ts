@@ -84,17 +84,20 @@ export default abstract class BaseNode {
       return css;
     }
 
+    const baseWidth = input.isWidthAuto ? "auto" : input.width + "px";
+    const baseHeight = input.isHeightAuto ? "auto" : input.height + "px";
+
     if (this.layoutModeAsChild !== "NONE") {
       css += ` width: ${
         this.layoutModeAsChild === "VERTICAL" && input.layoutAlign === "STRETCH"
           ? "100%"
-          : input.width + "px"
+          : baseWidth
       };`;
       css += ` height: ${
         this.layoutModeAsChild === "HORIZONTAL" &&
         input.layoutAlign === "STRETCH"
           ? "100%"
-          : input.height + "px"
+          : baseHeight
       };`;
       css += ` flex: ${
         input.layoutGrow === 1
@@ -111,18 +114,18 @@ export default abstract class BaseNode {
 
     css += ` position: ${input.isFixedPosition ? "fixed" : "absolute"};`;
     css += ` top: ${input.y}px;`;
-    css += ` height: ${input.height}px;`;
+    css += ` height: ${baseHeight};`;
 
     switch (input.constraintsHorizontal) {
       case "MIN":
       case "SCALE": {
         css += ` left: ${input.x}px;`;
-        css += ` width: ${input.width}px;`;
+        css += ` width: ${baseWidth};`;
         break;
       }
       case "MAX": {
         css += ` right: ${input.xFromRight}px;`;
-        css += ` width: ${input.width}px;`;
+        css += ` width: ${baseWidth};`;
         break;
       }
       case "STRETCH": {
@@ -136,7 +139,7 @@ export default abstract class BaseNode {
             ? " - " + input.xFromCenter
             : " + " + -1 * input.xFromCenter
         }px);`;
-        css += ` width: ${input.width}px;`;
+        css += ` width: ${baseWidth};`;
         break;
       }
     }

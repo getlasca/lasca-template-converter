@@ -97,10 +97,15 @@ export default class TextNode extends BaseNode {
   }
 
   buildCss(): string {
-    let css = `white-space: pre;`;
-    css += ` text-align: ${this.convertTextAlignHorizontal(
+    let css = `text-align: ${this.convertTextAlignHorizontal(
       this.style.textAlignHorizontal
     )};`;
+    if (this.style.wrapped) {
+      css += ` white-space: pre-wrap;`;
+      css += ` overflow-wrap: break-word;`;
+    } else {
+      css += ` white-space: pre;`;
+    }
     if (this.style.textIndent !== 0) {
       css += ` text-indent: ${this.style.textIndent}px;`;
     }
