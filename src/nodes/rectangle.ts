@@ -71,6 +71,39 @@ export default class RectangleNode extends BaseNode {
           }
         }
       }
+    } else if (this.style.backgroundGradient) {
+      let type = "";
+      let position = ""; // TODO: position should be calculated from transform matrix by affin transformation
+      switch (this.style.backgroundGradient.type) {
+        case "GRADIENT_LINEAR": {
+          type = "linear";
+          position = "180deg";
+          break;
+        }
+        case "GRADIENT_RADIAL": {
+          type = "radial";
+          position = "50% 50% at 50% 50%";
+          break;
+        }
+        case "GRADIENT_ANGULAR": {
+          type = "conic";
+          position = "from 180deg at 50% 50%";
+          break;
+        }
+      }
+      const gradientStops = this.style.backgroundGradient.gradientStops
+        .map((stop) => {
+          return ` rgba(${stop.color.r},${stop.color.g},${stop.color.b},${
+            stop.color.a
+          }) ${
+            this.style.backgroundGradient &&
+            this.style.backgroundGradient.type === "GRADIENT_ANGULAR"
+              ? Math.round(stop.position * 360 * 100) / 100 + "deg"
+              : stop.position * 100 + "%"
+          }`;
+        })
+        .join(",");
+      css += `background: ${type}-gradient(${position},${gradientStops});`;
     }
     if (this.style.border) {
       css += ` border: ${this.style.border.width}px solid rgba(${this.style.border.color.r},${this.style.border.color.g},${this.style.border.color.b},${this.style.border.color.a});`;

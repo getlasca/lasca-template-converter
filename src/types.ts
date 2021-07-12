@@ -95,6 +95,7 @@ export interface FrameStyle extends BaseStyle {
   itemSpacing: number;
   backgroundColor?: Color;
   backgroundImage?: BackgroundImage;
+  backgroundGradient?: BackgroundGradient;
   radius: Radius;
   clipsContent: boolean;
 }
@@ -124,6 +125,7 @@ export interface TextStyle extends BaseStyle, TextRangeStyle {
 export interface RectangleStyle extends BaseStyle {
   backgroundColor?: Color;
   backgroundImage?: BackgroundImage;
+  backgroundGradient?: BackgroundGradient;
   radius: Radius;
 }
 
@@ -138,6 +140,16 @@ interface Color {
 
 interface BackgroundImage {
   scaleMode: "FILL" | "FIT" | "CROP" | "TILE";
+}
+
+interface BackgroundGradient {
+  type: "GRADIENT_LINEAR" | "GRADIENT_RADIAL" | "GRADIENT_ANGULAR";
+  gradientStops: GradientStop[];
+}
+
+interface GradientStop {
+  color: Color;
+  position: number;
 }
 
 interface Border {
