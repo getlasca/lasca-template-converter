@@ -115,10 +115,10 @@ export default class TextNode extends BaseNode {
         this.style.textAlignVertical === "BOTTOM" ? "flex-end" : "center"
       };`;
     }
-    const shadowsCss = this.style.shadows.map((shadow) => {
-      return ` ${shadow.x}px ${shadow.y}px ${shadow.blur}px rgba(${shadow.color.r},${shadow.color.g},${shadow.color.b},${shadow.color.a})`;
-    });
-    if (shadowsCss.length > 0) {
+    if (this.style.shadows.length > 0) {
+      const shadowsCss = this.style.shadows.map((shadow) => {
+        return ` ${shadow.x}px ${shadow.y}px ${shadow.blur}px rgba(${shadow.color.r},${shadow.color.g},${shadow.color.b},${shadow.color.a})`;
+      });
       css += ` text-shadow:${shadowsCss.join(",")};`;
     }
     if (this.style.layerBlur) {

@@ -86,7 +86,6 @@ export default class GroupNode extends BaseNode {
             idGenerator,
             node,
             "NONE",
-            node.type,
             mixedTexts,
             nodeImages,
             variables,

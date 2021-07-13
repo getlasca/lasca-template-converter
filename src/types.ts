@@ -84,7 +84,14 @@ export interface BaseStyle {
   backgroundBlur?: Blur;
 }
 
-export interface FrameStyle extends BaseStyle {
+export interface ShapeStyle {
+  backgroundColor?: Color;
+  backgroundImage?: BackgroundImage;
+  backgroundGradient?: BackgroundGradient;
+  radius: Radius;
+}
+
+export interface FrameStyle extends BaseStyle, ShapeStyle {
   layoutMode: "NONE" | "HORIZONTAL" | "VERTICAL";
   primaryAxisSizingMode: "FIXED" | "AUTO";
   counterAxisSizingMode: "FIXED" | "AUTO";
@@ -95,12 +102,10 @@ export interface FrameStyle extends BaseStyle {
   paddingTop: number;
   paddingBottom: number;
   itemSpacing: number;
-  backgroundColor?: Color;
-  backgroundImage?: BackgroundImage;
-  backgroundGradient?: BackgroundGradient;
-  radius: Radius;
   clipsContent: boolean;
 }
+
+export interface RectangleStyle extends BaseStyle, ShapeStyle {}
 
 export interface TextRangeStyle {
   color?: Color;
@@ -123,13 +128,6 @@ export interface TextStyle extends BaseStyle, TextRangeStyle {
   textAlignVertical: "TOP" | "CENTER" | "BOTTOM";
   wrapped: boolean;
   textIndent: number;
-}
-
-export interface RectangleStyle extends BaseStyle {
-  backgroundColor?: Color;
-  backgroundImage?: BackgroundImage;
-  backgroundGradient?: BackgroundGradient;
-  radius: Radius;
 }
 
 export type VectorStyle = BaseStyle;
@@ -179,4 +177,5 @@ interface Radius {
   topRight: number;
   bottomRight: number;
   bottomLeft: number;
+  isEllipse: boolean;
 }
