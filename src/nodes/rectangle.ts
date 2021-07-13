@@ -13,14 +13,12 @@ import {
 
 export default class RectangleNode extends BaseNode {
   style: RectangleStyle;
-  type: "RECTANGLE" | "ELLIPSE" | "LINE";
 
   constructor(
     parser: Parser,
     idGenerator: IdGenerator,
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
-    type: "RECTANGLE" | "ELLIPSE" | "LINE",
     mixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
@@ -40,7 +38,6 @@ export default class RectangleNode extends BaseNode {
       events
     );
     this.style = parser.rectangleStyle(figma);
-    this.type = type;
   }
 
   buildTemplate(): string {
@@ -51,8 +48,7 @@ export default class RectangleNode extends BaseNode {
 
   buildCss(): string {
     return `.class-${this.className} { ${
-      this.buildBaseShapeCss(this.style, this.type === "ELLIPSE") +
-      this.buildBaseLayoutCss(this.style)
+      this.buildBaseShapeCss(this.style) + this.buildBaseLayoutCss(this.style)
     } }`;
   }
 }

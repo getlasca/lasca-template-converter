@@ -238,6 +238,7 @@ export default class Parser {
         topRight: obj.topRightRadius || 0,
         bottomRight: obj.bottomRightRadius || 0,
         bottomLeft: obj.bottomLeftRadius || 0,
+        isEllipse: obj.type === "ELLIPSE",
       },
     };
   }

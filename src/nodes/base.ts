@@ -145,10 +145,7 @@ export default abstract class BaseNode {
     return css;
   }
 
-  protected buildBaseShapeCss(
-    style: FrameStyle | RectangleStyle,
-    isEllipse = false
-  ): string {
+  protected buildBaseShapeCss(style: FrameStyle | RectangleStyle): string {
     let css = "";
     if (style.backgroundColor) {
       css += `background-color: rgba(${style.backgroundColor.r},${style.backgroundColor.g},${style.backgroundColor.b},${style.backgroundColor.a});`;
@@ -226,7 +223,7 @@ export default abstract class BaseNode {
     if (style.backgroundBlur) {
       css += ` backdrop-filter: blur(${style.backgroundBlur.radius}px);`;
     }
-    if (isEllipse) {
+    if (style.radius.isEllipse) {
       css += ` border-radius: 50%;`;
     } else if (
       style.radius.topLeft !== 0 ||

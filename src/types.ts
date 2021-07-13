@@ -177,4 +177,5 @@ interface Radius {
   topRight: number;
   bottomRight: number;
   bottomLeft: number;
+  isEllipse: boolean;
 }

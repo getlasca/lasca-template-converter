@@ -96,7 +96,6 @@ export default class FrameNode extends BaseNode {
             idGenerator,
             node,
             figma.layoutMode,
-            node.type,
             mixedTexts,
             nodeImages,
             variables,
