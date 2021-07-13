@@ -76,14 +76,11 @@ export default abstract class BaseNode {
   }
 
   protected buildBaseLayoutCss(input: BaseStyle, isRoot = false): string {
-    let css = "";
-
     if (isRoot) {
-      css += ` position: relative;`;
-      css += ` height: ${input.height}px;`;
-      return css;
+      return "";
     }
 
+    let css = "";
     const baseWidth = input.isWidthAuto ? "auto" : input.width + "px";
     const baseHeight = input.isHeightAuto ? "auto" : input.height + "px";
 
