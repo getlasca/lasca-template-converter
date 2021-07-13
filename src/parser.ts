@@ -231,7 +231,9 @@ export default class Parser {
       height: obj.type === "LINE" ? obj.strokeWeight : obj.height,
       isWidthAuto:
         obj.type === "TEXT" && obj.textAutoResize === "WIDTH_AND_HEIGHT",
-      isHeightAuto: obj.type === "TEXT" && obj.textAutoResize === "HEIGHT",
+      isHeightAuto:
+        obj.type === "TEXT" &&
+        ["HEIGHT", "WIDTH_AND_HEIGHT"].includes(obj.textAutoResize),
       constraintsHorizontal:
         fixedPositionNode && fixedPositionNode.fillContainer
           ? "STRETCH"
