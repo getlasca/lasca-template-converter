@@ -1,6 +1,8 @@
 import IdGenerator from "../helper/idGenerator";
 import {
   BaseStyle,
+  FrameStyle,
+  RectangleStyle,
   MixedText,
   NodeImage,
   Variable,
@@ -139,6 +141,100 @@ export default abstract class BaseNode {
         css += ` width: ${baseWidth};`;
         break;
       }
+    }
+    return css;
+  }
+
+  protected buildBaseShapeCss(
+    style: FrameStyle | RectangleStyle,
+    isEllipse = false
+  ): string {
+    let css = "";
+    if (style.backgroundColor) {
+      css += `background-color: rgba(${style.backgroundColor.r},${style.backgroundColor.g},${style.backgroundColor.b},${style.backgroundColor.a});`;
+    } else if (style.backgroundImage) {
+      const image = this.nodeImages.find(
+        (image) => this.nodeId === image.nodeId
+      );
+      if (image) {
+        css += `background: no-repeat center center url(https://assets.lasca.app/node_images/node-${image.imageId}.png);`;
+
+        switch (style.backgroundImage?.scaleMode) {
+          case "FILL": {
+            css += `background-size: cover;`;
+            break;
+          }
+          case "FIT": {
+            css += `background-size: contain;`;
+            break;
+          }
+        }
+      }
+    } else if (style.backgroundGradient) {
+      let type = "";
+      let position = ""; // TODO: position should be calculated from transform matrix by affin transformation
+      switch (style.backgroundGradient.type) {
+        case "GRADIENT_LINEAR": {
+          type = "linear";
+          position = "180deg";
+          break;
+        }
+        case "GRADIENT_RADIAL": {
+          type = "radial";
+          position = "50% 50% at 50% 50%";
+          break;
+        }
+        case "GRADIENT_ANGULAR": {
+          type = "conic";
+          position = "from 180deg at 50% 50%";
+          break;
+        }
+      }
+      const gradientStops = style.backgroundGradient.gradientStops
+        .map((stop) => {
+          return ` rgba(${stop.color.r},${stop.color.g},${stop.color.b},${
+            stop.color.a
+          }) ${
+            style.backgroundGradient &&
+            style.backgroundGradient.type === "GRADIENT_ANGULAR"
+              ? Math.round(stop.position * 360 * 100) / 100 + "deg"
+              : Math.round(stop.position * 100 * 100) / 100 + "%"
+          }`;
+        })
+        .join(",");
+      css += `background: ${type}-gradient(${position},${gradientStops});`;
+    }
+    if (style.border) {
+      css += ` border: ${style.border.width}px solid rgba(${style.border.color.r},${style.border.color.g},${style.border.color.b},${style.border.color.a});`;
+      if (style.border.inside) {
+        css += ` box-sizing: border-box;`;
+      }
+    }
+    if (style.shadows.length > 0) {
+      const shadowsCss = style.shadows.map((shadow) => {
+        return `${shadow.inner ? " inset" : ""} ${shadow.x}px ${shadow.y}px ${
+          shadow.blur
+        }px ${shadow.spread}px rgba(${shadow.color.r},${shadow.color.g},${
+          shadow.color.b
+        },${shadow.color.a})`;
+      });
+      css += ` box-shadow:${shadowsCss.join(",")};`;
+    }
+    if (style.layerBlur) {
+      css += ` filter: blur(${style.layerBlur.radius}px);`;
+    }
+    if (style.backgroundBlur) {
+      css += ` backdrop-filter: blur(${style.backgroundBlur.radius}px);`;
+    }
+    if (isEllipse) {
+      css += ` border-radius: 50%;`;
+    } else if (
+      style.radius.topLeft !== 0 ||
+      style.radius.topRight !== 0 ||
+      style.radius.bottomRight !== 0 ||
+      style.radius.bottomLeft !== 0
+    ) {
+      css += ` border-radius: ${style.radius.topLeft}px ${style.radius.topRight}px ${style.radius.bottomRight}px ${style.radius.bottomLeft}px;`;
     }
     return css;
   }

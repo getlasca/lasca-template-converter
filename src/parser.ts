@@ -1,5 +1,6 @@
 import {
   BaseStyle,
+  ShapeStyle,
   FrameStyle,
   TextStyle,
   TextRangeStyle,
@@ -24,6 +25,7 @@ export default class Parser {
     });
     return {
       ...this.baseStyle(obj),
+      ...this.shapeStyle(obj, fills),
       ...{
         layoutMode: obj.layoutMode,
         primaryAxisSizingMode: obj.primaryAxisSizingMode,
@@ -35,53 +37,6 @@ export default class Parser {
         paddingTop: obj.paddingTop,
         paddingBottom: obj.paddingBottom,
         itemSpacing: obj.itemSpacing,
-        backgroundColor:
-          fills.length !== 0 && fills[0].type === "SOLID"
-            ? {
-                r: Math.round(fills[0].color.r * 255),
-                g: Math.round(fills[0].color.g * 255),
-                b: Math.round(fills[0].color.b * 255),
-                a: fills[0].opacity * obj.opacity,
-              }
-            : undefined,
-        backgroundImage:
-          fills.length !== 0 && fills[0].type === "IMAGE"
-            ? {
-                scaleMode: fills[0].scaleMode,
-              }
-            : undefined,
-        backgroundGradient:
-          fills.length !== 0 &&
-          [
-            "GRADIENT_LINEAR",
-            "GRADIENT_RADIAL",
-            "GRADIENT_ANGULAR",
-            "GRADIENT_DIAMOND",
-          ].includes(fills[0].type)
-            ? {
-                type:
-                  fills[0].type === "GRADIENT_DIAMOND"
-                    ? "GRADIENT_RADIAL"
-                    : fills[0].type,
-                gradientStops: fills[0].gradientStops.map((stop: any) => {
-                  return {
-                    color: {
-                      r: Math.round(stop.color.r * 255),
-                      g: Math.round(stop.color.g * 255),
-                      b: Math.round(stop.color.b * 255),
-                      a: stop.color.a * obj.opacity,
-                    },
-                    position: stop.position,
-                  };
-                }),
-              }
-            : undefined,
-        radius: {
-          topLeft: obj.topLeftRadius,
-          topRight: obj.topRightRadius,
-          bottomRight: obj.bottomRightRadius,
-          bottomLeft: obj.bottomLeftRadius,
-        },
         clipsContent: obj.clipsContent,
       },
     };
@@ -101,55 +56,7 @@ export default class Parser {
 
     return {
       ...this.baseStyle(obj),
-      ...{
-        backgroundColor:
-          fills.length !== 0 && fills[0].type === "SOLID"
-            ? {
-                r: Math.round(fills[0].color.r * 255),
-                g: Math.round(fills[0].color.g * 255),
-                b: Math.round(fills[0].color.b * 255),
-                a: fills[0].opacity * obj.opacity,
-              }
-            : undefined,
-        backgroundImage:
-          fills.length !== 0 && fills[0].type === "IMAGE"
-            ? {
-                scaleMode: fills[0].scaleMode,
-              }
-            : undefined,
-        backgroundGradient:
-          fills.length !== 0 &&
-          [
-            "GRADIENT_LINEAR",
-            "GRADIENT_RADIAL",
-            "GRADIENT_ANGULAR",
-            "GRADIENT_DIAMOND",
-          ].includes(fills[0].type)
-            ? {
-                type:
-                  fills[0].type === "GRADIENT_DIAMOND"
-                    ? "GRADIENT_RADIAL"
-                    : fills[0].type,
-                gradientStops: fills[0].gradientStops.map((stop: any) => {
-                  return {
-                    color: {
-                      r: Math.round(stop.color.r * 255),
-                      g: Math.round(stop.color.g * 255),
-                      b: Math.round(stop.color.b * 255),
-                      a: stop.color.a * obj.opacity,
-                    },
-                    position: stop.position,
-                  };
-                }),
-              }
-            : undefined,
-        radius: {
-          topLeft: obj.topLeftRadius || 0,
-          topRight: obj.topRightRadius || 0,
-          bottomRight: obj.bottomRightRadius || 0,
-          bottomLeft: obj.bottomLeftRadius || 0,
-        },
-      },
+      ...this.shapeStyle(obj, fills),
     };
   }
 
@@ -280,6 +187,58 @@ export default class Parser {
             radius: backgroundBlur.radius,
           }
         : undefined,
+    };
+  }
+
+  private shapeStyle(obj: any, fills: any[]): ShapeStyle {
+    return {
+      backgroundColor:
+        fills.length !== 0 && fills[0].type === "SOLID"
+          ? {
+              r: Math.round(fills[0].color.r * 255),
+              g: Math.round(fills[0].color.g * 255),
+              b: Math.round(fills[0].color.b * 255),
+              a: fills[0].opacity * obj.opacity,
+            }
+          : undefined,
+      backgroundImage:
+        fills.length !== 0 && fills[0].type === "IMAGE"
+          ? {
+              scaleMode: fills[0].scaleMode,
+            }
+          : undefined,
+      backgroundGradient:
+        fills.length !== 0 &&
+        [
+          "GRADIENT_LINEAR",
+          "GRADIENT_RADIAL",
+          "GRADIENT_ANGULAR",
+          "GRADIENT_DIAMOND",
+        ].includes(fills[0].type)
+          ? {
+              type:
+                fills[0].type === "GRADIENT_DIAMOND"
+                  ? "GRADIENT_RADIAL"
+                  : fills[0].type,
+              gradientStops: fills[0].gradientStops.map((stop: any) => {
+                return {
+                  color: {
+                    r: Math.round(stop.color.r * 255),
+                    g: Math.round(stop.color.g * 255),
+                    b: Math.round(stop.color.b * 255),
+                    a: stop.color.a * obj.opacity,
+                  },
+                  position: stop.position,
+                };
+              }),
+            }
+          : undefined,
+      radius: {
+        topLeft: obj.topLeftRadius || 0,
+        topRight: obj.topRightRadius || 0,
+        bottomRight: obj.bottomRightRadius || 0,
+        bottomLeft: obj.bottomLeftRadius || 0,
+      },
     };
   }
 
