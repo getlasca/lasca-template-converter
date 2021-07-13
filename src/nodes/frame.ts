@@ -205,7 +205,7 @@ export default class FrameNode extends BaseNode {
         }
         case "MAX": {
           css += " justify-content: flex-end;";
-          childCss += ` .class-${this.className} > *:not(:first-of-type) { `;
+          childCss += ` .class-${this.className} > *:not(:first-child) { `;
           childCss += `margin-${
             this.style.layoutMode === "HORIZONTAL" ? "left" : "top"
           }: ${this.style.itemSpacing}px;`;
@@ -214,10 +214,14 @@ export default class FrameNode extends BaseNode {
         }
         case "CENTER": {
           css += " justify-content: center;";
-          childCss += ` .class-${this.className} > * { `;
+
+          childCss += ` .class-${this.className} > *:not(:first-child) { `;
           childCss += `margin-${
             this.style.layoutMode === "HORIZONTAL" ? "left" : "top"
           }: ${this.style.itemSpacing / 2}px;`;
+          childCss += " }";
+
+          childCss += ` .class-${this.className} > *:not(:last-child) { `;
           childCss += ` margin-${
             this.style.layoutMode === "HORIZONTAL" ? "right" : "bottom"
           }: ${this.style.itemSpacing / 2}px;`;
