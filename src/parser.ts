@@ -152,7 +152,7 @@ export default class Parser {
 
     return {
       x: this.groupAutoLayoutChildX
-        ? this.groupAutoLayoutChildX - obj.x
+        ? obj.x - this.groupAutoLayoutChildX
         : obj.x,
       xFromCenter: this.baseWidth / 2 - obj.x,
       xFromRight: this.baseWidth - (obj.x + obj.width),
@@ -160,7 +160,7 @@ export default class Parser {
         obj.type === "LINE"
           ? obj.y - obj.strokeWeight
           : this.groupAutoLayoutChildY
-          ? this.groupAutoLayoutChildY - obj.y
+          ? obj.y - this.groupAutoLayoutChildY
           : obj.y,
       width: obj.width,
       height: obj.type === "LINE" ? obj.strokeWeight : obj.height,

@@ -161,6 +161,9 @@ export default class GroupNode extends BaseNode {
 
   buildCss(): string {
     let css = `.class-${this.className} {`;
+    if (this.layoutModeAsChild !== "NONE") {
+      css += ` position: relative;`;
+    }
     css += ` width: ${this.style.width}px;`;
     css += ` height: ${this.style.height}px; } `;
     css += this.children
