@@ -5,6 +5,7 @@ import {
   TextStyle,
   TextRangeStyle,
   RectangleStyle,
+  GroupStyle,
   VectorStyle,
 } from "./types";
 
@@ -103,6 +104,13 @@ export default class Parser {
             ? `${obj.lineHeight.value}px`
             : `${obj.lineHeight.value}%`
           : undefined,
+    };
+  }
+
+  groupStyle(obj: any): GroupStyle {
+    return {
+      width: obj.width,
+      height: obj.height,
     };
   }
 

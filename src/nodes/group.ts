@@ -7,6 +7,7 @@ import EmptyNode from "./empty";
 import Parser from "../parser";
 import IdGenerator from "../helper/idGenerator";
 import {
+  GroupStyle,
   MixedText,
   NodeImage,
   Variable,
@@ -17,6 +18,7 @@ import {
 
 export default class GroupNode extends BaseNode {
   children: BaseNode[] = [];
+  style: GroupStyle;
 
   constructor(
     parser: Parser,
@@ -41,6 +43,8 @@ export default class GroupNode extends BaseNode {
       loops,
       events
     );
+
+    this.style = parser.groupStyle(figma);
 
     figma.children.forEach((node: any) => {
       let childNode: BaseNode;
@@ -142,7 +146,9 @@ export default class GroupNode extends BaseNode {
   }
 
   buildTemplate(): string {
-    let tag = `<div${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}>`;
+    let tag = `<div class="class-${
+      this.className
+    }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}>`;
     this.children.forEach((node: BaseNode) => {
       tag += node.buildTemplate();
     });
@@ -151,10 +157,14 @@ export default class GroupNode extends BaseNode {
   }
 
   buildCss(): string {
-    return this.children
+    let css = `.class-${this.className} {`;
+    css += ` width: ${this.style.width}px;`;
+    css += ` height: ${this.style.height}px; } `;
+    css += this.children
       .map((node: BaseNode) => {
         return node.buildCss();
       })
       .join(" ");
+    return css;
   }
 }
