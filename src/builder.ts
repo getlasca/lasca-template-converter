@@ -59,7 +59,7 @@ export default class Builder {
     loops: Loop[],
     events: Event[]
   ): FrameNode {
-    const parser = new Parser(figma, true);
+    const parser = new Parser("ROOT_FRAME", figma);
     const classIdGenerator = new IdGenerator();
     return new FrameNode(
       parser,

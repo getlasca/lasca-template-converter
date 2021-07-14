@@ -11,12 +11,25 @@ import {
 
 export default class Parser {
   baseWidth: number;
+  groupAutoLayoutChildX?: number = undefined;
+  groupAutoLayoutChildY?: number = undefined;
   fixedPositionNodes: { nodeId: string; fillContainer: boolean }[] = [];
 
-  constructor(node: any, isRoot = false) {
+  constructor(
+    type: "FRAME" | "ROOT_FRAME" | "GROUP_AUTOLAYOUT_CHILD",
+    node: any
+  ) {
     this.baseWidth = node.width;
-    if (isRoot) {
-      this.fixedPositionNodes = this.getFixedPositionNodes(node);
+    switch (type) {
+      case "ROOT_FRAME": {
+        this.fixedPositionNodes = this.getFixedPositionNodes(node);
+        break;
+      }
+      case "GROUP_AUTOLAYOUT_CHILD": {
+        this.groupAutoLayoutChildX = node.x;
+        this.groupAutoLayoutChildY = node.y;
+        break;
+      }
     }
   }
 
@@ -138,10 +151,17 @@ export default class Parser {
     });
 
     return {
-      x: obj.x,
+      x: this.groupAutoLayoutChildX
+        ? this.groupAutoLayoutChildX - obj.x
+        : obj.x,
       xFromCenter: this.baseWidth / 2 - obj.x,
       xFromRight: this.baseWidth - (obj.x + obj.width),
-      y: obj.type === "LINE" ? obj.y - obj.strokeWeight : obj.y,
+      y:
+        obj.type === "LINE"
+          ? obj.y - obj.strokeWeight
+          : this.groupAutoLayoutChildY
+          ? this.groupAutoLayoutChildY - obj.y
+          : obj.y,
       width: obj.width,
       height: obj.type === "LINE" ? obj.strokeWeight : obj.height,
       isWidthAuto:

@@ -57,7 +57,7 @@ export default class FrameNode extends BaseNode {
         case "COMPONENT":
         case "COMPONENT_SET":
         case "INSTANCE": {
-          const relativeParser = new Parser(node);
+          const relativeParser = new Parser("FRAME", node);
           childNode = new FrameNode(
             childParser,
             idGenerator,
@@ -74,12 +74,15 @@ export default class FrameNode extends BaseNode {
           );
           break;
         }
-        case "GROUP":
+        case "GROUP": {
           childNode = new GroupNode(
             childParser,
             idGenerator,
             node,
             figma.layoutMode,
+            figma.layoutMode === "NONE"
+              ? undefined
+              : new Parser("GROUP_AUTOLAYOUT_CHILD", node),
             mixedTexts,
             nodeImages,
             variables,
@@ -88,6 +91,7 @@ export default class FrameNode extends BaseNode {
             events
           );
           break;
+        }
         case "RECTANGLE":
         case "ELLIPSE":
         case "LINE":
