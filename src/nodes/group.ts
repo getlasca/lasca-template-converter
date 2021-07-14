@@ -25,6 +25,7 @@ export default class GroupNode extends BaseNode {
     idGenerator: IdGenerator,
     figma: any,
     layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    relativeParser?: Parser,
     mixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
@@ -45,6 +46,7 @@ export default class GroupNode extends BaseNode {
     );
 
     this.style = parser.groupStyle(figma);
+    const childParser = relativeParser || parser;
 
     figma.children.forEach((node: any) => {
       let childNode: BaseNode;
@@ -54,7 +56,7 @@ export default class GroupNode extends BaseNode {
         case "COMPONENT_SET":
         case "INSTANCE":
           childNode = new FrameNode(
-            parser,
+            childParser,
             idGenerator,
             node,
             false,
@@ -70,10 +72,11 @@ export default class GroupNode extends BaseNode {
           break;
         case "GROUP":
           childNode = new GroupNode(
-            parser,
+            childParser,
             idGenerator,
             node,
             "NONE",
+            undefined,
             mixedTexts,
             nodeImages,
             variables,
@@ -86,7 +89,7 @@ export default class GroupNode extends BaseNode {
         case "ELLIPSE":
         case "LINE":
           childNode = new RectangleNode(
-            parser,
+            childParser,
             idGenerator,
             node,
             "NONE",
@@ -100,7 +103,7 @@ export default class GroupNode extends BaseNode {
           break;
         case "TEXT":
           childNode = new TextNode(
-            parser,
+            childParser,
             idGenerator,
             node,
             "NONE",
@@ -114,7 +117,7 @@ export default class GroupNode extends BaseNode {
           break;
         case "VECTOR":
           childNode = new VectorNode(
-            parser,
+            childParser,
             idGenerator,
             node,
             "NONE",
@@ -128,7 +131,7 @@ export default class GroupNode extends BaseNode {
           break;
         default:
           childNode = new EmptyNode(
-            parser,
+            childParser,
             idGenerator,
             node,
             "NONE",
