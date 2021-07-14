@@ -130,6 +130,11 @@ export interface TextStyle extends BaseStyle, TextRangeStyle {
   textIndent: number;
 }
 
+export interface GroupStyle {
+  width: number;
+  height: number;
+}
+
 export type VectorStyle = BaseStyle;
 
 interface Color {
