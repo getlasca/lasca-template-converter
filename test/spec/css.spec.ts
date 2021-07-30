@@ -6,6 +6,8 @@ test("simple", () => {
   const output = convert([
     {
       figma: figma,
+      min: 0,
+      max: 0,
       mixedTexts: [],
       nodeImages: [],
       variables: [],
@@ -26,6 +28,7 @@ test("two breakpoints", () => {
   const output = convert([
     {
       figma: figma,
+      min: 0,
       max: 349,
       mixedTexts: [],
       nodeImages: [],
@@ -37,6 +40,7 @@ test("two breakpoints", () => {
     {
       figma: figma,
       min: 350,
+      max: 0,
       mixedTexts: [],
       nodeImages: [],
       variables: [],
@@ -64,6 +68,8 @@ test("nested", () => {
   const output = convert([
     {
       figma: figma,
+      min: 0,
+      max: 0,
       mixedTexts: [],
       nodeImages: [],
       variables: [],
