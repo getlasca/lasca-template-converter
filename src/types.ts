@@ -1,6 +1,6 @@
 export interface Breakpoint {
-  min?: number;
-  max?: number;
+  min: number;
+  max: number;
   figma: any;
   mixedTexts: MixedText[];
   nodeImages: NodeImage[];

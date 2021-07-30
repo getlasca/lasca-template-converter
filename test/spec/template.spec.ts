@@ -7,6 +7,8 @@ test("simple", () => {
   const output = convert([
     {
       figma: figma,
+      min: 0,
+      max: 0,
       mixedTexts: [],
       nodeImages: [],
       variables: [],
@@ -32,6 +34,7 @@ test("breakpoints", () => {
   const output = convert([
     {
       figma: figma,
+      min: 0,
       max: 349,
       mixedTexts: [],
       nodeImages: [],
@@ -43,6 +46,7 @@ test("breakpoints", () => {
     {
       figma: figma,
       min: 350,
+      max: 0,
       mixedTexts: [],
       nodeImages: [],
       variables: [],
@@ -74,6 +78,8 @@ test("nested", () => {
   const output = convert([
     {
       figma: figma,
+      min: 0,
+      max: 0,
       mixedTexts: [],
       nodeImages: [],
       variables: [],
@@ -100,6 +106,8 @@ test("variable", () => {
   const output = convert([
     {
       figma: figma,
+      min: 0,
+      max: 0,
       mixedTexts: [],
       nodeImages: [],
       variables: [{ nodeId: "1:8", expression: "count" }],
@@ -125,6 +133,8 @@ test("condition", () => {
   const output = convert([
     {
       figma: figma,
+      min: 0,
+      max: 0,
       mixedTexts: [],
       nodeImages: [],
       variables: [],
@@ -150,6 +160,8 @@ test("loop", () => {
   const output = convert([
     {
       figma: figma,
+      min: 0,
+      max: 0,
       mixedTexts: [],
       nodeImages: [],
       variables: [],
@@ -175,6 +187,8 @@ test("event", () => {
   const output = convert([
     {
       figma: figma,
+      min: 0,
+      max: 0,
       mixedTexts: [],
       nodeImages: [],
       variables: [],

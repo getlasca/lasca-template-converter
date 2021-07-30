@@ -15,8 +15,8 @@ import IdGenerator from "./helper/idGenerator";
 export interface ComponentNode {
   rootNode: FrameNode;
   breakPointId: string;
-  min?: number;
-  max?: number;
+  min: number;
+  max: number;
 }
 
 export default class Builder {
@@ -108,22 +108,22 @@ export default class Builder {
   private buildBreakPointCss(
     css: string,
     breakPointId: string,
-    min?: number,
-    max?: number
+    min: number,
+    max: number
   ): string {
-    if (max && min) {
+    if (max !== 0 && min !== 0) {
       return `@media screen and (max-width: ${max}px) and (min-width: ${min}px) { ${css} } @media screen and (min-width: ${
         max + 1
       }px) and (max-width: ${
         min - 1
       }px) { .breakpoint-${breakPointId} { display: none; } }`;
     }
-    if (max) {
+    if (max !== 0) {
       return `@media screen and (max-width: ${max}px) { ${css} } @media screen and (min-width: ${
         max + 1
       }px) { .breakpoint-${breakPointId} { display: none; } }`;
     }
-    if (min) {
+    if (min !== 0) {
       return `@media screen and (min-width: ${min}px) { ${css} } @media screen and (max-width: ${
         min - 1
       }px) { .breakpoint-${breakPointId} { display: none; } }`;
