@@ -155,7 +155,7 @@ export default abstract class BaseNode {
       );
       if (image) {
         css += `background: no-repeat center center url(${
-          process.env.ASSETS_URL || "https://assets.lasca.app"
+          process.env.LASCA_ASSETS_URL || "https://assets.lasca.app"
         }/node_images/node-${image.imageId}.png);`;
 
         switch (style.backgroundImage?.scaleMode) {
