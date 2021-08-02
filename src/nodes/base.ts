@@ -154,7 +154,9 @@ export default abstract class BaseNode {
         (image) => this.nodeId === image.nodeId
       );
       if (image) {
-        css += `background: no-repeat center center url(https://assets.lasca.app/node_images/node-${image.imageId}.png);`;
+        css += `background: no-repeat center center url(${
+          process.env.ASSETS_URL || "https://assets.lasca.app"
+        }/node_images/node-${image.imageId}.png);`;
 
         switch (style.backgroundImage?.scaleMode) {
           case "FILL": {
