@@ -178,7 +178,9 @@ export default class Parser {
       layoutGrow: obj.layoutGrow,
       isFixedPosition: !!fixedPositionNode,
       border:
-        obj.type !== "LINE" && strokes.length !== 0
+        obj.type !== "LINE" &&
+        strokes.length !== 0 &&
+        strokes[0].type === "SOLID"
           ? {
               color: {
                 r: Math.round(strokes[0].color.r * 255),
