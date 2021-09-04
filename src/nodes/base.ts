@@ -66,7 +66,7 @@ export default abstract class BaseNode {
       return this.nodeId === loop.nodeId;
     });
     return loop
-      ? ` v-for="${loop.itemVariable} in ${loop.variable}" :key="${loop.itemVariable}.id"`
+      ? ` v-for="lasca_item_1 in ${loop.variableSet.name}" :key="lasca_item_1.id"`
       : "";
   }
 
@@ -74,7 +74,7 @@ export default abstract class BaseNode {
     const event = this.events.find((event) => {
       return this.nodeId === event.nodeId;
     });
-    return event ? ` v-on:${event.eventType}="${event.name}"` : "";
+    return event ? ` v-on:${event.eventType}="${event.eventSet.name}"` : "";
   }
 
   protected buildBaseLayoutCss(input: BaseStyle, isRoot = false): string {
