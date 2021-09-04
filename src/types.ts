@@ -49,14 +49,21 @@ export interface Condition {
 
 export interface Loop {
   nodeId: string;
-  variable: string;
-  itemVariable: string;
+  variableSet: VariableSet;
+}
+
+export interface VariableSet {
+  name: string;
 }
 
 export interface Event {
   nodeId: string;
-  name: string;
   eventType: string;
+  eventSet: EventSet;
+}
+
+export interface EventSet {
+  name: string;
 }
 
 export interface Output {
