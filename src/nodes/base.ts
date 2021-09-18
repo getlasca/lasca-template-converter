@@ -79,10 +79,11 @@ export default abstract class BaseNode {
     const loop = this.loops.find((loop) => {
       return this.nodeId === loop.nodeId;
     });
-    const itemName = loop!.variableSet.name + LOOP_ITEM_SUFFIX;
-    return loop
-      ? ` v-for="${itemName} in ${loop.variableSet.name}" :key="${itemName}"`
-      : "";
+    if (!loop) {
+      return "";
+    }
+    const itemName = loop.variableSet.name + LOOP_ITEM_SUFFIX;
+    return ` v-for="${itemName} in ${loop.variableSet.name}" :key="${itemName}"`;
   }
 
   protected buildEvent(): string {
