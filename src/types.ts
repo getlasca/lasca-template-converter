@@ -40,11 +40,13 @@ export interface NodeImage {
 export interface Variable {
   nodeId: string;
   expression: string;
+  loopId: number;
 }
 
 export interface Condition {
   nodeId: string;
   expression: string;
+  loopId: number;
 }
 
 export interface Loop {

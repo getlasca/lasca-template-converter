@@ -11,6 +11,8 @@ import {
   Event,
 } from "../types";
 
+const LOOP_ITEM_SUFFIX = "__lascaItem";
+
 export default abstract class BaseNode {
   nodeId: string;
   className: string;
@@ -51,22 +53,35 @@ export default abstract class BaseNode {
     const variable = this.variables.find((variable) => {
       return this.nodeId === variable.nodeId;
     });
-    return variable ? `{{ ${variable.expression} }}` : "";
+    return variable
+      ? `{{ ${
+          variable.loopId === 0
+            ? variable.expression
+            : variable.expression + LOOP_ITEM_SUFFIX
+        } }}`
+      : "";
   }
 
   protected buildCondition(): string {
     const condition = this.conditions.find((condition) => {
       return this.nodeId === condition.nodeId;
     });
-    return condition ? ` v-if="${condition.expression}"` : "";
+    return condition
+      ? ` v-if="${
+          condition.loopId === 0
+            ? condition.expression
+            : condition.expression + LOOP_ITEM_SUFFIX
+        }"`
+      : "";
   }
 
   protected buildLoop(): string {
     const loop = this.loops.find((loop) => {
       return this.nodeId === loop.nodeId;
     });
+    const itemName = loop!.variableSet.name + LOOP_ITEM_SUFFIX;
     return loop
-      ? ` v-for="lasca_item_1 in ${loop.variableSet.name}" :key="lasca_item_1.id"`
+      ? ` v-for="${itemName} in ${loop.variableSet.name}" :key="${itemName}"`
       : "";
   }
 
