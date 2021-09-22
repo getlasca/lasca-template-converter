@@ -110,7 +110,7 @@ test("variable", () => {
       max: 0,
       mixedTexts: [],
       nodeImages: [],
-      variables: [{ nodeId: "1:8", expression: "count" }],
+      variables: [{ nodeId: "1:8", expression: "count", loopId: 0 }],
       conditions: [],
       loops: [],
       events: [],
@@ -138,7 +138,7 @@ test("condition", () => {
       mixedTexts: [],
       nodeImages: [],
       variables: [],
-      conditions: [{ nodeId: "1:7", expression: "valid" }],
+      conditions: [{ nodeId: "1:7", expression: "valid", loopId: 0 }],
       loops: [],
       events: [],
     },
@@ -166,7 +166,7 @@ test("loop", () => {
       nodeImages: [],
       variables: [],
       conditions: [],
-      loops: [{ nodeId: "1:7", itemVariable: "item", variable: "items" }],
+      loops: [{ nodeId: "1:7", variableSet: { name: "items" } }],
       events: [],
     },
   ]);
@@ -174,7 +174,7 @@ test("loop", () => {
     `<div>` +
       `<div class="breakpoint-1">` +
       `<div class="class-1">` +
-      `<div class="class-2" v-for="item in items" :key="item.id"></div>` +
+      `<div class="class-2" v-for="items__lascaItem in items" :key="items__lascaItem"></div>` +
       `<span class="class-3">sampleText</span>` +
       `</div>` +
       `</div>` +
@@ -194,7 +194,9 @@ test("event", () => {
       variables: [],
       conditions: [],
       loops: [],
-      events: [{ nodeId: "1:7", eventType: "click", name: "handle" }],
+      events: [
+        { nodeId: "1:7", eventType: "click", eventSet: { name: "handle" } },
+      ],
     },
   ]);
   expect(output.template).toBe(
