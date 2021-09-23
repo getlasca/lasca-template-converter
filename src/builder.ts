@@ -112,21 +112,31 @@ export default class Builder {
     max: number
   ): string {
     if (max !== 0 && min !== 0) {
-      return `@media screen and (max-width: ${max}px) and (min-width: ${min}px) { ${css} } @media screen and (min-width: ${
-        max + 1
-      }px) and (max-width: ${
-        min - 1
-      }px) { .breakpoint-${breakPointId} { display: none; } }`;
+      return (
+        `@media screen and (max-width: ${max}px) and (min-width: ${min}px) { ${css} } ` +
+        `@media screen and (min-width: ${
+          max + 1
+        }px) { .breakpoint-${breakPointId} { display: none; } } ` +
+        `@media screen and (max-width: ${
+          min - 1
+        }px) { .breakpoint-${breakPointId} { display: none; } }`
+      );
     }
     if (max !== 0) {
-      return `@media screen and (max-width: ${max}px) { ${css} } @media screen and (min-width: ${
-        max + 1
-      }px) { .breakpoint-${breakPointId} { display: none; } }`;
+      return (
+        `@media screen and (max-width: ${max}px) { ${css} } ` +
+        `@media screen and (min-width: ${
+          max + 1
+        }px) { .breakpoint-${breakPointId} { display: none; } }`
+      );
     }
     if (min !== 0) {
-      return `@media screen and (min-width: ${min}px) { ${css} } @media screen and (max-width: ${
-        min - 1
-      }px) { .breakpoint-${breakPointId} { display: none; } }`;
+      return (
+        `@media screen and (min-width: ${min}px) { ${css} } ` +
+        `@media screen and (max-width: ${
+          min - 1
+        }px) { .breakpoint-${breakPointId} { display: none; } }`
+      );
     }
     return css;
   }
