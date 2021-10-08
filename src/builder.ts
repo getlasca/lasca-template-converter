@@ -113,6 +113,7 @@ export default class Builder {
   ): string {
     if (max !== 0 && min !== 0) {
       return (
+        `.breakpoint-${breakPointId} { position: relative; } ` +
         `@media screen and (max-width: ${max}px) and (min-width: ${min}px) { ${css} } ` +
         `@media screen and (min-width: ${
           max + 1
@@ -124,6 +125,7 @@ export default class Builder {
     }
     if (max !== 0) {
       return (
+        `.breakpoint-${breakPointId} { position: relative; } ` +
         `@media screen and (max-width: ${max}px) { ${css} } ` +
         `@media screen and (min-width: ${
           max + 1
@@ -132,12 +134,13 @@ export default class Builder {
     }
     if (min !== 0) {
       return (
+        `.breakpoint-${breakPointId} { position: relative; } ` +
         `@media screen and (min-width: ${min}px) { ${css} } ` +
         `@media screen and (max-width: ${
           min - 1
         }px) { .breakpoint-${breakPointId} { display: none; } }`
       );
     }
-    return css;
+    return `.breakpoint-${breakPointId} { position: relative; } ` + css;
   }
 }
