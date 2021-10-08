@@ -102,7 +102,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         case "TEXT":
@@ -116,7 +117,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         case "VECTOR":
@@ -130,7 +132,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         default:
