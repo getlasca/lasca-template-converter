@@ -12,6 +12,7 @@ import {
 } from "../types";
 
 const LOOP_ITEM_SUFFIX = "__lascaItem";
+const LOOP_INDEX_SUFFIX = "__lascaIndex";
 
 export default abstract class BaseNode {
   nodeId: string;
@@ -83,14 +84,22 @@ export default abstract class BaseNode {
       return "";
     }
     const itemName = loop.variableSet.name + LOOP_ITEM_SUFFIX;
-    return ` v-for="${itemName} in ${loop.variableSet.name}" :key="${itemName}"`;
+    const indexName = loop.variableSet.name + LOOP_INDEX_SUFFIX;
+    return ` v-for="(${itemName}, ${indexName}) in ${loop.variableSet.name}" :key="${itemName}"`;
   }
 
   protected buildEvent(): string {
     const event = this.events.find((event) => {
       return this.nodeId === event.nodeId;
     });
-    return event ? ` v-on:${event.eventType}="${event.eventSet.name}"` : "";
+    const indexParams = this.getParentLoopVariables()
+      .map((v) => {
+        return v + LOOP_INDEX_SUFFIX;
+      })
+      .join(",");
+    return event
+      ? ` v-on:${event.eventType}="${event.eventSet.name}(${indexParams})"`
+      : "";
   }
 
   protected buildBaseLayoutCss(input: BaseStyle, isRoot = false): string {
@@ -252,5 +261,9 @@ export default abstract class BaseNode {
       css += ` border-radius: ${style.radius.topLeft}px ${style.radius.topRight}px ${style.radius.bottomRight}px ${style.radius.bottomLeft}px;`;
     }
     return css;
+  }
+
+  protected getParentLoopVariables(): string[] {
+    return [];
   }
 }
