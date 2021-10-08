@@ -24,6 +24,7 @@ export default abstract class BaseNode {
   conditions: Condition[];
   loops: Loop[];
   events: Event[];
+  parentLoopVariables: string[];
 
   constructor(
     nodeId: string,
@@ -34,7 +35,8 @@ export default abstract class BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = []
+    events: Event[] = [],
+    parentLoopVariables: string[] = []
   ) {
     this.nodeId = nodeId;
     this.className = idGenerator.getId() + "";
@@ -45,6 +47,7 @@ export default abstract class BaseNode {
     this.conditions = conditions;
     this.loops = loops;
     this.events = events;
+    this.parentLoopVariables = parentLoopVariables;
   }
 
   abstract buildTemplate(): string;
@@ -92,7 +95,7 @@ export default abstract class BaseNode {
     const event = this.events.find((event) => {
       return this.nodeId === event.nodeId;
     });
-    const indexParams = this.getParentLoopVariables()
+    const indexParams = this.parentLoopVariables
       .map((v) => {
         return v + LOOP_INDEX_SUFFIX;
       })
@@ -263,7 +266,14 @@ export default abstract class BaseNode {
     return css;
   }
 
-  protected getParentLoopVariables(): string[] {
-    return [];
+  protected getParentLoopVariablesForChild(): string[] {
+    const parentLoopVariblesForChild = this.parentLoopVariables.concat();
+    const loop = this.loops.find((v) => {
+      return v.nodeId === this.nodeId;
+    });
+    if (loop) {
+      parentLoopVariblesForChild.push(loop.variableSet.name);
+    }
+    return parentLoopVariblesForChild;
   }
 }
