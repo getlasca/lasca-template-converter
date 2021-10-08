@@ -12,6 +12,7 @@ import {
 } from "../types";
 
 const LOOP_ITEM_SUFFIX = "__lascaItem";
+const LOOP_INDEX_SUFFIX = "__lascaIndex";
 
 export default abstract class BaseNode {
   nodeId: string;
@@ -23,6 +24,7 @@ export default abstract class BaseNode {
   conditions: Condition[];
   loops: Loop[];
   events: Event[];
+  parentLoopVariables: string[];
 
   constructor(
     nodeId: string,
@@ -33,7 +35,8 @@ export default abstract class BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = []
+    events: Event[] = [],
+    parentLoopVariables: string[] = []
   ) {
     this.nodeId = nodeId;
     this.className = idGenerator.getId() + "";
@@ -44,6 +47,7 @@ export default abstract class BaseNode {
     this.conditions = conditions;
     this.loops = loops;
     this.events = events;
+    this.parentLoopVariables = parentLoopVariables;
   }
 
   abstract buildTemplate(): string;
@@ -83,14 +87,22 @@ export default abstract class BaseNode {
       return "";
     }
     const itemName = loop.variableSet.name + LOOP_ITEM_SUFFIX;
-    return ` v-for="${itemName} in ${loop.variableSet.name}" :key="${itemName}"`;
+    const indexName = loop.variableSet.name + LOOP_INDEX_SUFFIX;
+    return ` v-for="(${itemName}, ${indexName}) in ${loop.variableSet.name}" :key="${itemName}"`;
   }
 
   protected buildEvent(): string {
     const event = this.events.find((event) => {
       return this.nodeId === event.nodeId;
     });
-    return event ? ` v-on:${event.eventType}="${event.eventSet.name}"` : "";
+    const indexParams = this.parentLoopVariables
+      .map((v) => {
+        return v + LOOP_INDEX_SUFFIX;
+      })
+      .join(",");
+    return event
+      ? ` v-on:${event.eventType}="${event.eventSet.name}(${indexParams})"`
+      : "";
   }
 
   protected buildBaseLayoutCss(input: BaseStyle, isRoot = false): string {
@@ -252,5 +264,16 @@ export default abstract class BaseNode {
       css += ` border-radius: ${style.radius.topLeft}px ${style.radius.topRight}px ${style.radius.bottomRight}px ${style.radius.bottomLeft}px;`;
     }
     return css;
+  }
+
+  protected getParentLoopVariablesForChild(): string[] {
+    const parentLoopVariblesForChild = this.parentLoopVariables.concat();
+    const loop = this.loops.find((v) => {
+      return v.nodeId === this.nodeId;
+    });
+    if (loop) {
+      parentLoopVariblesForChild.push(loop.variableSet.name);
+    }
+    return parentLoopVariblesForChild;
   }
 }

@@ -174,7 +174,7 @@ test("loop", () => {
     `<div>` +
       `<div class="breakpoint-1">` +
       `<div class="class-1">` +
-      `<div class="class-2" v-for="items__lascaItem in items" :key="items__lascaItem"></div>` +
+      `<div class="class-2" v-for="(items__lascaItem, items__lascaIndex) in items" :key="items__lascaItem"></div>` +
       `<span class="class-3">sampleText</span>` +
       `</div>` +
       `</div>` +
@@ -203,8 +203,38 @@ test("event", () => {
     `<div>` +
       `<div class="breakpoint-1">` +
       `<div class="class-1">` +
-      `<div class="class-2" v-on:click="handle"></div>` +
+      `<div class="class-2" v-on:click="handle()"></div>` +
       `<span class="class-3">sampleText</span>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});
+
+test("event in loop", () => {
+  const figma = loadFixture("nested");
+  const output = convert([
+    {
+      figma: figma,
+      min: 0,
+      max: 0,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [{ nodeId: "46:4", variableSet: { name: "items" } }],
+      events: [
+        { nodeId: "46:5", eventType: "click", eventSet: { name: "handle" } },
+      ],
+    },
+  ]);
+  expect(output.template).toBe(
+    `<div>` +
+      `<div class="breakpoint-1">` +
+      `<div class="class-1">` +
+      `<div class="class-2" v-for="(items__lascaItem, items__lascaIndex) in items" :key="items__lascaItem">` +
+      `<div class="class-3" v-on:click="handle(items__lascaIndex)"></div>` +
+      `</div>` +
       `</div>` +
       `</div>` +
       `</div>`

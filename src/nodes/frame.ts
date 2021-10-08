@@ -33,7 +33,8 @@ export default class FrameNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = []
+    events: Event[] = [],
+    parentLoopVaribles: string[] = []
   ) {
     super(
       figma.id,
@@ -44,7 +45,8 @@ export default class FrameNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events
+      events,
+      parentLoopVaribles
     );
     this.isRoot = isRoot;
     this.style = parser.frameStyle(figma);
@@ -70,7 +72,8 @@ export default class FrameNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         }
@@ -88,7 +91,8 @@ export default class FrameNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         }
@@ -105,7 +109,8 @@ export default class FrameNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         case "TEXT":
@@ -119,7 +124,8 @@ export default class FrameNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         case "VECTOR":
@@ -133,7 +139,8 @@ export default class FrameNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         default:

@@ -29,7 +29,8 @@ export default class TextNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = []
+    events: Event[] = [],
+    parentLoopVaribles: string[] = []
   ) {
     super(
       figma.id,

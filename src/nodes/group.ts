@@ -31,7 +31,8 @@ export default class GroupNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = []
+    events: Event[] = [],
+    parentLoopVaribles: string[] = []
   ) {
     super(
       figma.id,
@@ -42,7 +43,8 @@ export default class GroupNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events
+      events,
+      parentLoopVaribles
     );
 
     this.style = parser.groupStyle(figma);
@@ -67,7 +69,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         case "GROUP":
@@ -82,7 +85,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         case "RECTANGLE":
@@ -98,7 +102,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         case "TEXT":
@@ -112,7 +117,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         case "VECTOR":
@@ -126,7 +132,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            this.getParentLoopVariablesForChild()
           );
           break;
         default:
