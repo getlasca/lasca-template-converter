@@ -73,7 +73,7 @@ export default class FrameNode extends BaseNode {
             conditions,
             loops,
             events,
-            this.getParentLoopVariablesForChild()
+            this.loopVariables
           );
           break;
         }
@@ -92,7 +92,7 @@ export default class FrameNode extends BaseNode {
             conditions,
             loops,
             events,
-            this.getParentLoopVariablesForChild()
+            this.loopVariables
           );
           break;
         }
@@ -110,7 +110,7 @@ export default class FrameNode extends BaseNode {
             conditions,
             loops,
             events,
-            this.getParentLoopVariablesForChild()
+            this.loopVariables
           );
           break;
         case "TEXT":
@@ -125,7 +125,7 @@ export default class FrameNode extends BaseNode {
             conditions,
             loops,
             events,
-            this.getParentLoopVariablesForChild()
+            this.loopVariables
           );
           break;
         case "VECTOR":
@@ -140,7 +140,7 @@ export default class FrameNode extends BaseNode {
             conditions,
             loops,
             events,
-            this.getParentLoopVariablesForChild()
+            this.loopVariables
           );
           break;
         default:
