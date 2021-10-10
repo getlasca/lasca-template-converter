@@ -41,7 +41,8 @@ export default class TextNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events
+      events,
+      parentLoopVaribles
     );
     this.text = figma.characters;
     this.style = parser.textStyle(figma);
