@@ -50,7 +50,9 @@ export default class RectangleNode extends BaseNode {
 
   buildCss(): string {
     return `.class-${this.className} { ${
-      this.buildBaseShapeCss(this.style) + this.buildBaseLayoutCss(this.style)
+      this.buildBaseShapeCss(this.style) +
+      this.buildBaseLayoutCss(this.style) +
+      this.buildCursorCss()
     } }`;
   }
 }

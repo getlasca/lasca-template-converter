@@ -262,6 +262,7 @@ export default class FrameNode extends BaseNode {
     }
 
     css += this.buildBaseLayoutCss(this.style, this.isRoot);
+    css += this.buildCursorCss();
     css += " }";
     return [css, childCss];
   }

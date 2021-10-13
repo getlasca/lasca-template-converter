@@ -131,6 +131,7 @@ export default class TextNode extends BaseNode {
     }
     css += this.buildRangeCssBase(this.style);
     css += this.buildBaseLayoutCss(this.style);
+    css += this.buildCursorCss();
     return `.class-${this.className} { ${css} }` + this.buildRangeCss();
   }
 

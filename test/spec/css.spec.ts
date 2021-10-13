@@ -88,3 +88,28 @@ test("nested", () => {
       ".class-3 { background-color: rgba(0,0,0,1); border-radius: 80px 80px 80px 80px; position: absolute; top: 120px; height: 200px; left: 30px; width: 380px; }"
   );
 });
+
+test("event cursor", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      min: 0,
+      max: 0,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [],
+      events: [
+        { nodeId: "1:7", eventType: "click", eventSet: { name: "handle" } },
+      ],
+    },
+  ]);
+  expect(output.css).toBe(
+    ".breakpoint-1 { position: relative; } " +
+      ".class-1 { background-color: rgba(255,255,255,1); }" +
+      ".class-2 { background-color: rgba(255,255,255,1); border-radius: 80px 80px 80px 80px; position: absolute; top: 140px; height: 230px; left: 180px; width: 350px; cursor: pointer; }" +
+      ".class-3 { text-align: left; white-space: pre-wrap; overflow-wrap: break-word; font-size: 12px; color: rgba(0,0,0,1); font-weight: 400; font-family: 'Roboto', sans-serif; position: absolute; top: 550px; height: 90px; left: 110px; width: 310px; }"
+  );
+});

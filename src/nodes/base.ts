@@ -105,6 +105,13 @@ export default abstract class BaseNode {
       : "";
   }
 
+  protected buildCursorCss(): string {
+    const event = this.events.find((event) => {
+      return this.nodeId === event.nodeId;
+    });
+    return event ? " cursor: pointer;" : "";
+  }
+
   protected buildBaseLayoutCss(input: BaseStyle, isRoot = false): string {
     if (isRoot) {
       return "";

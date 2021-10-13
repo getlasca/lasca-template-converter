@@ -49,7 +49,7 @@ export default class VectorNode extends BaseNode {
   }
 
   buildCss(): string {
-    let css = this.buildBaseLayoutCss(this.style);
+    let css = this.buildBaseLayoutCss(this.style) + this.buildCursorCss();
     const image = this.nodeImages.find((image) => this.nodeId === image.nodeId);
     if (image) {
       css += `background: no-repeat center center url(${

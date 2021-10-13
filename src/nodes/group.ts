@@ -168,11 +168,18 @@ export default class GroupNode extends BaseNode {
 
   buildCss(): string {
     let css = "";
-    if (this.layoutModeAsChild !== "NONE") {
+    const cursorCss = this.buildCursorCss();
+    if (this.layoutModeAsChild !== "NONE" || cursorCss) {
       css += `.class-${this.className} {`;
-      css += ` position: relative;`;
-      css += ` width: ${this.style.width}px;`;
-      css += ` height: ${this.style.height}px; } `;
+      if (this.layoutModeAsChild !== "NONE") {
+        css += ` position: relative;`;
+        css += ` width: ${this.style.width}px;`;
+        css += ` height: ${this.style.height}px;`;
+      }
+      if (cursorCss) {
+        css += cursorCss;
+      }
+      css += " } ";
     }
     css += this.children
       .map((node: BaseNode) => {
