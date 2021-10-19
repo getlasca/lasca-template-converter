@@ -42,10 +42,10 @@ export default class RectangleNode extends BaseNode {
     this.style = parser.rectangleStyle(figma);
   }
 
-  buildTemplate(): string {
-    return `<div class="class-${
-      this.className
-    }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}></div>`;
+  buildTemplate(type: "jsx" | "vue"): string {
+    return `<div class="class-${this.className}"${this.buildCondition(
+      type
+    )}${this.buildLoop(type)}${this.buildEvent(type)}></div>`;
   }
 
   buildCss(): string {
