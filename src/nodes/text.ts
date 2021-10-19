@@ -61,10 +61,10 @@ export default class TextNode extends BaseNode {
     }
   }
 
-  buildTemplate(): string {
-    const attr = `class="class-${
-      this.className
-    }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}`;
+  buildTemplate(type: "jsx" | "vue"): string {
+    const attr = `class="class-${this.className}"${this.buildCondition(
+      type
+    )}${this.buildLoop(type)}${this.buildEvent(type)}`;
 
     if (this.mixedText) {
       const charStyles = this.mixedText.style.characterStyleMixed;
@@ -94,7 +94,7 @@ export default class TextNode extends BaseNode {
       // TODO: should consider embed variables
       return `<span ${attr}>${innerTag}</span>`;
     } else {
-      return `<span ${attr}>${this.buildVariable() || this.text}</span>`;
+      return `<span ${attr}>${this.buildVariable(type) || this.text}</span>`;
     }
   }
 

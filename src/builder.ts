@@ -45,7 +45,8 @@ export default class Builder {
 
   build(): Output {
     return {
-      template: this.buildTemplate(),
+      jsxTemplate: this.buildTemplate("jsx"),
+      vueTemplate: this.buildTemplate("vue"),
       css: this.buildCss(),
     };
   }
@@ -77,7 +78,7 @@ export default class Builder {
     );
   }
 
-  private buildTemplate(): string {
+  private buildTemplate(type: "jsx" | "vue"): string {
     return (
       "<div>" +
       this.componentNodes
@@ -85,7 +86,7 @@ export default class Builder {
           (node) =>
             `<div class="breakpoint-${
               node.breakPointId
-            }">${node.rootNode.buildTemplate()}</div>`
+            }">${node.rootNode.buildTemplate(type)}</div>`
         )
         .join("") +
       "</div>"

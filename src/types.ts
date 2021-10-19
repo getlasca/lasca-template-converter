@@ -69,7 +69,8 @@ export interface EventSet {
 }
 
 export interface Output {
-  template: string;
+  jsxTemplate: string;
+  vueTemplate: string;
   css: string;
 }
 

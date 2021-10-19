@@ -155,12 +155,12 @@ export default class GroupNode extends BaseNode {
     });
   }
 
-  buildTemplate(): string {
-    let tag = `<div class="class-${
-      this.className
-    }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}>`;
+  buildTemplate(type: "jsx" | "vue"): string {
+    let tag = `<div class="class-${this.className}"${this.buildCondition(
+      type
+    )}${this.buildLoop(type)}${this.buildEvent(type)}>`;
     this.children.forEach((node: BaseNode) => {
-      tag += node.buildTemplate();
+      tag += node.buildTemplate(type);
     });
     tag += "</div>";
     return tag;

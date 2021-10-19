@@ -50,36 +50,47 @@ export default abstract class BaseNode {
     this.loopVariables = this.getLoopVariablesFromParent(parentLoopVariables);
   }
 
-  abstract buildTemplate(): string;
+  abstract buildTemplate(type: "jsx" | "vue"): string;
   abstract buildCss(): string;
 
-  protected buildVariable(): string {
+  protected buildVariable(type: "jsx" | "vue"): string {
     const variable = this.variables.find((variable) => {
       return this.nodeId === variable.nodeId;
     });
-    return variable
-      ? `{{ ${
+    if (!variable) {
+      return "";
+    }
+    return type === "jsx"
+      ? `{ ${
           variable.loopId === 0
             ? variable.expression
             : variable.expression + LOOP_ITEM_SUFFIX
-        } }}`
-      : "";
+        } }`
+      : `{{ ${
+          variable.loopId === 0
+            ? variable.expression
+            : variable.expression + LOOP_ITEM_SUFFIX
+        } }}`;
   }
 
-  protected buildCondition(): string {
+  protected buildCondition(type: "jsx" | "vue"): string {
     const condition = this.conditions.find((condition) => {
       return this.nodeId === condition.nodeId;
     });
-    return condition
-      ? ` v-if="${
+    if (!condition) {
+      return "";
+    }
+    // TODO: support for JSX
+    return type === "jsx"
+      ? ""
+      : ` v-if="${
           condition.loopId === 0
             ? condition.expression
             : condition.expression + LOOP_ITEM_SUFFIX
-        }"`
-      : "";
+        }"`;
   }
 
-  protected buildLoop(): string {
+  protected buildLoop(type: "jsx" | "vue"): string {
     const loop = this.loops.find((loop) => {
       return this.nodeId === loop.nodeId;
     });
@@ -88,21 +99,30 @@ export default abstract class BaseNode {
     }
     const itemName = loop.variableSet.name + LOOP_ITEM_SUFFIX;
     const indexName = loop.variableSet.name + LOOP_INDEX_SUFFIX;
-    return ` v-for="(${itemName}, ${indexName}) in ${loop.variableSet.name}" :key="${itemName}"`;
+    // TODO: support for JSX
+    return type === "jsx"
+      ? ""
+      : ` v-for="(${itemName}, ${indexName}) in ${loop.variableSet.name}" :key="${itemName}"`;
   }
 
-  protected buildEvent(): string {
+  protected buildEvent(type: "jsx" | "vue"): string {
     const event = this.events.find((event) => {
       return this.nodeId === event.nodeId;
     });
+    if (!event) {
+      return "";
+    }
+
     const indexParams = this.loopVariables
       .map((v) => {
         return v + LOOP_INDEX_SUFFIX;
       })
       .join(",");
-    return event
-      ? ` v-on:${event.eventType}="${event.eventSet.name}(${indexParams})"`
-      : "";
+    return type === "jsx"
+      ? ` on${event.eventType[0].toUpperCase() + event.eventType.slice(1)}={${
+          event.eventSet.name
+        }(${indexParams})}`
+      : ` v-on:${event.eventType}="${event.eventSet.name}(${indexParams})"`;
   }
 
   protected buildCursorCss(): string {

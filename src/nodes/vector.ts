@@ -42,10 +42,10 @@ export default class VectorNode extends BaseNode {
     this.style = parser.vectorStyle(figma);
   }
 
-  buildTemplate(): string {
-    return `<span class="class-${
-      this.className
-    }"${this.buildCondition()}${this.buildLoop()}${this.buildEvent()}></span>`;
+  buildTemplate(type: "jsx" | "vue"): string {
+    return `<span class="class-${this.className}"${this.buildCondition(
+      type
+    )}${this.buildLoop(type)}${this.buildEvent(type)}></span>`;
   }
 
   buildCss(): string {
