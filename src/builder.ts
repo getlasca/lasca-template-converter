@@ -84,7 +84,7 @@ export default class Builder {
       this.componentNodes
         .map(
           (node) =>
-            `<div class="breakpoint-${
+            `<div ${type === "jsx" ? "className" : "class"}="breakpoint-${
               node.breakPointId
             }">${node.rootNode.buildTemplate(type)}</div>`
         )

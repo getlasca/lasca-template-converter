@@ -11,9 +11,6 @@ import {
   Event,
 } from "../types";
 
-const LOOP_ITEM_SUFFIX = "__lascaItem";
-const LOOP_INDEX_SUFFIX = "__lascaIndex";
-
 export default abstract class BaseNode {
   nodeId: string;
   className: string;
@@ -24,7 +21,6 @@ export default abstract class BaseNode {
   conditions: Condition[];
   loops: Loop[];
   events: Event[];
-  loopVariables: string[];
 
   constructor(
     nodeId: string,
@@ -35,8 +31,7 @@ export default abstract class BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = [],
-    parentLoopVariables: string[] = []
+    events: Event[] = []
   ) {
     this.nodeId = nodeId;
     this.className = idGenerator.getId() + "";
@@ -47,82 +42,84 @@ export default abstract class BaseNode {
     this.conditions = conditions;
     this.loops = loops;
     this.events = events;
-    this.loopVariables = this.getLoopVariablesFromParent(parentLoopVariables);
   }
 
   abstract buildTemplate(type: "jsx" | "vue"): string;
   abstract buildCss(): string;
 
-  protected buildVariable(type: "jsx" | "vue"): string {
-    const variable = this.variables.find((variable) => {
-      return this.nodeId === variable.nodeId;
-    });
-    if (!variable) {
-      return "";
-    }
-    return type === "jsx"
-      ? `{ ${
-          variable.loopId === 0
-            ? variable.expression
-            : variable.expression + LOOP_ITEM_SUFFIX
-        } }`
-      : `{{ ${
-          variable.loopId === 0
-            ? variable.expression
-            : variable.expression + LOOP_ITEM_SUFFIX
-        } }}`;
-  }
-
-  protected buildCondition(type: "jsx" | "vue"): string {
+  protected buildTag(
+    type: "jsx" | "vue",
+    tag: string,
+    className: string,
+    inner: string
+  ): string {
     const condition = this.conditions.find((condition) => {
       return this.nodeId === condition.nodeId;
     });
-    if (!condition) {
-      return "";
-    }
-    // TODO: support for JSX
-    return type === "jsx"
-      ? ""
-      : ` v-if="${
-          condition.loopId === 0
-            ? condition.expression
-            : condition.expression + LOOP_ITEM_SUFFIX
-        }"`;
-  }
 
-  protected buildLoop(type: "jsx" | "vue"): string {
     const loop = this.loops.find((loop) => {
       return this.nodeId === loop.nodeId;
     });
-    if (!loop) {
-      return "";
-    }
-    const itemName = loop.variableSet.name + LOOP_ITEM_SUFFIX;
-    const indexName = loop.variableSet.name + LOOP_INDEX_SUFFIX;
-    // TODO: support for JSX
-    return type === "jsx"
-      ? ""
-      : ` v-for="(${itemName}, ${indexName}) in ${loop.variableSet.name}" :key="${itemName}"`;
-  }
 
-  protected buildEvent(type: "jsx" | "vue"): string {
+    const variable = this.variables.find((variable) => {
+      return this.nodeId === variable.nodeId;
+    });
+
     const event = this.events.find((event) => {
       return this.nodeId === event.nodeId;
     });
-    if (!event) {
-      return "";
-    }
 
-    const indexParams = this.loopVariables
-      .map((v) => {
-        return v + LOOP_INDEX_SUFFIX;
-      })
-      .join(",");
-    return type === "jsx"
-      ? ` on${event.eventType[0].toUpperCase() + event.eventType.slice(1)}={${
-          event.eventSet.name
-        }(${indexParams})}`
-      : ` v-on:${event.eventType}="${event.eventSet.name}(${indexParams})"`;
+    if (type === "jsx") {
+      const loopKeyAttr = loop ? ` key={${loop.loopSet.key}}` : "";
+
+      const eventAttr = event
+        ? ` on${event.eventType[0].toUpperCase() + event.eventType.slice(1)}={${
+            event.eventSet.expression
+          }}`
+        : "";
+
+      let outputTag = `<${tag} className="class-${className}"${loopKeyAttr}${eventAttr}>`;
+      outputTag += variable ? `{ ${variable.variableSet.expression} }` : inner;
+      outputTag += `</${tag}>`;
+
+      if (!condition && !loop) {
+        return outputTag;
+      }
+
+      const conditionExpression = condition
+        ? `${condition.conditionSet.expression} && `
+        : "";
+
+      const loopExpression = loop
+        ? loop.loopSet.indexVariable
+          ? `${loop.loopSet.expression}.map((${loop.loopSet.itemVariable}, ${loop.loopSet.indexVariable}) => `
+          : `${loop.loopSet.expression}.map((${loop.loopSet.itemVariable}) => `
+        : "";
+
+      let output = `{ ${conditionExpression}${loopExpression}`;
+      output += outputTag;
+      output += loop ? " )}" : " }";
+      return output;
+    } else {
+      const conditionAttr = condition
+        ? ` v-if="${condition.conditionSet.expression}"`
+        : "";
+
+      const loopAttr = loop
+        ? loop.loopSet.indexVariable
+          ? ` v-for="(${loop.loopSet.itemVariable}, ${loop.loopSet.indexVariable}) in ${loop.loopSet.expression}" :key="${loop.loopSet.key}"`
+          : ` v-for="${loop.loopSet.itemVariable} in ${loop.loopSet.expression}" :key="${loop.loopSet.key}"`
+        : "";
+
+      const eventAttr = event
+        ? ` v-on:${event.eventType}="${event.eventSet.expression}"`
+        : "";
+
+      let output = `<${tag} class="class-${className}"${conditionAttr}${loopAttr}${eventAttr}>`;
+      output += variable ? `{{ ${variable.variableSet.expression} }}` : inner;
+      output += `</${tag}>`;
+      return output;
+    }
   }
 
   protected buildCursorCss(): string {
@@ -291,18 +288,5 @@ export default abstract class BaseNode {
       css += ` border-radius: ${style.radius.topLeft}px ${style.radius.topRight}px ${style.radius.bottomRight}px ${style.radius.bottomLeft}px;`;
     }
     return css;
-  }
-
-  protected getLoopVariablesFromParent(
-    parentLoopVariables: string[]
-  ): string[] {
-    const loopVariables = parentLoopVariables.concat();
-    const loop = this.loops.find((v) => {
-      return v.nodeId === this.nodeId;
-    });
-    if (loop) {
-      loopVariables.push(loop.variableSet.name);
-    }
-    return loopVariables;
   }
 }

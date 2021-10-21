@@ -24,8 +24,7 @@ export default class RectangleNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = [],
-    parentLoopVaribles: string[] = []
+    events: Event[] = []
   ) {
     super(
       figma.id,
@@ -36,16 +35,13 @@ export default class RectangleNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events,
-      parentLoopVaribles
+      events
     );
     this.style = parser.rectangleStyle(figma);
   }
 
   buildTemplate(type: "jsx" | "vue"): string {
-    return `<div class="class-${this.className}"${this.buildCondition(
-      type
-    )}${this.buildLoop(type)}${this.buildEvent(type)}></div>`;
+    return this.buildTag(type, "div", this.className, "");
   }
 
   buildCss(): string {

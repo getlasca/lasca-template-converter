@@ -29,8 +29,7 @@ export default class TextNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = [],
-    parentLoopVaribles: string[] = []
+    events: Event[] = []
   ) {
     super(
       figma.id,
@@ -41,8 +40,7 @@ export default class TextNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events,
-      parentLoopVaribles
+      events
     );
     this.text = figma.characters;
     this.style = parser.textStyle(figma);
@@ -62,10 +60,6 @@ export default class TextNode extends BaseNode {
   }
 
   buildTemplate(type: "jsx" | "vue"): string {
-    const attr = `class="class-${this.className}"${this.buildCondition(
-      type
-    )}${this.buildLoop(type)}${this.buildEvent(type)}`;
-
     if (this.mixedText) {
       const charStyles = this.mixedText.style.characterStyleMixed;
       let innerTag = "";
@@ -79,7 +73,9 @@ export default class TextNode extends BaseNode {
           const className = `class-${this.className}-${charStyles[i - 1]}`;
           const text = this.text.slice(sliceIndex, i);
 
-          innerTag += `<span class="${className}">${text}</span>`;
+          innerTag += `<span ${
+            type === "jsx" ? "className" : "class"
+          }="${className}">${text}</span>`;
           sliceIndex = i;
         }
 
@@ -87,14 +83,16 @@ export default class TextNode extends BaseNode {
           const className = `class-${this.className}-${charStyles[i]}`;
           const text = this.text.slice(sliceIndex);
 
-          innerTag += `<span class="${className}">${text}</span>`;
+          innerTag += `<span ${
+            type === "jsx" ? "className" : "class"
+          }="${className}">${text}</span>`;
         }
       }
 
       // TODO: should consider embed variables
-      return `<span ${attr}>${innerTag}</span>`;
+      return this.buildTag(type, "span", this.className, innerTag);
     } else {
-      return `<span ${attr}>${this.buildVariable(type) || this.text}</span>`;
+      return this.buildTag(type, "span", this.className, this.text);
     }
   }
 

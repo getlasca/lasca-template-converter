@@ -37,35 +37,44 @@ export interface NodeImage {
   imageId: string;
 }
 
-export interface Variable {
-  nodeId: string;
+export interface ConditionSet {
   expression: string;
-  loopId: number;
+}
+
+export interface LoopSet {
+  expression: string;
+  key: string;
+  itemVariable: string;
+  indexVariable?: string;
+}
+
+export interface VariableSet {
+  expression: string;
+}
+
+export interface EventSet {
+  expression: string;
 }
 
 export interface Condition {
   nodeId: string;
-  expression: string;
-  loopId: number;
+  conditionSet: ConditionSet;
 }
 
 export interface Loop {
   nodeId: string;
-  variableSet: VariableSet;
+  loopSet: LoopSet;
 }
 
-export interface VariableSet {
-  name: string;
+export interface Variable {
+  nodeId: string;
+  variableSet: VariableSet;
 }
 
 export interface Event {
   nodeId: string;
   eventType: string;
   eventSet: EventSet;
-}
-
-export interface EventSet {
-  name: string;
 }
 
 export interface Output {

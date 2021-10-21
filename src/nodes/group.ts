@@ -31,8 +31,7 @@ export default class GroupNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = [],
-    parentLoopVaribles: string[] = []
+    events: Event[] = []
   ) {
     super(
       figma.id,
@@ -43,8 +42,7 @@ export default class GroupNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events,
-      parentLoopVaribles
+      events
     );
 
     this.style = parser.groupStyle(figma);
@@ -69,8 +67,7 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events,
-            this.loopVariables
+            events
           );
           break;
         case "GROUP":
@@ -85,8 +82,7 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events,
-            this.loopVariables
+            events
           );
           break;
         case "RECTANGLE":
@@ -102,8 +98,7 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events,
-            this.loopVariables
+            events
           );
           break;
         case "TEXT":
@@ -117,8 +112,7 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events,
-            this.loopVariables
+            events
           );
           break;
         case "VECTOR":
@@ -132,8 +126,7 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events,
-            this.loopVariables
+            events
           );
           break;
         default:
@@ -156,14 +149,11 @@ export default class GroupNode extends BaseNode {
   }
 
   buildTemplate(type: "jsx" | "vue"): string {
-    let tag = `<div class="class-${this.className}"${this.buildCondition(
-      type
-    )}${this.buildLoop(type)}${this.buildEvent(type)}>`;
+    let inner = "";
     this.children.forEach((node: BaseNode) => {
-      tag += node.buildTemplate(type);
+      inner += node.buildTemplate(type);
     });
-    tag += "</div>";
-    return tag;
+    return this.buildTag(type, "div", this.className, inner);
   }
 
   buildCss(): string {
