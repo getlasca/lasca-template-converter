@@ -47,55 +47,79 @@ export default abstract class BaseNode {
   abstract buildTemplate(type: "jsx" | "vue"): string;
   abstract buildCss(): string;
 
-  protected buildVariable(type: "jsx" | "vue"): string {
-    const variable = this.variables.find((variable) => {
-      return this.nodeId === variable.nodeId;
-    });
-    if (!variable) {
-      return "";
-    }
-    return type === "jsx"
-      ? `{ ${variable.variableSet.expression} }`
-      : `{{ ${variable.variableSet.expression} }}`;
-  }
-
-  protected buildCondition(type: "jsx" | "vue"): string {
+  protected buildTag(
+    type: "jsx" | "vue",
+    tag: string,
+    className: string,
+    inner: string
+  ): string {
     const condition = this.conditions.find((condition) => {
       return this.nodeId === condition.nodeId;
     });
-    if (!condition) {
-      return "";
-    }
-    // TODO: support for JSX
-    return type === "jsx" ? "" : ` v-if="${condition.conditionSet.expression}"`;
-  }
 
-  protected buildLoop(type: "jsx" | "vue"): string {
     const loop = this.loops.find((loop) => {
       return this.nodeId === loop.nodeId;
     });
-    if (!loop) {
-      return "";
-    }
-    // TODO: support for JSX
-    return type === "jsx"
-      ? ""
-      : ` v-for="(${loop.loopSet.itemVariable}, ${loop.loopSet.indexVariable}) in ${loop.loopSet.expression}" :key="${loop.loopSet.key}"`;
-  }
 
-  protected buildEvent(type: "jsx" | "vue"): string {
+    const variable = this.variables.find((variable) => {
+      return this.nodeId === variable.nodeId;
+    });
+
     const event = this.events.find((event) => {
       return this.nodeId === event.nodeId;
     });
-    if (!event) {
-      return "";
-    }
 
-    return type === "jsx"
-      ? ` on${event.eventType[0].toUpperCase() + event.eventType.slice(1)}={${
-          event.eventSet.expression
-        }}`
-      : ` v-on:${event.eventType}="${event.eventSet.expression}"`;
+    if (type === "jsx") {
+      const loopKeyAttr = loop ? ` key={${loop.loopSet.key}}` : "";
+
+      const eventAttr = event
+        ? ` on${event.eventType[0].toUpperCase() + event.eventType.slice(1)}={${
+            event.eventSet.expression
+          }}`
+        : "";
+
+      let outputTag = `<${tag} className="class-${className}"${loopKeyAttr}${eventAttr}>`;
+      outputTag += variable ? `{ ${variable.variableSet.expression} }` : inner;
+      outputTag += `</${tag}>`;
+
+      if (!condition && !loop) {
+        return outputTag;
+      }
+
+      const conditionExpression = condition
+        ? `${condition.conditionSet.expression} && `
+        : "";
+
+      const loopExpression = loop
+        ? loop.loopSet.indexVariable
+          ? `${loop.loopSet.expression}.map((${loop.loopSet.itemVariable}, ${loop.loopSet.indexVariable}) => `
+          : `${loop.loopSet.expression}.map((${loop.loopSet.itemVariable}) => `
+        : "";
+
+      let output = `{ ${conditionExpression}${loopExpression}`;
+      output += outputTag;
+      output += loop ? " )}" : " }";
+      return output;
+    } else {
+      const conditionAttr = condition
+        ? ` v-if="${condition.conditionSet.expression}"`
+        : "";
+
+      const loopAttr = loop
+        ? loop.loopSet.indexVariable
+          ? ` v-for="(${loop.loopSet.itemVariable}, ${loop.loopSet.indexVariable}) in ${loop.loopSet.expression}" :key="${loop.loopSet.key}"`
+          : ` v-for="${loop.loopSet.itemVariable} in ${loop.loopSet.expression}" :key="${loop.loopSet.key}"`
+        : "";
+
+      const eventAttr = event
+        ? ` v-on:${event.eventType}="${event.eventSet.expression}"`
+        : "";
+
+      let output = `<${tag} class="class-${className}"${conditionAttr}${loopAttr}${eventAttr}>`;
+      output += variable ? `{{ ${variable.variableSet.expression} }}` : inner;
+      output += `</${tag}>`;
+      return output;
+    }
   }
 
   protected buildCursorCss(): string {

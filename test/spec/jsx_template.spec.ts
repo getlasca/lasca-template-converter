@@ -1,6 +1,164 @@
 import convert from "../../src/index";
 import { loadFixture } from "../helper";
 
+test("simple", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      min: 0,
+      max: 0,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [],
+      events: [],
+    },
+  ]);
+  const template =
+    `<div>` +
+    `<div className="breakpoint-1">` +
+    `<div className="class-1">` +
+    `<div className="class-2"></div>` +
+    `<span className="class-3">sampleText</span>` +
+    `</div>` +
+    `</div>` +
+    `</div>`;
+  expect(output.jsxTemplate).toBe(template);
+});
+
+test("breakpoints", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      min: 0,
+      max: 349,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [],
+      events: [],
+    },
+    {
+      figma: figma,
+      min: 350,
+      max: 0,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [],
+      events: [],
+    },
+  ]);
+  const template =
+    `<div>` +
+    `<div className="breakpoint-1">` +
+    `<div className="class-1">` +
+    `<div className="class-2"></div>` +
+    `<span className="class-3">sampleText</span>` +
+    `</div>` +
+    `</div>` +
+    `<div className="breakpoint-2">` +
+    `<div className="class-1">` +
+    `<div className="class-2"></div>` +
+    `<span className="class-3">sampleText</span>` +
+    `</div>` +
+    `</div>` +
+    `</div>`;
+  expect(output.jsxTemplate).toBe(template);
+});
+
+test("nested", () => {
+  const figma = loadFixture("nested");
+  const output = convert([
+    {
+      figma: figma,
+      min: 0,
+      max: 0,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [],
+      events: [],
+    },
+  ]);
+  const template =
+    `<div>` +
+    `<div className="breakpoint-1">` +
+    `<div className="class-1">` +
+    `<div className="class-2">` +
+    `<div className="class-3"></div>` +
+    `</div>` +
+    `</div>` +
+    `</div>` +
+    `</div>`;
+  expect(output.jsxTemplate).toBe(template);
+});
+
+test("condition", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      min: 0,
+      max: 0,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [{ nodeId: "1:7", conditionSet: { expression: "valid" } }],
+      loops: [],
+      events: [],
+    },
+  ]);
+  expect(output.jsxTemplate).toBe(
+    `<div>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `{ valid && <div className="class-2"></div> }` +
+      `<span className="class-3">sampleText</span>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});
+
+test("loop", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      min: 0,
+      max: 0,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [
+        {
+          nodeId: "1:7",
+          loopSet: { expression: "items", key: "item", itemVariable: "item" },
+        },
+      ],
+      events: [],
+    },
+  ]);
+  expect(output.jsxTemplate).toBe(
+    `<div>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `{ items.map((item) => <div className="class-2" key={item}></div> )}` +
+      `<span className="class-3">sampleText</span>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});
+
 test("variable", () => {
   const figma = loadFixture("simple");
   const output = convert([
@@ -10,7 +168,12 @@ test("variable", () => {
       max: 0,
       mixedTexts: [],
       nodeImages: [],
-      variables: [{ nodeId: "1:8", expression: "this.state.count", loopId: 0 }],
+      variables: [
+        {
+          nodeId: "1:8",
+          variableSet: { expression: "this.state.count" },
+        },
+      ],
       conditions: [],
       loops: [],
       events: [],
@@ -18,10 +181,10 @@ test("variable", () => {
   ]);
   expect(output.jsxTemplate).toBe(
     `<div>` +
-      `<div class="breakpoint-1">` +
-      `<div class="class-1">` +
-      `<div class="class-2"></div>` +
-      `<span class="class-3">{ this.state.count }</span>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `<div className="class-2"></div>` +
+      `<span className="class-3">{ this.state.count }</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -44,17 +207,17 @@ test("event", () => {
         {
           nodeId: "1:7",
           eventType: "click",
-          eventSet: { name: "this.handle" },
+          eventSet: { expression: "this.handle" },
         },
       ],
     },
   ]);
   expect(output.jsxTemplate).toBe(
     `<div>` +
-      `<div class="breakpoint-1">` +
-      `<div class="class-1">` +
-      `<div class="class-2" onClick={this.handle()}></div>` +
-      `<span class="class-3">sampleText</span>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `<div className="class-2" onClick={this.handle}></div>` +
+      `<span className="class-3">sampleText</span>` +
       `</div>` +
       `</div>` +
       `</div>`

@@ -41,9 +41,7 @@ export default class VectorNode extends BaseNode {
   }
 
   buildTemplate(type: "jsx" | "vue"): string {
-    return `<span class="class-${this.className}"${this.buildCondition(
-      type
-    )}${this.buildLoop(type)}${this.buildEvent(type)}></span>`;
+    return this.buildTag(type, "span", this.className, "");
   }
 
   buildCss(): string {

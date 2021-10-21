@@ -102,7 +102,11 @@ test("event cursor", () => {
       conditions: [],
       loops: [],
       events: [
-        { nodeId: "1:7", eventType: "click", eventSet: { name: "handle" } },
+        {
+          nodeId: "1:7",
+          eventType: "click",
+          eventSet: { expression: "handle" },
+        },
       ],
     },
   ]);

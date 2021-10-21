@@ -156,14 +156,11 @@ export default class FrameNode extends BaseNode {
   }
 
   buildTemplate(type: "jsx" | "vue"): string {
-    let tag = `<div class="class-${this.className}"${this.buildCondition(
-      type
-    )}${this.buildLoop(type)}${this.buildEvent(type)}>`;
+    let inner = "";
     this.children.forEach((node: BaseNode) => {
-      tag += node.buildTemplate(type);
+      inner += node.buildTemplate(type);
     });
-    tag += "</div>";
-    return tag;
+    return this.buildTag(type, "div", this.className, inner);
   }
 
   buildCss(): string {

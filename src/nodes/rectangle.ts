@@ -41,9 +41,7 @@ export default class RectangleNode extends BaseNode {
   }
 
   buildTemplate(type: "jsx" | "vue"): string {
-    return `<div class="class-${this.className}"${this.buildCondition(
-      type
-    )}${this.buildLoop(type)}${this.buildEvent(type)}></div>`;
+    return this.buildTag(type, "div", this.className, "");
   }
 
   buildCss(): string {
