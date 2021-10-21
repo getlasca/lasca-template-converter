@@ -29,8 +29,7 @@ export default class TextNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = [],
-    parentLoopVaribles: string[] = []
+    events: Event[] = []
   ) {
     super(
       figma.id,
@@ -41,8 +40,7 @@ export default class TextNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events,
-      parentLoopVaribles
+      events
     );
     this.text = figma.characters;
     this.style = parser.textStyle(figma);

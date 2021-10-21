@@ -11,9 +11,6 @@ import {
   Event,
 } from "../types";
 
-const LOOP_ITEM_SUFFIX = "__lascaItem";
-const LOOP_INDEX_SUFFIX = "__lascaIndex";
-
 export default abstract class BaseNode {
   nodeId: string;
   className: string;
@@ -24,7 +21,6 @@ export default abstract class BaseNode {
   conditions: Condition[];
   loops: Loop[];
   events: Event[];
-  loopVariables: string[];
 
   constructor(
     nodeId: string,
@@ -35,8 +31,7 @@ export default abstract class BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = [],
-    parentLoopVariables: string[] = []
+    events: Event[] = []
   ) {
     this.nodeId = nodeId;
     this.className = idGenerator.getId() + "";
@@ -47,7 +42,6 @@ export default abstract class BaseNode {
     this.conditions = conditions;
     this.loops = loops;
     this.events = events;
-    this.loopVariables = this.getLoopVariablesFromParent(parentLoopVariables);
   }
 
   abstract buildTemplate(type: "jsx" | "vue"): string;
@@ -61,16 +55,8 @@ export default abstract class BaseNode {
       return "";
     }
     return type === "jsx"
-      ? `{ ${
-          variable.loopId === 0
-            ? variable.expression
-            : variable.expression + LOOP_ITEM_SUFFIX
-        } }`
-      : `{{ ${
-          variable.loopId === 0
-            ? variable.expression
-            : variable.expression + LOOP_ITEM_SUFFIX
-        } }}`;
+      ? `{ ${variable.variableSet.expression} }`
+      : `{{ ${variable.variableSet.expression} }}`;
   }
 
   protected buildCondition(type: "jsx" | "vue"): string {
@@ -81,13 +67,7 @@ export default abstract class BaseNode {
       return "";
     }
     // TODO: support for JSX
-    return type === "jsx"
-      ? ""
-      : ` v-if="${
-          condition.loopId === 0
-            ? condition.expression
-            : condition.expression + LOOP_ITEM_SUFFIX
-        }"`;
+    return type === "jsx" ? "" : ` v-if="${condition.conditionSet.expression}"`;
   }
 
   protected buildLoop(type: "jsx" | "vue"): string {
@@ -97,12 +77,10 @@ export default abstract class BaseNode {
     if (!loop) {
       return "";
     }
-    const itemName = loop.variableSet.name + LOOP_ITEM_SUFFIX;
-    const indexName = loop.variableSet.name + LOOP_INDEX_SUFFIX;
     // TODO: support for JSX
     return type === "jsx"
       ? ""
-      : ` v-for="(${itemName}, ${indexName}) in ${loop.variableSet.name}" :key="${itemName}"`;
+      : ` v-for="(${loop.loopSet.itemVariable}, ${loop.loopSet.indexVariable}) in ${loop.loopSet.expression}" :key="${loop.loopSet.key}"`;
   }
 
   protected buildEvent(type: "jsx" | "vue"): string {
@@ -113,16 +91,11 @@ export default abstract class BaseNode {
       return "";
     }
 
-    const indexParams = this.loopVariables
-      .map((v) => {
-        return v + LOOP_INDEX_SUFFIX;
-      })
-      .join(",");
     return type === "jsx"
       ? ` on${event.eventType[0].toUpperCase() + event.eventType.slice(1)}={${
-          event.eventSet.name
-        }(${indexParams})}`
-      : ` v-on:${event.eventType}="${event.eventSet.name}(${indexParams})"`;
+          event.eventSet.expression
+        }}`
+      : ` v-on:${event.eventType}="${event.eventSet.expression}"`;
   }
 
   protected buildCursorCss(): string {
@@ -291,18 +264,5 @@ export default abstract class BaseNode {
       css += ` border-radius: ${style.radius.topLeft}px ${style.radius.topRight}px ${style.radius.bottomRight}px ${style.radius.bottomLeft}px;`;
     }
     return css;
-  }
-
-  protected getLoopVariablesFromParent(
-    parentLoopVariables: string[]
-  ): string[] {
-    const loopVariables = parentLoopVariables.concat();
-    const loop = this.loops.find((v) => {
-      return v.nodeId === this.nodeId;
-    });
-    if (loop) {
-      loopVariables.push(loop.variableSet.name);
-    }
-    return loopVariables;
   }
 }

@@ -24,8 +24,7 @@ export default class VectorNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = [],
-    parentLoopVaribles: string[] = []
+    events: Event[] = []
   ) {
     super(
       figma.id,
@@ -36,8 +35,7 @@ export default class VectorNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events,
-      parentLoopVaribles
+      events
     );
     this.style = parser.vectorStyle(figma);
   }
