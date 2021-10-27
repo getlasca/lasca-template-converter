@@ -69,6 +69,8 @@ export default abstract class BaseNode {
       return this.nodeId === event.nodeId;
     });
 
+    const image = this.nodeImages.find((image) => this.nodeId === image.nodeId);
+
     if (type === "jsx") {
       const loopKeyAttr = loop ? ` key={${loop.loopSet.key}}` : "";
 
@@ -79,7 +81,8 @@ export default abstract class BaseNode {
         : "";
 
       let outputTag = `<${tag} className="class-${className}"${loopKeyAttr}${eventAttr}>`;
-      outputTag += variable ? `{ ${variable.variableSet.expression} }` : inner;
+      outputTag +=
+        variable && !image ? `{ ${variable.variableSet.expression} }` : inner;
       outputTag += `</${tag}>`;
 
       if (!condition && !loop) {
@@ -116,7 +119,8 @@ export default abstract class BaseNode {
         : "";
 
       let output = `<${tag} class="class-${className}"${conditionAttr}${loopAttr}${eventAttr}>`;
-      output += variable ? `{{ ${variable.variableSet.expression} }}` : inner;
+      output +=
+        variable && !image ? `{{ ${variable.variableSet.expression} }}` : inner;
       output += `</${tag}>`;
       return output;
     }
@@ -206,9 +210,20 @@ export default abstract class BaseNode {
         (image) => this.nodeId === image.nodeId
       );
       if (image) {
-        css += `background: no-repeat center center url(${
-          process.env.LASCA_ASSETS_URL || "https://assets.lasca.app"
-        }/node_images/node-${image.imageId}.png);`;
+        const variable = this.variables.find((variable) => {
+          return this.nodeId === variable.nodeId;
+        });
+
+        let url;
+        if (variable) {
+          url = variable.variableSet.expression;
+        } else {
+          url = `${
+            process.env.LASCA_ASSETS_URL || "https://assets.lasca.app"
+          }/node_images/node-${image.imageId}.png`;
+        }
+
+        css += `background: no-repeat center center url(${url});`;
 
         switch (style.backgroundImage?.scaleMode) {
           case "FILL": {
