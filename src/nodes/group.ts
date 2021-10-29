@@ -14,6 +14,7 @@ import {
   Condition,
   Loop,
   Event,
+  Link,
 } from "../types";
 
 export default class GroupNode extends BaseNode {
@@ -31,7 +32,8 @@ export default class GroupNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = []
+    events: Event[] = [],
+    links: Link[] = []
   ) {
     super(
       figma.id,
@@ -42,7 +44,8 @@ export default class GroupNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events
+      events,
+      links
     );
 
     this.style = parser.groupStyle(figma);
@@ -67,7 +70,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            links
           );
           break;
         case "GROUP":
@@ -82,7 +86,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            links
           );
           break;
         case "RECTANGLE":
@@ -98,7 +103,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            links
           );
           break;
         case "TEXT":
@@ -112,7 +118,8 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            links
           );
           break;
         case "VECTOR":
@@ -126,22 +133,12 @@ export default class GroupNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            links
           );
           break;
         default:
-          childNode = new EmptyNode(
-            childParser,
-            idGenerator,
-            node,
-            "NONE",
-            mixedTexts,
-            nodeImages,
-            variables,
-            conditions,
-            loops,
-            events
-          );
+          childNode = new EmptyNode(childParser, idGenerator, node, "NONE");
           break;
       }
       this.children.push(childNode);

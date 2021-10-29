@@ -14,6 +14,7 @@ import {
   Condition,
   Loop,
   Event,
+  Link,
 } from "../types";
 
 export default class FrameNode extends BaseNode {
@@ -33,7 +34,8 @@ export default class FrameNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = []
+    events: Event[] = [],
+    links: Link[] = []
   ) {
     super(
       figma.id,
@@ -44,7 +46,8 @@ export default class FrameNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events
+      events,
+      links
     );
     this.isRoot = isRoot;
     this.style = parser.frameStyle(figma);
@@ -70,7 +73,8 @@ export default class FrameNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            links
           );
           break;
         }
@@ -88,7 +92,8 @@ export default class FrameNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            links
           );
           break;
         }
@@ -105,7 +110,8 @@ export default class FrameNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            links
           );
           break;
         case "TEXT":
@@ -119,7 +125,8 @@ export default class FrameNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            links
           );
           break;
         case "VECTOR":
@@ -133,7 +140,8 @@ export default class FrameNode extends BaseNode {
             variables,
             conditions,
             loops,
-            events
+            events,
+            links
           );
           break;
         default:
@@ -141,13 +149,7 @@ export default class FrameNode extends BaseNode {
             childParser,
             idGenerator,
             node,
-            figma.layoutMode,
-            mixedTexts,
-            nodeImages,
-            variables,
-            conditions,
-            loops,
-            events
+            figma.layoutMode
           );
           break;
       }

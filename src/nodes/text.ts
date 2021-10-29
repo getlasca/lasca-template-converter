@@ -11,6 +11,7 @@ import {
   Condition,
   Loop,
   Event,
+  Link,
 } from "../types";
 
 export default class TextNode extends BaseNode {
@@ -29,7 +30,8 @@ export default class TextNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = []
+    events: Event[] = [],
+    links: Link[] = []
   ) {
     super(
       figma.id,
@@ -40,7 +42,8 @@ export default class TextNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events
+      events,
+      links
     );
     this.text = figma.characters;
     this.style = parser.textStyle(figma);

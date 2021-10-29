@@ -9,6 +9,7 @@ import {
   Condition,
   Loop,
   Event,
+  Link,
 } from "../types";
 
 export default abstract class BaseNode {
@@ -21,6 +22,7 @@ export default abstract class BaseNode {
   conditions: Condition[];
   loops: Loop[];
   events: Event[];
+  links: Link[];
 
   constructor(
     nodeId: string,
@@ -31,7 +33,8 @@ export default abstract class BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = []
+    events: Event[] = [],
+    links: Link[] = []
   ) {
     this.nodeId = nodeId;
     this.className = idGenerator.getId() + "";
@@ -42,6 +45,7 @@ export default abstract class BaseNode {
     this.conditions = conditions;
     this.loops = loops;
     this.events = events;
+    this.links = links;
   }
 
   abstract buildTemplate(type: "jsx" | "vue"): string;
@@ -69,7 +73,15 @@ export default abstract class BaseNode {
       return this.nodeId === event.nodeId;
     });
 
+    const link = this.links.find((link) => {
+      return this.nodeId === link.nodeId;
+    });
+
     const image = this.nodeImages.find((image) => this.nodeId === image.nodeId);
+
+    if (link) {
+      tag = "a";
+    }
 
     if (type === "jsx") {
       const styleAttr =
@@ -85,7 +97,14 @@ export default abstract class BaseNode {
           }}`
         : "";
 
-      let outputTag = `<${tag} className="class-${className}"${styleAttr}${loopKeyAttr}${eventAttr}>`;
+      let linkAttr = "";
+      if (link) {
+        linkAttr = ` href={${link.variableSet.expression}}${
+          link.isTargetBlank ? ` target="_blank"` : ""
+        }`;
+      }
+
+      let outputTag = `<${tag} className="class-${className}"${linkAttr}${styleAttr}${loopKeyAttr}${eventAttr}>`;
       outputTag +=
         variable && !image ? `{ ${variable.variableSet.expression} }` : inner;
       outputTag += `</${tag}>`;
@@ -128,7 +147,14 @@ export default abstract class BaseNode {
         ? ` v-on:${event.eventType}="${event.eventSet.expression}"`
         : "";
 
-      let output = `<${tag} class="class-${className}"${styleAttr}${conditionAttr}${loopAttr}${eventAttr}>`;
+      let linkAttr = "";
+      if (link) {
+        linkAttr = ` :href=${link.variableSet.expression}${
+          link.isTargetBlank ? ` target="_blank"` : ""
+        }`;
+      }
+
+      let output = `<${tag} class="class-${className}"${linkAttr}${styleAttr}${conditionAttr}${loopAttr}${eventAttr}>`;
       output +=
         variable && !image ? `{{ ${variable.variableSet.expression} }}` : inner;
       output += `</${tag}>`;
