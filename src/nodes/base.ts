@@ -74,7 +74,7 @@ export default abstract class BaseNode {
     if (type === "jsx") {
       const styleAttr =
         variable && image
-          ? ` style={{ backgroundImage: "url(${variable.variableSet.expression})" }}`
+          ? ` style={{ backgroundImage: 'url(' + ${variable.variableSet.expression} + ')' }}`
           : "";
 
       const loopKeyAttr = loop ? ` key={${loop.loopSet.key}}` : "";
@@ -111,7 +111,7 @@ export default abstract class BaseNode {
     } else {
       const styleAttr =
         variable && image
-          ? ` :style="{ 'background-image': url(${variable.variableSet.expression}) }"`
+          ? ` :style="{ 'background-image': 'url(' + ${variable.variableSet.expression} + ')' }"`
           : "";
 
       const conditionAttr = condition
