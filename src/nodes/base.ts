@@ -72,6 +72,11 @@ export default abstract class BaseNode {
     const image = this.nodeImages.find((image) => this.nodeId === image.nodeId);
 
     if (type === "jsx") {
+      const styleAttr =
+        variable && image
+          ? ` style={{ backgroundImage: "url(${variable.variableSet.expression})" }}`
+          : "";
+
       const loopKeyAttr = loop ? ` key={${loop.loopSet.key}}` : "";
 
       const eventAttr = event
@@ -80,7 +85,7 @@ export default abstract class BaseNode {
           }}`
         : "";
 
-      let outputTag = `<${tag} className="class-${className}"${loopKeyAttr}${eventAttr}>`;
+      let outputTag = `<${tag} className="class-${className}"${styleAttr}${loopKeyAttr}${eventAttr}>`;
       outputTag +=
         variable && !image ? `{ ${variable.variableSet.expression} }` : inner;
       outputTag += `</${tag}>`;
@@ -104,6 +109,11 @@ export default abstract class BaseNode {
       output += loop ? " )}" : " }";
       return output;
     } else {
+      const styleAttr =
+        variable && image
+          ? ` :style="{ 'background-image': url(${variable.variableSet.expression}) }"`
+          : "";
+
       const conditionAttr = condition
         ? ` v-if="${condition.conditionSet.expression}"`
         : "";
@@ -118,7 +128,7 @@ export default abstract class BaseNode {
         ? ` v-on:${event.eventType}="${event.eventSet.expression}"`
         : "";
 
-      let output = `<${tag} class="class-${className}"${conditionAttr}${loopAttr}${eventAttr}>`;
+      let output = `<${tag} class="class-${className}"${styleAttr}${conditionAttr}${loopAttr}${eventAttr}>`;
       output +=
         variable && !image ? `{{ ${variable.variableSet.expression} }}` : inner;
       output += `</${tag}>`;
@@ -210,20 +220,9 @@ export default abstract class BaseNode {
         (image) => this.nodeId === image.nodeId
       );
       if (image) {
-        const variable = this.variables.find((variable) => {
-          return this.nodeId === variable.nodeId;
-        });
-
-        let url;
-        if (variable) {
-          url = variable.variableSet.expression;
-        } else {
-          url = `${
-            process.env.LASCA_ASSETS_URL || "https://assets.lasca.app"
-          }/node_images/node-${image.imageId}.png`;
-        }
-
-        css += `background: no-repeat center center url(${url});`;
+        css += `background: no-repeat center center url(${
+          process.env.LASCA_ASSETS_URL || "https://assets.lasca.app"
+        }/node_images/node-${image.imageId}.png);`;
 
         switch (style.backgroundImage?.scaleMode) {
           case "FILL": {
