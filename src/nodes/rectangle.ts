@@ -9,6 +9,7 @@ import {
   Condition,
   Loop,
   Event,
+  Link,
 } from "../types";
 
 export default class RectangleNode extends BaseNode {
@@ -24,7 +25,8 @@ export default class RectangleNode extends BaseNode {
     variables: Variable[] = [],
     conditions: Condition[] = [],
     loops: Loop[] = [],
-    events: Event[] = []
+    events: Event[] = [],
+    links: Link[] = []
   ) {
     super(
       figma.id,
@@ -35,7 +37,8 @@ export default class RectangleNode extends BaseNode {
       variables,
       conditions,
       loops,
-      events
+      events,
+      links
     );
     this.style = parser.rectangleStyle(figma);
   }

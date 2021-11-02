@@ -8,6 +8,7 @@ export interface Breakpoint {
   conditions: Condition[];
   loops: Loop[];
   events: Event[];
+  links: Link[];
 }
 
 export interface MixedText {
@@ -75,6 +76,12 @@ export interface Event {
   nodeId: string;
   eventType: string;
   eventSet: EventSet;
+}
+
+export interface Link {
+  nodeId: string;
+  isTargetBlank: boolean;
+  variableSet: VariableSet;
 }
 
 export interface Output {
