@@ -149,7 +149,7 @@ export default abstract class BaseNode {
 
       let linkAttr = "";
       if (link) {
-        linkAttr = ` :href=${link.variableSet.expression}${
+        linkAttr = ` :href="${link.variableSet.expression}"${
           link.isTargetBlank ? ` target="_blank"` : ""
         }`;
       }
