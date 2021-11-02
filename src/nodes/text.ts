@@ -169,11 +169,13 @@ export default class TextNode extends BaseNode {
           : "capitalize"
       };`;
     }
-    if (style.textDecoration && style.textDecoration !== "NONE") {
-      css += ` text-decoration: ${
-        style.textDecoration === "UNDERLINE" ? "underline" : "line-through"
-      };`;
-    }
+    css += ` text-decoration: ${
+      !style.textDecoration || style.textDecoration === "NONE"
+        ? "none" // no underline even if it is link
+        : style.textDecoration === "UNDERLINE"
+        ? "underline"
+        : "line-through"
+    };`;
     if (style.letterSpacing) {
       css += ` letter-spacing: ${style.letterSpacing};`;
     }
