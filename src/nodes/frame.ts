@@ -184,15 +184,25 @@ export default class FrameNode extends BaseNode {
 
     // AutoLayout
     if (this.style.layoutMode !== "NONE") {
-      css += ` padding-left: ${this.style.paddingLeft}px;`;
-      css += ` padding-right: ${this.style.paddingRight}px;`;
-      css += ` padding-top: ${this.style.paddingTop}px;`;
-      css += ` padding-bottom: ${this.style.paddingBottom}px;`;
       css += " box-sizing: border-box;";
       css += " display: flex;";
       css += ` flex-direction: ${
         this.style.layoutMode === "HORIZONTAL" ? "row" : "column"
       };`;
+      css += ` padding-top: ${this.style.paddingTop}px;`;
+      css += ` padding-bottom: ${this.style.paddingBottom}px;`;
+
+      if (this.style.constraintsHorizontal === "STRETCH") {
+        if (this.style.primaryAxisAlignItems === "MIN") {
+          css += ` padding-left: ${this.style.paddingLeft}px;`;
+        }
+        if (this.style.primaryAxisAlignItems === "MAX") {
+          css += ` padding-right: ${this.style.paddingRight}px;`;
+        }
+      } else {
+        css += ` padding-left: ${this.style.paddingLeft}px;`;
+        css += ` padding-right: ${this.style.paddingRight}px;`;
+      }
 
       switch (this.style.primaryAxisAlignItems) {
         case "MIN": {
@@ -231,6 +241,13 @@ export default class FrameNode extends BaseNode {
         }
         case "SPACE_BETWEEN": {
           css += " justify-content: space-between;";
+
+          // center if one element in autolayout frame
+          childCss += ` .class-${this.className} > *:only-child { `;
+          childCss += `margin: ${
+            this.style.layoutMode === "HORIZONTAL" ? "0 auto" : "auto 0"
+          };`;
+          childCss += " }";
           break;
         }
       }
