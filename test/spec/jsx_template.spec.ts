@@ -231,3 +231,37 @@ test("event", () => {
       `</div>`
   );
 });
+
+test("link", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      min: 0,
+      max: 0,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [],
+      events: [],
+      links: [
+        {
+          nodeId: "1:7",
+          isTargetBlank: false,
+          variableSet: { expression: "link" },
+        },
+      ],
+    },
+  ]);
+  expect(output.jsxTemplate).toBe(
+    `<div>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `<a className="class-2" href={link}></a>` +
+      `<span className="class-3">sampleText</span>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});

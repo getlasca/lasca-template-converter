@@ -226,3 +226,37 @@ test("event", () => {
       `</div>`
   );
 });
+
+test("link", () => {
+  const figma = loadFixture("simple");
+  const output = convert([
+    {
+      figma: figma,
+      min: 0,
+      max: 0,
+      mixedTexts: [],
+      nodeImages: [],
+      variables: [],
+      conditions: [],
+      loops: [],
+      events: [],
+      links: [
+        {
+          nodeId: "1:7",
+          isTargetBlank: false,
+          variableSet: { expression: "link" },
+        },
+      ],
+    },
+  ]);
+  expect(output.vueTemplate).toBe(
+    `<div>` +
+      `<div class="breakpoint-1">` +
+      `<div class="class-1">` +
+      `<a class="class-2" :href="link"></a>` +
+      `<span class="class-3">sampleText</span>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});
