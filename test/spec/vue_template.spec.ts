@@ -14,6 +14,7 @@ test("simple", () => {
       conditions: [],
       loops: [],
       events: [],
+      links: [],
     },
   ]);
   const template =
@@ -41,6 +42,7 @@ test("breakpoints", () => {
       conditions: [],
       loops: [],
       events: [],
+      links: [],
     },
     {
       figma: figma,
@@ -52,6 +54,7 @@ test("breakpoints", () => {
       conditions: [],
       loops: [],
       events: [],
+      links: [],
     },
   ]);
   const template =
@@ -85,6 +88,7 @@ test("nested", () => {
       conditions: [],
       loops: [],
       events: [],
+      links: [],
     },
   ]);
   const template =
@@ -113,6 +117,7 @@ test("condition", () => {
       conditions: [{ nodeId: "1:7", conditionSet: { expression: "valid" } }],
       loops: [],
       events: [],
+      links: [],
     },
   ]);
   expect(output.vueTemplate).toBe(
@@ -145,6 +150,7 @@ test("loop", () => {
         },
       ],
       events: [],
+      links: [],
     },
   ]);
   expect(output.vueTemplate).toBe(
@@ -172,6 +178,7 @@ test("variable", () => {
       conditions: [],
       loops: [],
       events: [],
+      links: [],
     },
   ]);
   expect(output.vueTemplate).toBe(
@@ -205,6 +212,7 @@ test("event", () => {
           eventSet: { expression: "handle" },
         },
       ],
+      links: [],
     },
   ]);
   expect(output.vueTemplate).toBe(

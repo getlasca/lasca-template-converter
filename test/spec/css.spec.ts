@@ -14,6 +14,7 @@ test("simple", () => {
       conditions: [],
       loops: [],
       events: [],
+      links: [],
     },
   ]);
   expect(output.css).toBe(
@@ -37,6 +38,7 @@ test("two breakpoints", () => {
       conditions: [],
       loops: [],
       events: [],
+      links: [],
     },
     {
       figma: figma,
@@ -48,6 +50,7 @@ test("two breakpoints", () => {
       conditions: [],
       loops: [],
       events: [],
+      links: [],
     },
   ]);
   expect(output.css).toBe(
@@ -79,6 +82,7 @@ test("nested", () => {
       conditions: [],
       loops: [],
       events: [],
+      links: [],
     },
   ]);
   expect(output.css).toBe(
@@ -108,6 +112,7 @@ test("event cursor", () => {
           eventSet: { expression: "handle" },
         },
       ],
+      links: [],
     },
   ]);
   expect(output.css).toBe(
