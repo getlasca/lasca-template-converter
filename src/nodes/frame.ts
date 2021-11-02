@@ -241,6 +241,13 @@ export default class FrameNode extends BaseNode {
         }
         case "SPACE_BETWEEN": {
           css += " justify-content: space-between;";
+
+          // center if one element in autolayout frame
+          childCss += ` .class-${this.className} > *:only-child { `;
+          childCss += `margin: ${
+            this.style.layoutMode === "HORIZONTAL" ? "0 auto" : "auto 0"
+          };`;
+          childCss += " }";
           break;
         }
       }
