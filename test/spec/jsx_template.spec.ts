@@ -1,20 +1,15 @@
 import convert from "../../src/index";
-import { loadFixture } from "../helper";
+import {
+  defaultConvertParams,
+  simpleFigmaFixture,
+  nestedFigmaFixture,
+} from "../fixture";
 
 test("simple", () => {
-  const figma = loadFixture("simple");
   const output = convert([
     {
-      figma: figma,
-      min: 0,
-      max: 0,
-      mixedTexts: [],
-      nodeImages: [],
-      variables: [],
-      conditions: [],
-      loops: [],
-      events: [],
-      links: [],
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
     },
   ]);
   const template =
@@ -22,7 +17,7 @@ test("simple", () => {
     `<div className="breakpoint-1">` +
     `<div className="class-1">` +
     `<div className="class-2"></div>` +
-    `<span className="class-3">sampleText</span>` +
+    `<span className="class-3">test_text</span>` +
     `</div>` +
     `</div>` +
     `</div>`;
@@ -30,31 +25,16 @@ test("simple", () => {
 });
 
 test("breakpoints", () => {
-  const figma = loadFixture("simple");
   const output = convert([
     {
-      figma: figma,
-      min: 0,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       max: 349,
-      mixedTexts: [],
-      nodeImages: [],
-      variables: [],
-      conditions: [],
-      loops: [],
-      events: [],
-      links: [],
     },
     {
-      figma: figma,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       min: 350,
-      max: 0,
-      mixedTexts: [],
-      nodeImages: [],
-      variables: [],
-      conditions: [],
-      loops: [],
-      events: [],
-      links: [],
     },
   ]);
   const template =
@@ -62,13 +42,13 @@ test("breakpoints", () => {
     `<div className="breakpoint-1">` +
     `<div className="class-1">` +
     `<div className="class-2"></div>` +
-    `<span className="class-3">sampleText</span>` +
+    `<span className="class-3">test_text</span>` +
     `</div>` +
     `</div>` +
     `<div className="breakpoint-2">` +
     `<div className="class-1">` +
     `<div className="class-2"></div>` +
-    `<span className="class-3">sampleText</span>` +
+    `<span className="class-3">test_text</span>` +
     `</div>` +
     `</div>` +
     `</div>`;
@@ -76,19 +56,10 @@ test("breakpoints", () => {
 });
 
 test("nested", () => {
-  const figma = loadFixture("nested");
   const output = convert([
     {
-      figma: figma,
-      min: 0,
-      max: 0,
-      mixedTexts: [],
-      nodeImages: [],
-      variables: [],
-      conditions: [],
-      loops: [],
-      events: [],
-      links: [],
+      ...defaultConvertParams,
+      figma: nestedFigmaFixture,
     },
   ]);
   const template =
@@ -105,19 +76,11 @@ test("nested", () => {
 });
 
 test("condition", () => {
-  const figma = loadFixture("simple");
   const output = convert([
     {
-      figma: figma,
-      min: 0,
-      max: 0,
-      mixedTexts: [],
-      nodeImages: [],
-      variables: [],
-      conditions: [{ nodeId: "1:7", conditionSet: { expression: "valid" } }],
-      loops: [],
-      events: [],
-      links: [],
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
+      conditions: [{ nodeId: "10:1", conditionSet: { expression: "valid" } }],
     },
   ]);
   expect(output.jsxTemplate).toBe(
@@ -125,32 +88,24 @@ test("condition", () => {
       `<div className="breakpoint-1">` +
       `<div className="class-1">` +
       `{ valid && <div className="class-2"></div> }` +
-      `<span className="class-3">sampleText</span>` +
+      `<span className="class-3">test_text</span>` +
       `</div>` +
       `</div>` +
       `</div>`
   );
 });
 
-test("loop", () => {
-  const figma = loadFixture("simple");
+test("loop without index", () => {
   const output = convert([
     {
-      figma: figma,
-      min: 0,
-      max: 0,
-      mixedTexts: [],
-      nodeImages: [],
-      variables: [],
-      conditions: [],
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       loops: [
         {
-          nodeId: "1:7",
+          nodeId: "10:1",
           loopSet: { expression: "items", key: "item", itemVariable: "item" },
         },
       ],
-      events: [],
-      links: [],
     },
   ]);
   expect(output.jsxTemplate).toBe(
@@ -158,7 +113,37 @@ test("loop", () => {
       `<div className="breakpoint-1">` +
       `<div className="class-1">` +
       `{ items.map((item) => <div className="class-2" key={item}></div> )}` +
-      `<span className="class-3">sampleText</span>` +
+      `<span className="class-3">test_text</span>` +
+      `</div>` +
+      `</div>` +
+      `</div>`
+  );
+});
+
+test("loop with index", () => {
+  const output = convert([
+    {
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
+      loops: [
+        {
+          nodeId: "10:1",
+          loopSet: {
+            expression: "items",
+            key: "item",
+            itemVariable: "item",
+            indexVariable: "i",
+          },
+        },
+      ],
+    },
+  ]);
+  expect(output.jsxTemplate).toBe(
+    `<div>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `{ items.map((item, i) => <div className="class-2" key={item}></div> )}` +
+      `<span className="class-3">test_text</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -166,24 +151,13 @@ test("loop", () => {
 });
 
 test("variable", () => {
-  const figma = loadFixture("simple");
   const output = convert([
     {
-      figma: figma,
-      min: 0,
-      max: 0,
-      mixedTexts: [],
-      nodeImages: [],
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       variables: [
-        {
-          nodeId: "1:8",
-          variableSet: { expression: "this.state.count" },
-        },
+        { nodeId: "10:2", variableSet: { expression: "this.state.count" } },
       ],
-      conditions: [],
-      loops: [],
-      events: [],
-      links: [],
     },
   ]);
   expect(output.jsxTemplate).toBe(
@@ -199,25 +173,17 @@ test("variable", () => {
 });
 
 test("event", () => {
-  const figma = loadFixture("simple");
   const output = convert([
     {
-      figma: figma,
-      min: 0,
-      max: 0,
-      mixedTexts: [],
-      nodeImages: [],
-      variables: [],
-      conditions: [],
-      loops: [],
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       events: [
         {
-          nodeId: "1:7",
+          nodeId: "10:1",
           eventType: "click",
           eventSet: { expression: "this.handle" },
         },
       ],
-      links: [],
     },
   ]);
   expect(output.jsxTemplate).toBe(
@@ -225,7 +191,7 @@ test("event", () => {
       `<div className="breakpoint-1">` +
       `<div className="class-1">` +
       `<div className="class-2" onClick={this.handle}></div>` +
-      `<span className="class-3">sampleText</span>` +
+      `<span className="class-3">test_text</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -233,21 +199,13 @@ test("event", () => {
 });
 
 test("link", () => {
-  const figma = loadFixture("simple");
   const output = convert([
     {
-      figma: figma,
-      min: 0,
-      max: 0,
-      mixedTexts: [],
-      nodeImages: [],
-      variables: [],
-      conditions: [],
-      loops: [],
-      events: [],
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       links: [
         {
-          nodeId: "1:7",
+          nodeId: "10:1",
           isTargetBlank: false,
           variableSet: { expression: "link" },
         },
@@ -259,7 +217,7 @@ test("link", () => {
       `<div className="breakpoint-1">` +
       `<div className="class-1">` +
       `<a className="class-2" href={link}></a>` +
-      `<span className="class-3">sampleText</span>` +
+      `<span className="class-3">test_text</span>` +
       `</div>` +
       `</div>` +
       `</div>`

@@ -1,39 +1,15 @@
 import convert from "../../src/index";
-import { buildFixture } from "../helper";
-
-const defaultParams = {
-  min: 0,
-  max: 0,
-  mixedTexts: [],
-  nodeImages: [],
-  variables: [],
-  conditions: [],
-  loops: [],
-  events: [],
-  links: [],
-};
-
-const simpleFixture = buildFixture({
-  type: "FRAME",
-  id: "10:0",
-  children: [
-    {
-      id: "10:1",
-      type: "RECTANGLE",
-    },
-    {
-      type: "TEXT",
-      id: "10:2",
-      characters: "test_text",
-    },
-  ],
-});
+import {
+  defaultConvertParams,
+  simpleFigmaFixture,
+  nestedFigmaFixture,
+} from "../fixture";
 
 test("simple", () => {
   const output = convert([
     {
-      ...defaultParams,
-      figma: simpleFixture,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
     },
   ]);
   const template =
@@ -51,13 +27,13 @@ test("simple", () => {
 test("breakpoints", () => {
   const output = convert([
     {
-      ...defaultParams,
-      figma: simpleFixture,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       max: 349,
     },
     {
-      ...defaultParams,
-      figma: simpleFixture,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       min: 350,
     },
   ]);
@@ -80,24 +56,10 @@ test("breakpoints", () => {
 });
 
 test("nested", () => {
-  const fixture = buildFixture({
-    type: "FRAME",
-    children: [
-      {
-        type: "FRAME",
-        children: [
-          {
-            type: "RECTANGLE",
-          },
-        ],
-      },
-    ],
-  });
-
   const output = convert([
     {
-      ...defaultParams,
-      figma: fixture,
+      ...defaultConvertParams,
+      figma: nestedFigmaFixture,
     },
   ]);
   const template =
@@ -116,8 +78,8 @@ test("nested", () => {
 test("condition", () => {
   const output = convert([
     {
-      ...defaultParams,
-      figma: simpleFixture,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       conditions: [{ nodeId: "10:1", conditionSet: { expression: "valid" } }],
     },
   ]);
@@ -137,8 +99,8 @@ test("condition", () => {
 test("loop without index", () => {
   const output = convert([
     {
-      ...defaultParams,
-      figma: simpleFixture,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       loops: [
         {
           nodeId: "10:1",
@@ -162,8 +124,8 @@ test("loop without index", () => {
 test("loop with index", () => {
   const output = convert([
     {
-      ...defaultParams,
-      figma: simpleFixture,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       loops: [
         {
           nodeId: "10:1",
@@ -192,8 +154,8 @@ test("loop with index", () => {
 test("variable", () => {
   const output = convert([
     {
-      ...defaultParams,
-      figma: simpleFixture,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       variables: [{ nodeId: "10:2", variableSet: { expression: "count" } }],
     },
   ]);
@@ -212,8 +174,8 @@ test("variable", () => {
 test("event", () => {
   const output = convert([
     {
-      ...defaultParams,
-      figma: simpleFixture,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       events: [
         {
           nodeId: "10:1",
@@ -238,8 +200,8 @@ test("event", () => {
 test("link", () => {
   const output = convert([
     {
-      ...defaultParams,
-      figma: simpleFixture,
+      ...defaultConvertParams,
+      figma: simpleFigmaFixture,
       links: [
         {
           nodeId: "10:1",

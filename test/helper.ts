@@ -41,7 +41,7 @@ interface Constraint {
   vertical: string;
 }
 
-export function buildFixture(frame: FrameNode): any {
+export function buildFigmaFixture(frame: FrameNode): any {
   const build = (node: FrameNode | RectangleNode | TextNode): any => {
     if (node.type === "FRAME") {
       let children = [];
