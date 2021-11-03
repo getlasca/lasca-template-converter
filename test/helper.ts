@@ -1,9 +1,3 @@
-import fs from "fs";
-
-export function loadFixture(name: string): any {
-  return JSON.parse(fs.readFileSync(`./test/fixture/${name}.json`, "utf8"));
-}
-
 interface FrameNode {
   type: "FRAME";
   id?: string;
@@ -181,9 +175,9 @@ const rectangleDefault = {
     {
       type: "SOLID",
       color: {
-        b: 0.7686274647712708,
-        g: 0.7686274647712708,
-        r: 0.7686274647712708,
+        b: 1,
+        g: 1,
+        r: 1,
       },
       opacity: 1,
       visible: true,
