@@ -1,9 +1,9 @@
-import convert from "../../src/index";
+import convert from "../../../src/index";
 import {
   defaultConvertParams,
   simpleFigmaFixture,
   nestedFigmaFixture,
-} from "../fixture";
+} from "../../fixture";
 
 test("simple", () => {
   const output = convert([
@@ -14,14 +14,14 @@ test("simple", () => {
   ]);
   const template =
     `<div>` +
-    `<div class="breakpoint-1">` +
-    `<div class="class-1">` +
-    `<div class="class-2"></div>` +
-    `<span class="class-3">test_text</span>` +
+    `<div className="breakpoint-1">` +
+    `<div className="class-1">` +
+    `<div className="class-2"></div>` +
+    `<span className="class-3">test_text</span>` +
     `</div>` +
     `</div>` +
     `</div>`;
-  expect(output.vueTemplate).toBe(template);
+  expect(output.jsxTemplate).toBe(template);
 });
 
 test("breakpoints", () => {
@@ -39,20 +39,20 @@ test("breakpoints", () => {
   ]);
   const template =
     `<div>` +
-    `<div class="breakpoint-1">` +
-    `<div class="class-1">` +
-    `<div class="class-2"></div>` +
-    `<span class="class-3">test_text</span>` +
+    `<div className="breakpoint-1">` +
+    `<div className="class-1">` +
+    `<div className="class-2"></div>` +
+    `<span className="class-3">test_text</span>` +
     `</div>` +
     `</div>` +
-    `<div class="breakpoint-2">` +
-    `<div class="class-1">` +
-    `<div class="class-2"></div>` +
-    `<span class="class-3">test_text</span>` +
+    `<div className="breakpoint-2">` +
+    `<div className="class-1">` +
+    `<div className="class-2"></div>` +
+    `<span className="class-3">test_text</span>` +
     `</div>` +
     `</div>` +
     `</div>`;
-  expect(output.vueTemplate).toBe(template);
+  expect(output.jsxTemplate).toBe(template);
 });
 
 test("nested", () => {
@@ -64,15 +64,15 @@ test("nested", () => {
   ]);
   const template =
     `<div>` +
-    `<div class="breakpoint-1">` +
-    `<div class="class-1">` +
-    `<div class="class-2">` +
-    `<div class="class-3"></div>` +
+    `<div className="breakpoint-1">` +
+    `<div className="class-1">` +
+    `<div className="class-2">` +
+    `<div className="class-3"></div>` +
     `</div>` +
     `</div>` +
     `</div>` +
     `</div>`;
-  expect(output.vueTemplate).toBe(template);
+  expect(output.jsxTemplate).toBe(template);
 });
 
 test("condition", () => {
@@ -83,13 +83,12 @@ test("condition", () => {
       conditions: [{ nodeId: "10:1", conditionSet: { expression: "valid" } }],
     },
   ]);
-
-  expect(output.vueTemplate).toBe(
+  expect(output.jsxTemplate).toBe(
     `<div>` +
-      `<div class="breakpoint-1">` +
-      `<div class="class-1">` +
-      `<div class="class-2" v-if="valid"></div>` +
-      `<span class="class-3">test_text</span>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `{ valid && <div className="class-2"></div> }` +
+      `<span className="class-3">test_text</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -109,12 +108,12 @@ test("loop without index", () => {
       ],
     },
   ]);
-  expect(output.vueTemplate).toBe(
+  expect(output.jsxTemplate).toBe(
     `<div>` +
-      `<div class="breakpoint-1">` +
-      `<div class="class-1">` +
-      `<div class="class-2" v-for="item in items" :key="item"></div>` +
-      `<span class="class-3">test_text</span>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `{ items.map((item) => <div className="class-2" key={item}></div> )}` +
+      `<span className="class-3">test_text</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -139,12 +138,12 @@ test("loop with index", () => {
       ],
     },
   ]);
-  expect(output.vueTemplate).toBe(
+  expect(output.jsxTemplate).toBe(
     `<div>` +
-      `<div class="breakpoint-1">` +
-      `<div class="class-1">` +
-      `<div class="class-2" v-for="(item, i) in items" :key="item"></div>` +
-      `<span class="class-3">test_text</span>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `{ items.map((item, i) => <div className="class-2" key={item}></div> )}` +
+      `<span className="class-3">test_text</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -156,15 +155,17 @@ test("variable", () => {
     {
       ...defaultConvertParams,
       figma: simpleFigmaFixture,
-      variables: [{ nodeId: "10:2", variableSet: { expression: "count" } }],
+      variables: [
+        { nodeId: "10:2", variableSet: { expression: "this.state.count" } },
+      ],
     },
   ]);
-  expect(output.vueTemplate).toBe(
+  expect(output.jsxTemplate).toBe(
     `<div>` +
-      `<div class="breakpoint-1">` +
-      `<div class="class-1">` +
-      `<div class="class-2"></div>` +
-      `<span class="class-3">{{ count }}</span>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `<div className="class-2"></div>` +
+      `<span className="class-3">{ this.state.count }</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -180,17 +181,17 @@ test("event", () => {
         {
           nodeId: "10:1",
           eventType: "click",
-          eventSet: { expression: "handle" },
+          eventSet: { expression: "this.handle" },
         },
       ],
     },
   ]);
-  expect(output.vueTemplate).toBe(
+  expect(output.jsxTemplate).toBe(
     `<div>` +
-      `<div class="breakpoint-1">` +
-      `<div class="class-1">` +
-      `<div class="class-2" v-on:click="handle"></div>` +
-      `<span class="class-3">test_text</span>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `<div className="class-2" onClick={this.handle}></div>` +
+      `<span className="class-3">test_text</span>` +
       `</div>` +
       `</div>` +
       `</div>`
@@ -211,12 +212,12 @@ test("link", () => {
       ],
     },
   ]);
-  expect(output.vueTemplate).toBe(
+  expect(output.jsxTemplate).toBe(
     `<div>` +
-      `<div class="breakpoint-1">` +
-      `<div class="class-1">` +
-      `<a class="class-2" :href="link"></a>` +
-      `<span class="class-3">test_text</span>` +
+      `<div className="breakpoint-1">` +
+      `<div className="class-1">` +
+      `<a className="class-2" href={link}></a>` +
+      `<span className="class-3">test_text</span>` +
       `</div>` +
       `</div>` +
       `</div>`
