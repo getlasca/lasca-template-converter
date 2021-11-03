@@ -1,9 +1,9 @@
-import convert from "../../src/index";
+import convert from "../../../src/index";
 import {
   defaultConvertParams,
   simpleFigmaFixture,
   nestedFigmaFixture,
-} from "../fixture";
+} from "../../fixture";
 
 test("simple", () => {
   const output = convert([
