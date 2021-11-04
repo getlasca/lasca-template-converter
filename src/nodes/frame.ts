@@ -79,14 +79,18 @@ export default class FrameNode extends BaseNode {
           break;
         }
         case "GROUP": {
+          const isFixedPosition = !!parser.fixedPositionNodes.find(
+            (n) => n.nodeId === node.id
+          );
+
           childNode = new GroupNode(
             childParser,
             idGenerator,
             node,
             figma.layoutMode,
-            figma.layoutMode === "NONE"
-              ? undefined
-              : new Parser("GROUP_AUTOLAYOUT_CHILD", node),
+            figma.layoutMode !== "NONE" || isFixedPosition
+              ? new Parser("GROUP_RELATIVE_POSITION", node)
+              : undefined,
             mixedTexts,
             nodeImages,
             variables,

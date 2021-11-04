@@ -11,12 +11,12 @@ import {
 
 export default class Parser {
   baseWidth: number;
-  groupAutoLayoutChildX?: number = undefined;
-  groupAutoLayoutChildY?: number = undefined;
+  groupRelativeX?: number = undefined;
+  groupRelativeY?: number = undefined;
   fixedPositionNodes: { nodeId: string; fillContainer: boolean }[] = [];
 
   constructor(
-    type: "FRAME" | "ROOT_FRAME" | "GROUP_AUTOLAYOUT_CHILD",
+    type: "FRAME" | "ROOT_FRAME" | "GROUP_RELATIVE_POSITION",
     node: any
   ) {
     this.baseWidth = node.width;
@@ -25,9 +25,10 @@ export default class Parser {
         this.fixedPositionNodes = this.getFixedPositionNodes(node);
         break;
       }
-      case "GROUP_AUTOLAYOUT_CHILD": {
-        this.groupAutoLayoutChildX = node.x;
-        this.groupAutoLayoutChildY = node.y;
+      // in case of autolayout child group node or position fixed group node, x and y must be calculated relatively
+      case "GROUP_RELATIVE_POSITION": {
+        this.groupRelativeX = node.x;
+        this.groupRelativeY = node.y;
         break;
       }
     }
@@ -158,16 +159,14 @@ export default class Parser {
     });
 
     return {
-      x: this.groupAutoLayoutChildX
-        ? obj.x - this.groupAutoLayoutChildX
-        : obj.x,
+      x: this.groupRelativeX ? obj.x - this.groupRelativeX : obj.x,
       xFromCenter: this.baseWidth / 2 - obj.x,
       xFromRight: this.baseWidth - (obj.x + obj.width),
       y:
         obj.type === "LINE"
           ? obj.y - obj.strokeWeight
-          : this.groupAutoLayoutChildY
-          ? obj.y - this.groupAutoLayoutChildY
+          : this.groupRelativeY
+          ? obj.y - this.groupRelativeY
           : obj.y,
       width: obj.width,
       height: obj.type === "LINE" ? obj.strokeWeight : obj.height,
