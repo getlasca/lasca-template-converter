@@ -1,6 +1,6 @@
-import convert from "../../../src/index";
-import { defaultConvertParams } from "../../fixture";
-import { buildFigmaFixture } from "../../helper";
+import convert from "../../../../src/index";
+import { defaultConvertParams } from "../../../fixture";
+import { buildFigmaFixture } from "../../../helper";
 
 test("horizontal left top", () => {
   const figmaFixture = buildFigmaFixture({
