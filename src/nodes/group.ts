@@ -155,19 +155,29 @@ export default class GroupNode extends BaseNode {
 
   buildCss(): string {
     let css = "";
-    const cursorCss = this.buildCursorCss();
-    if (this.layoutModeAsChild !== "NONE" || cursorCss) {
-      css += `.class-${this.className} {`;
-      if (this.layoutModeAsChild !== "NONE") {
-        css += ` position: relative;`;
-        css += ` width: ${this.style.width}px;`;
-        css += ` height: ${this.style.height}px;`;
-      }
-      if (cursorCss) {
-        css += cursorCss;
-      }
-      css += " } ";
+    let cssInner = "";
+
+    if (this.style.isFixedPosition) {
+      cssInner += ` position: fixed;`;
+      cssInner += ` left: ${this.style.x}px;`;
+      cssInner += ` top: ${this.style.y}px;`;
     }
+
+    if (this.layoutModeAsChild !== "NONE") {
+      cssInner += ` position: relative;`;
+      cssInner += ` width: ${this.style.width}px;`;
+      cssInner += ` height: ${this.style.height}px;`;
+    }
+
+    const cursorCss = this.buildCursorCss();
+    if (cursorCss) {
+      cssInner += cursorCss;
+    }
+
+    if (cssInner) {
+      css += `.class-${this.className} {${cssInner} }`;
+    }
+
     css += this.children
       .map((node: BaseNode) => {
         return node.buildCss();
