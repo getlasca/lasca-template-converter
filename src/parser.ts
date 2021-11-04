@@ -121,9 +121,16 @@ export default class Parser {
   }
 
   groupStyle(obj: any): GroupStyle {
+    const fixedPositionNode = this.fixedPositionNodes.find(
+      (n) => n.nodeId === obj.id
+    );
+
     return {
+      x: obj.x,
+      y: obj.y,
       width: obj.width,
       height: obj.height,
+      isFixedPosition: !!fixedPositionNode,
     };
   }
 

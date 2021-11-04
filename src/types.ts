@@ -157,8 +157,11 @@ export interface TextStyle extends BaseStyle, TextRangeStyle {
 }
 
 export interface GroupStyle {
+  x: number;
+  y: number;
   width: number;
   height: number;
+  isFixedPosition: boolean;
 }
 
 export type VectorStyle = BaseStyle;
