@@ -235,7 +235,7 @@ export default class FrameNode extends BaseNode {
           childCss += " }";
 
           childCss += ` .class-${this.className} > *:not(:last-child) { `;
-          childCss += ` margin-${
+          childCss += `margin-${
             this.style.layoutMode === "HORIZONTAL" ? "right" : "bottom"
           }: ${this.style.itemSpacing / 2}px;`;
           childCss += " }";

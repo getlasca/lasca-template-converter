@@ -1,32 +1,39 @@
-interface FrameNode {
-  type: "FRAME";
+interface BaseNode {
   id?: string;
   x?: number;
   y?: number;
   width?: number;
   height?: number;
   constraints?: Constraint;
+}
+
+interface AutoLayout {
+  layoutMode?: "NONE" | "HORIZONTAL" | "VERTICAL";
+  primaryAxisAlignItems?: "MIN" | "CENTER" | "MAX" | "SPACE_BETWEEN";
+  counterAxisAlignItems?: "MIN" | "CENTER" | "MAX";
+  paddingLeft?: number;
+  paddingRight?: number;
+  paddingTop?: number;
+  paddingBottom?: number;
+  itemSpacing?: number;
+}
+
+interface AutoLayoutChild {
+  layoutAlign?: "STRETCH" | "INHERIT";
+  layoutGrow?: number;
+}
+
+interface FrameNode extends BaseNode, AutoLayout, AutoLayoutChild {
+  type: "FRAME";
   children?: (FrameNode | RectangleNode | TextNode)[];
 }
 
-interface RectangleNode {
+interface RectangleNode extends BaseNode, AutoLayoutChild {
   type: "RECTANGLE";
-  id?: string;
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
-  constraints?: Constraint;
 }
 
-interface TextNode {
+interface TextNode extends BaseNode, AutoLayoutChild {
   type: "TEXT";
-  id?: string;
-  x?: number;
-  y?: number;
-  width?: number;
-  height?: number;
-  constraints?: Constraint;
   characters?: string;
 }
 
