@@ -209,7 +209,10 @@ export default abstract class BaseNode {
 
     css += ` position: ${input.isFixedPosition ? "fixed" : "absolute"};`;
     css += ` top: ${input.y}px;`;
-    css += ` height: ${input.height}px;`;
+
+    if (!input.isHeightAuto) {
+      css += ` height: ${input.height}px;`;
+    }
 
     switch (input.constraintsHorizontal) {
       case "MIN":
