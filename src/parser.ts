@@ -165,10 +165,12 @@ export default class Parser {
       width: obj.width,
       height: obj.type === "LINE" ? obj.strokeWeight : obj.height,
       isWidthAuto:
-        obj.type === "TEXT" && obj.textAutoResize === "WIDTH_AND_HEIGHT",
+        (obj.type === "FRAME" && obj.layoutMode === "HORIZONTAL") ||
+        (obj.type === "TEXT" && obj.textAutoResize === "WIDTH_AND_HEIGHT"),
       isHeightAuto:
-        obj.type === "TEXT" &&
-        ["HEIGHT", "WIDTH_AND_HEIGHT"].includes(obj.textAutoResize),
+        (obj.type === "FRAME" && obj.layoutMode === "VERTICAL") ||
+        (obj.type === "TEXT" &&
+          ["HEIGHT", "WIDTH_AND_HEIGHT"].includes(obj.textAutoResize)),
       constraintsHorizontal:
         fixedPositionNode && fixedPositionNode.fillContainer
           ? "STRETCH"

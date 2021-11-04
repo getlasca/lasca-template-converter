@@ -173,23 +173,27 @@ export default abstract class BaseNode {
     if (isRoot) {
       return "";
     }
-
     let css = "";
-    const baseWidth = input.isWidthAuto ? "auto" : input.width + "px";
-    const baseHeight = input.isHeightAuto ? "auto" : input.height + "px";
 
     if (this.layoutModeAsChild !== "NONE") {
-      css += ` width: ${
-        this.layoutModeAsChild === "VERTICAL" && input.layoutAlign === "STRETCH"
-          ? "100%"
-          : baseWidth
-      };`;
-      css += ` height: ${
-        this.layoutModeAsChild === "HORIZONTAL" &&
-        input.layoutAlign === "STRETCH"
-          ? "100%"
-          : baseHeight
-      };`;
+      if (!input.isWidthAuto) {
+        css += ` width: ${
+          this.layoutModeAsChild === "VERTICAL" &&
+          input.layoutAlign === "STRETCH"
+            ? "100%"
+            : `${input.width}px`
+        };`;
+      }
+
+      if (!input.isHeightAuto) {
+        css += ` height: ${
+          this.layoutModeAsChild === "HORIZONTAL" &&
+          input.layoutAlign === "STRETCH"
+            ? "100%"
+            : `${input.height}px`
+        };`;
+      }
+
       css += ` flex: ${
         input.layoutGrow === 1
           ? "1"
@@ -205,18 +209,25 @@ export default abstract class BaseNode {
 
     css += ` position: ${input.isFixedPosition ? "fixed" : "absolute"};`;
     css += ` top: ${input.y}px;`;
-    css += ` height: ${baseHeight};`;
+
+    if (!input.isHeightAuto) {
+      css += ` height: ${input.height}px;`;
+    }
 
     switch (input.constraintsHorizontal) {
       case "MIN":
       case "SCALE": {
         css += ` left: ${input.x}px;`;
-        css += ` width: ${baseWidth};`;
+        if (!input.isWidthAuto) {
+          css += ` width: ${input.width}px;`;
+        }
         break;
       }
       case "MAX": {
         css += ` right: ${input.xFromRight}px;`;
-        css += ` width: ${baseWidth};`;
+        if (!input.isWidthAuto) {
+          css += ` width: ${input.width}px;`;
+        }
         break;
       }
       case "STRETCH": {
@@ -230,7 +241,9 @@ export default abstract class BaseNode {
             ? " - " + input.xFromCenter
             : " + " + -1 * input.xFromCenter
         }px);`;
-        css += ` width: ${baseWidth};`;
+        if (!input.isWidthAuto) {
+          css += ` width: ${input.width}px;`;
+        }
         break;
       }
     }
