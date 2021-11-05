@@ -198,15 +198,17 @@ export default class FrameNode extends BaseNode {
       css += ` padding-top: ${this.style.paddingTop}px;`;
       css += ` padding-bottom: ${this.style.paddingBottom}px;`;
 
-      if (this.style.constraintsHorizontal === "STRETCH") {
-        if (this.style.primaryAxisAlignItems === "MIN") {
-          css += ` padding-left: ${this.style.paddingLeft}px;`;
-        }
-        if (this.style.primaryAxisAlignItems === "MAX") {
-          css += ` padding-right: ${this.style.paddingRight}px;`;
-        }
-      } else {
+      if (
+        this.style.constraintsHorizontal !== "STRETCH" ||
+        this.style.primaryAxisAlignItems !== "MAX"
+      ) {
         css += ` padding-left: ${this.style.paddingLeft}px;`;
+      }
+
+      if (
+        this.style.constraintsHorizontal !== "STRETCH" ||
+        this.style.primaryAxisAlignItems !== "MIN"
+      ) {
         css += ` padding-right: ${this.style.paddingRight}px;`;
       }
 
