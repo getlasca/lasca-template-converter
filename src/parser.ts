@@ -158,10 +158,16 @@ export default class Parser {
       return effect.visible && effect.type === "BACKGROUND_BLUR";
     });
 
+    const x = this.groupRelativeX ? obj.x - this.groupRelativeX : obj.x;
+    const xFromRight = this.baseWidth - (obj.x + obj.width);
+
     return {
-      x: this.groupRelativeX ? obj.x - this.groupRelativeX : obj.x,
+      x: x,
+      xPercent: Math.round((x / this.baseWidth) * 10000) / 100,
       xFromCenter: this.baseWidth / 2 - obj.x,
-      xFromRight: this.baseWidth - (obj.x + obj.width),
+      xFromRight: xFromRight,
+      xFromRightPercent:
+        Math.round((xFromRight / this.baseWidth) * 10000) / 100,
       y:
         obj.type === "LINE"
           ? obj.y - obj.strokeWeight

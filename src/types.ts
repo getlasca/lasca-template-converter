@@ -94,6 +94,8 @@ export interface BaseStyle {
   x: number;
   xFromCenter: number;
   xFromRight: number;
+  xPercent: number;
+  xFromRightPercent: number;
   y: number;
   width: number;
   height: number;
