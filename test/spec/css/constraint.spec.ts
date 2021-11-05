@@ -117,3 +117,32 @@ test("center", () => {
       ".class-2 { background-color: rgba(255,255,255,1); position: absolute; top: 100px; height: 500px; left: calc(50% - 300px); width: 150px; }"
   );
 });
+
+test("scale", () => {
+  const rightConstraintFigmaFixture = buildFigmaFixture({
+    type: "FRAME",
+    id: "10:0",
+    width: 1000,
+    x: 0,
+    children: [
+      {
+        type: "RECTANGLE",
+        id: "10:1",
+        width: 200,
+        x: 200,
+        constraints: { horizontal: "SCALE", vertical: "MIN" },
+      },
+    ],
+  });
+  const output = convert([
+    {
+      ...defaultConvertParams,
+      figma: rightConstraintFigmaFixture,
+    },
+  ]);
+  expect(output.css).toBe(
+    ".breakpoint-1 { position: relative; } " +
+      ".class-1 { background-color: rgba(255,255,255,1); }" +
+      ".class-2 { background-color: rgba(255,255,255,1); position: absolute; top: 100px; height: 500px; left: 20%; right: 60%; }"
+  );
+});

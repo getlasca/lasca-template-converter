@@ -219,8 +219,7 @@ export default abstract class BaseNode {
     }
 
     switch (input.constraintsHorizontal) {
-      case "MIN":
-      case "SCALE": {
+      case "MIN": {
         css += ` left: ${input.x}px;`;
         if (input.isWidthAuto) {
           css += ` min-width: ${input.width}px;`;
@@ -254,6 +253,11 @@ export default abstract class BaseNode {
         } else {
           css += ` width: ${input.width}px;`;
         }
+        break;
+      }
+      case "SCALE": {
+        css += ` left: ${input.xPercent}%;`;
+        css += ` right: ${input.xFromRightPercent}%;`;
         break;
       }
     }
