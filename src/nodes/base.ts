@@ -222,14 +222,18 @@ export default abstract class BaseNode {
       case "MIN":
       case "SCALE": {
         css += ` left: ${input.x}px;`;
-        if (!input.isWidthAuto) {
+        if (input.isWidthAuto) {
+          css += ` min-width: ${input.width}px;`;
+        } else {
           css += ` width: ${input.width}px;`;
         }
         break;
       }
       case "MAX": {
         css += ` right: ${input.xFromRight}px;`;
-        if (!input.isWidthAuto) {
+        if (input.isWidthAuto) {
+          css += ` min-width: ${input.width}px;`;
+        } else {
           css += ` width: ${input.width}px;`;
         }
         break;
@@ -245,7 +249,9 @@ export default abstract class BaseNode {
             ? " - " + input.xFromCenter
             : " + " + -1 * input.xFromCenter
         }px);`;
-        if (!input.isWidthAuto) {
+        if (input.isWidthAuto) {
+          css += ` min-width: ${input.width}px;`;
+        } else {
           css += ` width: ${input.width}px;`;
         }
         break;
