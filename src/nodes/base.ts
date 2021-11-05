@@ -176,22 +176,26 @@ export default abstract class BaseNode {
     let css = "";
 
     if (this.layoutModeAsChild !== "NONE") {
-      if (!input.isWidthAuto) {
-        css += ` width: ${
-          this.layoutModeAsChild === "VERTICAL" &&
-          input.layoutAlign === "STRETCH"
-            ? "100%"
-            : `${input.width}px`
-        };`;
+      if (
+        this.layoutModeAsChild === "VERTICAL" &&
+        input.layoutAlign === "STRETCH"
+      ) {
+        css += ` width: 100%;`;
+      } else if (input.isWidthAuto) {
+        css += ` min-width: ${input.width}px;`;
+      } else {
+        css += ` width: ${input.width}px;`;
       }
 
-      if (!input.isHeightAuto) {
-        css += ` height: ${
-          this.layoutModeAsChild === "HORIZONTAL" &&
-          input.layoutAlign === "STRETCH"
-            ? "100%"
-            : `${input.height}px`
-        };`;
+      if (
+        this.layoutModeAsChild === "HORIZONTAL" &&
+        input.layoutAlign === "STRETCH"
+      ) {
+        css += ` height: 100%;`;
+      } else if (input.isWidthAuto) {
+        css += ` min-height: ${input.height}px;`;
+      } else {
+        css += ` height: ${input.height}px;`;
       }
 
       css += ` flex: ${
