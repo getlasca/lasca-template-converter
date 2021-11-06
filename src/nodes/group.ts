@@ -164,9 +164,14 @@ export default class GroupNode extends BaseNode {
     }
 
     if (this.layoutModeAsChild !== "NONE") {
-      cssInner += ` position: relative;`;
-      cssInner += ` width: ${this.style.width}px;`;
-      cssInner += ` height: ${this.style.height}px;`;
+      cssInner += this.buildAutoLayoutChildCss(
+        this.style.width,
+        this.style.height,
+        false,
+        false,
+        this.style.layoutAlign,
+        this.style.layoutGrow
+      );
     }
 
     const cursorCss = this.buildCursorCss();
