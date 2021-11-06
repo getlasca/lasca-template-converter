@@ -131,6 +131,8 @@ export default class Parser {
       y: obj.y,
       width: obj.width,
       height: obj.height,
+      layoutAlign: obj.layoutAlign,
+      layoutGrow: obj.layoutGrow,
       isFixedPosition: !!fixedPositionNode,
     };
   }

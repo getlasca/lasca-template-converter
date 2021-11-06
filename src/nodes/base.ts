@@ -173,45 +173,19 @@ export default abstract class BaseNode {
     if (isRoot) {
       return "";
     }
-    let css = "";
 
     if (this.layoutModeAsChild !== "NONE") {
-      if (
-        this.layoutModeAsChild === "VERTICAL" &&
-        input.layoutAlign === "STRETCH"
-      ) {
-        css += ` width: 100%;`;
-      } else if (input.isWidthAuto) {
-        css += ` min-width: ${input.width}px;`;
-      } else {
-        css += ` width: ${input.width}px;`;
-      }
-
-      if (
-        this.layoutModeAsChild === "HORIZONTAL" &&
-        input.layoutAlign === "STRETCH"
-      ) {
-        css += ` height: 100%;`;
-      } else if (input.isWidthAuto) {
-        css += ` min-height: ${input.height}px;`;
-      } else {
-        css += ` height: ${input.height}px;`;
-      }
-
-      css += ` flex: ${
-        input.layoutGrow === 1
-          ? "1"
-          : `0 0 ${
-              this.layoutModeAsChild === "HORIZONTAL"
-                ? input.width
-                : input.height
-            }px`
-      };`;
-      css += ` position: ${input.isFixedPosition ? "fixed" : "relative"};`;
-      return css;
+      return this.buildAutoLayoutChildCss(
+        input.width,
+        input.height,
+        input.isWidthAuto,
+        input.isHeightAuto,
+        input.layoutAlign,
+        input.layoutGrow
+      );
     }
 
-    css += ` position: ${input.isFixedPosition ? "fixed" : "absolute"};`;
+    let css = ` position: ${input.isFixedPosition ? "fixed" : "absolute"};`;
     css += ` top: ${input.y}px;`;
 
     if (!input.isHeightAuto) {
@@ -261,6 +235,40 @@ export default abstract class BaseNode {
         break;
       }
     }
+    return css;
+  }
+
+  protected buildAutoLayoutChildCss(
+    width: number,
+    height: number,
+    isWidthAuto: boolean,
+    isHeightAuto: boolean,
+    layoutAlign: "STRETCH" | "INHERIT",
+    layoutGrow: number
+  ): string {
+    let css = "";
+    if (this.layoutModeAsChild === "VERTICAL" && layoutAlign === "STRETCH") {
+      css += ` width: 100%;`;
+    } else if (isWidthAuto) {
+      css += ` min-width: ${width}px;`;
+    } else {
+      css += ` width: ${width}px;`;
+    }
+
+    if (this.layoutModeAsChild === "HORIZONTAL" && layoutAlign === "STRETCH") {
+      css += ` height: 100%;`;
+    } else if (isHeightAuto) {
+      css += ` min-height: ${height}px;`;
+    } else {
+      css += ` height: ${height}px;`;
+    }
+
+    css += ` flex: ${
+      layoutGrow === 1
+        ? "1"
+        : `0 0 ${this.layoutModeAsChild === "HORIZONTAL" ? width : height}px`
+    };`;
+    css += ` position: relative;`;
     return css;
   }
 

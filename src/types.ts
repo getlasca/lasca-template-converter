@@ -163,6 +163,8 @@ export interface GroupStyle {
   y: number;
   width: number;
   height: number;
+  layoutAlign: "STRETCH" | "INHERIT";
+  layoutGrow: number;
   isFixedPosition: boolean;
 }
 
