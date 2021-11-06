@@ -25,7 +25,12 @@ export default class GroupNode extends BaseNode {
     parser: Parser,
     idGenerator: IdGenerator,
     figma: any,
-    layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    layoutModeAsChild:
+      | "NONE"
+      | "HORIZONTAL"
+      | "VERTICAL"
+      | "AUTOLAYOUT_GROUP"
+      | "HORIZONTAL_GROUP_FILL_CONTAINER",
     relativeParser?: Parser,
     mixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],
@@ -50,6 +55,16 @@ export default class GroupNode extends BaseNode {
 
     this.style = parser.groupStyle(figma);
     const childParser = relativeParser || parser;
+
+    let childLayoutModeAsChild = this.layoutModeAsChild;
+    if (
+      this.layoutModeAsChild === "HORIZONTAL" &&
+      this.style.layoutGrow === 1
+    ) {
+      childLayoutModeAsChild = "HORIZONTAL_GROUP_FILL_CONTAINER";
+    } else if (["HORIZONTAL", "VERTICAL"].includes(this.layoutModeAsChild)) {
+      childLayoutModeAsChild = "AUTOLAYOUT_GROUP";
+    }
 
     figma.children.forEach((node: any) => {
       let childNode: BaseNode;
@@ -79,7 +94,7 @@ export default class GroupNode extends BaseNode {
             childParser,
             idGenerator,
             node,
-            "NONE",
+            childLayoutModeAsChild,
             undefined,
             mixedTexts,
             nodeImages,
@@ -97,7 +112,7 @@ export default class GroupNode extends BaseNode {
             childParser,
             idGenerator,
             node,
-            "NONE",
+            childLayoutModeAsChild,
             mixedTexts,
             nodeImages,
             variables,
@@ -112,7 +127,7 @@ export default class GroupNode extends BaseNode {
             childParser,
             idGenerator,
             node,
-            "NONE",
+            childLayoutModeAsChild,
             mixedTexts,
             nodeImages,
             variables,
@@ -127,7 +142,7 @@ export default class GroupNode extends BaseNode {
             childParser,
             idGenerator,
             node,
-            "NONE",
+            childLayoutModeAsChild,
             mixedTexts,
             nodeImages,
             variables,
@@ -138,7 +153,12 @@ export default class GroupNode extends BaseNode {
           );
           break;
         default:
-          childNode = new EmptyNode(childParser, idGenerator, node, "NONE");
+          childNode = new EmptyNode(
+            childParser,
+            idGenerator,
+            node,
+            childLayoutModeAsChild
+          );
           break;
       }
       this.children.push(childNode);
@@ -163,7 +183,7 @@ export default class GroupNode extends BaseNode {
       cssInner += ` top: ${this.style.y}px;`;
     }
 
-    if (this.layoutModeAsChild !== "NONE") {
+    if (["HORIZONTAL", "VERTICAL"].includes(this.layoutModeAsChild)) {
       cssInner += this.buildAutoLayoutChildCss(
         this.style.width,
         this.style.height,

@@ -15,7 +15,12 @@ export default class EmptyNode extends BaseNode {
     parser: Parser,
     idGenerator: IdGenerator,
     figma: any,
-    layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    layoutModeAsChild:
+      | "NONE"
+      | "HORIZONTAL"
+      | "VERTICAL"
+      | "AUTOLAYOUT_GROUP"
+      | "HORIZONTAL_GROUP_FILL_CONTAINER",
     MixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],
     variables: Variable[] = [],

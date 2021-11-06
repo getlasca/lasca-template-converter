@@ -19,7 +19,12 @@ export default class RectangleNode extends BaseNode {
     parser: Parser,
     idGenerator: IdGenerator,
     figma: any,
-    layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    layoutModeAsChild:
+      | "NONE"
+      | "HORIZONTAL"
+      | "VERTICAL"
+      | "AUTOLAYOUT_GROUP"
+      | "HORIZONTAL_GROUP_FILL_CONTAINER",
     mixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
