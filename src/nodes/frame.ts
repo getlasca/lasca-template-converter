@@ -27,7 +27,12 @@ export default class FrameNode extends BaseNode {
     idGenerator: IdGenerator,
     figma: any,
     isRoot: boolean,
-    layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL",
+    layoutModeAsChild:
+      | "NONE"
+      | "HORIZONTAL"
+      | "VERTICAL"
+      | "AUTOLAYOUT_GROUP"
+      | "HORIZONTAL_GROUP_FILL_CONTAINER",
     relativeParser?: Parser,
     mixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],

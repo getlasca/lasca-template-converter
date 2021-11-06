@@ -15,7 +15,12 @@ import {
 export default abstract class BaseNode {
   nodeId: string;
   className: string;
-  layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL";
+  layoutModeAsChild:
+    | "NONE"
+    | "HORIZONTAL"
+    | "VERTICAL"
+    | "AUTOLAYOUT_GROUP"
+    | "HORIZONTAL_GROUP_FILL_CONTAINER";
   mixedTexts: MixedText[];
   nodeImages: NodeImage[];
   variables: Variable[];
@@ -27,7 +32,12 @@ export default abstract class BaseNode {
   constructor(
     nodeId: string,
     idGenerator: IdGenerator,
-    layoutModeAsChild: "NONE" | "HORIZONTAL" | "VERTICAL" = "NONE",
+    layoutModeAsChild:
+      | "NONE"
+      | "HORIZONTAL"
+      | "VERTICAL"
+      | "AUTOLAYOUT_GROUP"
+      | "HORIZONTAL_GROUP_FILL_CONTAINER" = "NONE",
     mixedTexts: MixedText[] = [],
     nodeImages: NodeImage[] = [],
     variables: Variable[] = [],
@@ -174,7 +184,7 @@ export default abstract class BaseNode {
       return "";
     }
 
-    if (this.layoutModeAsChild !== "NONE") {
+    if (["HORIZONTAL", "VERTICAL"].includes(this.layoutModeAsChild)) {
       return this.buildAutoLayoutChildCss(
         input.width,
         input.height,
@@ -192,7 +202,19 @@ export default abstract class BaseNode {
       css += ` height: ${input.height}px;`;
     }
 
-    switch (input.constraintsHorizontal) {
+    let constraintsHorizontal = input.constraintsHorizontal;
+    // nodes inside autolayout group are forced to be constrained.
+    switch (this.layoutModeAsChild) {
+      case "HORIZONTAL_GROUP_FILL_CONTAINER": {
+        constraintsHorizontal = "SCALE";
+        break;
+      }
+      case "AUTOLAYOUT_GROUP": {
+        constraintsHorizontal = "MIN";
+        break;
+      }
+    }
+    switch (constraintsHorizontal) {
       case "MIN": {
         css += ` left: ${input.x}px;`;
         if (input.isWidthAuto) {
