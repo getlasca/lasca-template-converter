@@ -207,7 +207,7 @@ export default abstract class BaseNode {
                 : input.height
             }px`
       };`;
-      css += ` position: ${input.isFixedPosition ? "fixed" : "relative"};`;
+      css += ` position: relative;`;
       return css;
     }
 
