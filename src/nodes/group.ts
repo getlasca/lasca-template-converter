@@ -80,7 +80,7 @@ export default class GroupNode extends BaseNode {
             idGenerator,
             node,
             false,
-            "NONE",
+            childLayoutModeAsChild,
             undefined,
             mixedTexts,
             nodeImages,
