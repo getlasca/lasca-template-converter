@@ -58,8 +58,10 @@ export default class GroupNode extends BaseNode {
 
     let childLayoutModeAsChild = this.layoutModeAsChild;
     if (
-      this.layoutModeAsChild === "HORIZONTAL" &&
-      this.style.layoutGrow === 1
+      (this.layoutModeAsChild === "HORIZONTAL" &&
+        this.style.layoutGrow === 1) ||
+      (this.layoutModeAsChild === "VERTICAL" &&
+        this.style.layoutAlign === "STRETCH")
     ) {
       childLayoutModeAsChild = "HORIZONTAL_GROUP_FILL_CONTAINER";
     } else if (["HORIZONTAL", "VERTICAL"].includes(this.layoutModeAsChild)) {
