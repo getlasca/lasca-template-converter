@@ -11,6 +11,7 @@ import {
 
 export default class Parser {
   baseWidth: number;
+  baseHeight: number;
   groupRelativeX?: number = undefined;
   groupRelativeY?: number = undefined;
   fixedPositionNodes: { nodeId: string; fillContainer: boolean }[] = [];
@@ -20,6 +21,7 @@ export default class Parser {
     node: any
   ) {
     this.baseWidth = node.width;
+    this.baseHeight = node.height;
     switch (type) {
       case "ROOT_FRAME": {
         this.fixedPositionNodes = this.getFixedPositionNodes(node);
@@ -162,6 +164,13 @@ export default class Parser {
 
     const x = this.groupRelativeX ? obj.x - this.groupRelativeX : obj.x;
     const xFromRight = this.baseWidth - (obj.x + obj.width);
+    const y =
+      obj.type === "LINE"
+        ? obj.y - obj.strokeWeight
+        : this.groupRelativeY
+        ? obj.y - this.groupRelativeY
+        : obj.y;
+    const yFromBottom = this.baseHeight - (obj.y + obj.height);
 
     return {
       x: x,
@@ -170,12 +179,12 @@ export default class Parser {
       xFromRight: xFromRight,
       xFromRightPercent:
         Math.round((xFromRight / this.baseWidth) * 10000) / 100,
-      y:
-        obj.type === "LINE"
-          ? obj.y - obj.strokeWeight
-          : this.groupRelativeY
-          ? obj.y - this.groupRelativeY
-          : obj.y,
+      y: y,
+      yPercent: Math.round((y / this.baseHeight) * 10000) / 100,
+      yFromCenter: this.baseHeight / 2 - obj.y,
+      yFromBottom: yFromBottom,
+      yFromBottomPercent:
+        Math.round((yFromBottom / this.baseHeight) * 10000) / 100,
       width: obj.width,
       height: obj.type === "LINE" ? obj.strokeWeight : obj.height,
       isWidthAuto:
@@ -290,15 +299,38 @@ export default class Parser {
   }
 
   private getFixedPositionNodes(
-    node: any
+    rootNode: any
   ): { nodeId: string; fillContainer: boolean }[] {
-    if (!node.numberOfFixedChildren || node.numberOfFixedChildren === 0) {
+    if (
+      !rootNode.numberOfFixedChildren ||
+      rootNode.numberOfFixedChildren === 0
+    ) {
       return [];
     }
-    return node.children
-      .slice(-1 * node.numberOfFixedChildren)
-      .map((child: any) => {
-        return { nodeId: child.id, fillContainer: node.width <= child.width };
+
+    const fixedPositionNodes: { nodeId: string; fillContainer: boolean }[] = [];
+
+    const get = (node: any) => {
+      // group node is not position fixed directly. child node is.
+      if (node.type === "GROUP") {
+        node.children.forEach((child: any) => {
+          get(child);
+        });
+      } else {
+        fixedPositionNodes.push({
+          nodeId: node.id,
+          fillContainer: rootNode.width <= node.width,
+        });
+      }
+    };
+
+    // position fixed nodes are at the end of root's children array
+    rootNode.children
+      .slice(-1 * rootNode.numberOfFixedChildren)
+      .forEach((v: any) => {
+        get(v);
       });
+
+    return fixedPositionNodes;
   }
 }
