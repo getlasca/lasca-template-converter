@@ -97,6 +97,10 @@ export interface BaseStyle {
   xPercent: number;
   xFromRightPercent: number;
   y: number;
+  yFromCenter: number;
+  yFromBottom: number;
+  yPercent: number;
+  yFromBottomPercent: number;
   width: number;
   height: number;
   isWidthAuto: boolean;
