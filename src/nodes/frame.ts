@@ -171,15 +171,14 @@ export default class FrameNode extends BaseNode {
   }
 
   buildCss(): string {
-    const [mainCss, childCss] = this.buildFrameCss();
-    let css = mainCss + childCss;
+    let css = this.buildFrameCss();
     this.children.forEach((node: BaseNode) => {
       css += node.buildCss();
     });
     return css;
   }
 
-  private buildFrameCss(): [string, string] {
+  private buildFrameCss(): string {
     let css = `.class-${this.className} { `;
     let childCss = "";
 
@@ -264,6 +263,6 @@ export default class FrameNode extends BaseNode {
     css += this.buildBaseLayoutCss(this.style, this.isRoot);
     css += this.buildCursorCss();
     css += " }";
-    return [css, childCss];
+    return css + childCss;
   }
 }
