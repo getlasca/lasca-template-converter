@@ -333,11 +333,10 @@ export default abstract class BaseNode {
       css += ` height: ${height}px;`;
     }
 
-    css += ` flex: ${
-      layoutGrow === 1
-        ? "1"
-        : `0 0 ${this.layoutModeAsChild === "HORIZONTAL" ? width : height}px`
-    };`;
+    if (layoutGrow === 1) {
+      css += ` flex: 1;`;
+    }
+
     css += ` position: relative;`;
     return css;
   }
