@@ -213,39 +213,23 @@ export default class FrameNode extends BaseNode {
         css += ` padding-right: ${this.style.paddingRight}px;`;
       }
 
+      const gapProperty =
+        this.style.layoutMode === "HORIZONTAL" ? "column-gap" : "row-gap";
+
       switch (this.style.primaryAxisAlignItems) {
         case "MIN": {
           css += " justify-content: flex-start;";
-          childCss += ` .class-${this.className} > *:not(:last-child) { `;
-          childCss += `margin-${
-            this.style.layoutMode === "HORIZONTAL" ? "right" : "bottom"
-          }: ${this.style.itemSpacing}px;`;
-          childCss += " }";
+          css += ` ${gapProperty}: ${this.style.itemSpacing}px;`;
           break;
         }
         case "MAX": {
           css += " justify-content: flex-end;";
-          childCss += ` .class-${this.className} > *:not(:first-child) { `;
-          childCss += `margin-${
-            this.style.layoutMode === "HORIZONTAL" ? "left" : "top"
-          }: ${this.style.itemSpacing}px;`;
-          childCss += " }";
+          css += ` ${gapProperty}: ${this.style.itemSpacing}px;`;
           break;
         }
         case "CENTER": {
           css += " justify-content: center;";
-
-          childCss += ` .class-${this.className} > *:not(:first-child) { `;
-          childCss += `margin-${
-            this.style.layoutMode === "HORIZONTAL" ? "left" : "top"
-          }: ${this.style.itemSpacing / 2}px;`;
-          childCss += " }";
-
-          childCss += ` .class-${this.className} > *:not(:last-child) { `;
-          childCss += `margin-${
-            this.style.layoutMode === "HORIZONTAL" ? "right" : "bottom"
-          }: ${this.style.itemSpacing / 2}px;`;
-          childCss += " }";
+          css += ` ${gapProperty}: ${this.style.itemSpacing}px;`;
           break;
         }
         case "SPACE_BETWEEN": {
