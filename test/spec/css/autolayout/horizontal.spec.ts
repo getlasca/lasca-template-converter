@@ -37,7 +37,7 @@ test("horizontal left top", () => {
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
       ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: row; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; column-gap: 20px; align-items: flex-start; position: absolute; top: 100px; height: 500px; left: 100px; min-width: 500px; }" +
-      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; flex: 0 0 500px; position: relative; }"
+      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
 
@@ -76,7 +76,7 @@ test("horizontal left bottom", () => {
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
       ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: row; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; column-gap: 20px; align-items: flex-end; position: absolute; top: 100px; height: 500px; left: 100px; min-width: 500px; }" +
-      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; flex: 0 0 500px; position: relative; }"
+      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
 
@@ -115,7 +115,7 @@ test("horizontal left center", () => {
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
       ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: row; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; column-gap: 20px; align-items: center; position: absolute; top: 100px; height: 500px; left: 100px; min-width: 500px; }" +
-      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; flex: 0 0 500px; position: relative; }"
+      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
 
@@ -154,7 +154,7 @@ test("horizontal right top", () => {
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
       ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: row; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-end; column-gap: 20px; align-items: flex-start; position: absolute; top: 100px; height: 500px; left: 100px; min-width: 500px; }" +
-      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; flex: 0 0 500px; position: relative; }"
+      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
 
@@ -193,7 +193,7 @@ test("horizontal center top", () => {
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
       ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: row; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: center; column-gap: 20px; align-items: flex-start; position: absolute; top: 100px; height: 500px; left: 100px; min-width: 500px; }" +
-      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; flex: 0 0 500px; position: relative; }"
+      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
 
@@ -233,7 +233,7 @@ test("horizontal space between top", () => {
       ".class-1 { background-color: rgba(255,255,255,1); }" +
       ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: row; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: space-between; align-items: flex-start; position: absolute; top: 100px; height: 500px; left: 100px; min-width: 500px; }" +
       " .class-2 > *:only-child { margin: 0 auto; }" +
-      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; flex: 0 0 500px; position: relative; }"
+      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
 
@@ -313,6 +313,6 @@ test("horizontal fill container vertically", () => {
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
       ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: row; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; column-gap: 20px; align-items: flex-start; position: absolute; top: 100px; height: 500px; left: 100px; min-width: 500px; }" +
-      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 100%; flex: 0 0 500px; position: relative; }"
+      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 100%; position: relative; }"
   );
 });
