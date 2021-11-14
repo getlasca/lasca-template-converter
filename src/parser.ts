@@ -9,12 +9,18 @@ import {
   VectorStyle,
 } from "./types";
 
+interface FixedPosition {
+  nodeId: string;
+  stretchHorizontal: boolean;
+  stretchVertical: boolean;
+}
+
 export default class Parser {
   baseWidth: number;
   baseHeight: number;
   groupRelativeX?: number = undefined;
   groupRelativeY?: number = undefined;
-  fixedPositionNodes: { nodeId: string; fillContainer: boolean }[] = [];
+  fixedPositionNodes: FixedPosition[] = [];
 
   constructor(
     type: "FRAME" | "ROOT_FRAME" | "GROUP_RELATIVE_POSITION",
@@ -195,10 +201,13 @@ export default class Parser {
         (obj.type === "TEXT" &&
           ["HEIGHT", "WIDTH_AND_HEIGHT"].includes(obj.textAutoResize)),
       constraintsHorizontal:
-        fixedPositionNode && fixedPositionNode.fillContainer
+        fixedPositionNode && fixedPositionNode.stretchHorizontal
           ? "STRETCH"
           : obj.constraints.horizontal,
-      constraintsVertical: obj.constraints.vertical,
+      constraintsVertical:
+        fixedPositionNode && fixedPositionNode.stretchVertical
+          ? "STRETCH"
+          : obj.constraints.vertical,
       layoutAlign: obj.layoutAlign,
       layoutGrow: obj.layoutGrow,
       isFixedPosition: !!fixedPositionNode,
@@ -298,9 +307,7 @@ export default class Parser {
     };
   }
 
-  private getFixedPositionNodes(
-    rootNode: any
-  ): { nodeId: string; fillContainer: boolean }[] {
+  private getFixedPositionNodes(rootNode: any): FixedPosition[] {
     if (
       !rootNode.numberOfFixedChildren ||
       rootNode.numberOfFixedChildren === 0
@@ -308,7 +315,7 @@ export default class Parser {
       return [];
     }
 
-    const fixedPositionNodes: { nodeId: string; fillContainer: boolean }[] = [];
+    const fixedPositionNodes: FixedPosition[] = [];
 
     const get = (node: any) => {
       // group node is not position fixed directly. child node is.
@@ -319,7 +326,8 @@ export default class Parser {
       } else {
         fixedPositionNodes.push({
           nodeId: node.id,
-          fillContainer: rootNode.width <= node.width,
+          stretchHorizontal: rootNode.width <= node.width,
+          stretchVertical: rootNode.height <= node.y + node.height,
         });
       }
     };
