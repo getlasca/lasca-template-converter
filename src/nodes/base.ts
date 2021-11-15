@@ -197,55 +197,47 @@ export default abstract class BaseNode {
 
     let css = ` position: ${input.isFixedPosition ? "fixed" : "absolute"};`;
 
-    if (input.isFixedPosition) {
-      switch (input.constraintsVertical) {
-        case "MIN": {
-          css += ` top: ${input.y}px;`;
-          if (input.isHeightAuto) {
-            css += ` min-height: ${input.height}px;`;
-          } else {
-            css += ` height: ${input.height}px;`;
-          }
-          break;
+    switch (input.constraintsVertical) {
+      case "MIN": {
+        css += ` top: ${input.y}px;`;
+        if (input.isHeightAuto) {
+          css += ` min-height: ${input.height}px;`;
+        } else {
+          css += ` height: ${input.height}px;`;
         }
-        case "MAX": {
-          css += ` bottom: ${input.yFromBottom}px;`;
-          if (input.isHeightAuto) {
-            css += ` min-height: ${input.height}px;`;
-          } else {
-            css += ` height: ${input.height}px;`;
-          }
-          break;
-        }
-        case "STRETCH": {
-          css += ` top: ${input.y}px;`;
-          css += ` bottom: ${input.yFromBottom}px;`;
-          break;
-        }
-        case "CENTER": {
-          css += ` top: calc(50%${
-            input.yFromCenter > 0
-              ? " - " + input.yFromCenter
-              : " + " + -1 * input.yFromCenter
-          }px);`;
-          if (input.isHeightAuto) {
-            css += ` min-height: ${input.height}px;`;
-          } else {
-            css += ` height: ${input.height}px;`;
-          }
-          break;
-        }
-        case "SCALE": {
-          css += ` top: ${input.yPercent}%;`;
-          css += ` bottom: ${input.yFromBottomPercent}%;`;
-          break;
-        }
+        break;
       }
-    } else {
-      css += ` top: ${input.y}px;`;
-
-      if (!input.isHeightAuto) {
-        css += ` height: ${input.height}px;`;
+      case "MAX": {
+        css += ` bottom: ${input.yFromBottom}px;`;
+        if (input.isHeightAuto) {
+          css += ` min-height: ${input.height}px;`;
+        } else {
+          css += ` height: ${input.height}px;`;
+        }
+        break;
+      }
+      case "STRETCH": {
+        css += ` top: ${input.y}px;`;
+        css += ` bottom: ${input.yFromBottom}px;`;
+        break;
+      }
+      case "CENTER": {
+        css += ` top: calc(50%${
+          input.yFromCenter > 0
+            ? " - " + input.yFromCenter
+            : " + " + -1 * input.yFromCenter
+        }px);`;
+        if (input.isHeightAuto) {
+          css += ` min-height: ${input.height}px;`;
+        } else {
+          css += ` height: ${input.height}px;`;
+        }
+        break;
+      }
+      case "SCALE": {
+        css += ` top: ${input.yPercent}%;`;
+        css += ` bottom: ${input.yFromBottomPercent}%;`;
+        break;
       }
     }
 

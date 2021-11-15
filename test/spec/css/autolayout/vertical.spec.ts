@@ -36,7 +36,7 @@ test("vertical left top", () => {
   expect(output.css).toBe(
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
-      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; row-gap: 20px; align-items: flex-start; position: absolute; top: 100px; left: 100px; width: 500px; }" +
+      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; row-gap: 20px; align-items: flex-start; position: absolute; top: 100px; min-height: 500px; left: 100px; width: 500px; }" +
       ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
@@ -75,7 +75,7 @@ test("vertical right top", () => {
   expect(output.css).toBe(
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
-      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; row-gap: 20px; align-items: flex-end; position: absolute; top: 100px; left: 100px; width: 500px; }" +
+      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; row-gap: 20px; align-items: flex-end; position: absolute; top: 100px; min-height: 500px; left: 100px; width: 500px; }" +
       ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
@@ -114,7 +114,7 @@ test("vertical center top", () => {
   expect(output.css).toBe(
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
-      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; row-gap: 20px; align-items: center; position: absolute; top: 100px; left: 100px; width: 500px; }" +
+      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; row-gap: 20px; align-items: center; position: absolute; top: 100px; min-height: 500px; left: 100px; width: 500px; }" +
       ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
@@ -153,7 +153,7 @@ test("vertical left bottom", () => {
   expect(output.css).toBe(
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
-      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-end; row-gap: 20px; align-items: flex-start; position: absolute; top: 100px; left: 100px; width: 500px; }" +
+      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-end; row-gap: 20px; align-items: flex-start; position: absolute; top: 100px; min-height: 500px; left: 100px; width: 500px; }" +
       ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
@@ -192,7 +192,7 @@ test("vertical left center", () => {
   expect(output.css).toBe(
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
-      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: center; row-gap: 20px; align-items: flex-start; position: absolute; top: 100px; left: 100px; width: 500px; }" +
+      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: center; row-gap: 20px; align-items: flex-start; position: absolute; top: 100px; min-height: 500px; left: 100px; width: 500px; }" +
       ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
 });
@@ -231,7 +231,7 @@ test("horizontal left space between", () => {
   expect(output.css).toBe(
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
-      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: space-between; align-items: flex-start; position: absolute; top: 100px; left: 100px; width: 500px; }" +
+      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: space-between; align-items: flex-start; position: absolute; top: 100px; min-height: 500px; left: 100px; width: 500px; }" +
       " .class-2 > *:only-child { margin: auto 0; }" +
       ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; position: relative; }"
   );
@@ -272,7 +272,7 @@ test("vertical fill container vertically", () => {
   expect(output.css).toBe(
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
-      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; row-gap: 20px; align-items: flex-start; position: absolute; top: 100px; left: 100px; width: 500px; }" +
+      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; row-gap: 20px; align-items: flex-start; position: absolute; top: 100px; min-height: 500px; left: 100px; width: 500px; }" +
       ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 500px; flex: 1; position: relative; }"
   );
 });
@@ -312,7 +312,7 @@ test("vertical fill container horizontally", () => {
   expect(output.css).toBe(
     ".breakpoint-1 { position: relative; } " +
       ".class-1 { background-color: rgba(255,255,255,1); }" +
-      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; row-gap: 20px; align-items: flex-start; position: absolute; top: 100px; left: 100px; width: 500px; }" +
+      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: column; padding-top: 40px; padding-bottom: 40px; padding-left: 50px; padding-right: 50px; justify-content: flex-start; row-gap: 20px; align-items: flex-start; position: absolute; top: 100px; min-height: 500px; left: 100px; width: 500px; }" +
       ".class-3 { background-color: rgba(255,255,255,1); width: 100%; height: 500px; position: relative; }"
   );
 });
