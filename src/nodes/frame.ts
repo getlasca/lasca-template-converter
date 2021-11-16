@@ -197,20 +197,8 @@ export default class FrameNode extends BaseNode {
       };`;
       css += ` padding-top: ${this.style.paddingTop}px;`;
       css += ` padding-bottom: ${this.style.paddingBottom}px;`;
-
-      if (
-        this.style.constraintsHorizontal !== "STRETCH" ||
-        this.style.primaryAxisAlignItems !== "MAX"
-      ) {
-        css += ` padding-left: ${this.style.paddingLeft}px;`;
-      }
-
-      if (
-        this.style.constraintsHorizontal !== "STRETCH" ||
-        this.style.primaryAxisAlignItems !== "MIN"
-      ) {
-        css += ` padding-right: ${this.style.paddingRight}px;`;
-      }
+      css += ` padding-left: ${this.style.paddingLeft}px;`;
+      css += ` padding-right: ${this.style.paddingRight}px;`;
 
       const gapProperty =
         this.style.layoutMode === "HORIZONTAL" ? "column-gap" : "row-gap";
