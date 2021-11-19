@@ -7,6 +7,7 @@ import {
   Loop,
   Event,
   Link,
+  FlexWrap,
   Output,
 } from "./types";
 import FrameNode from "./nodes/frame";
@@ -34,7 +35,8 @@ export default class Builder {
         breakPoint.conditions,
         breakPoint.loops,
         breakPoint.events,
-        breakPoint.links
+        breakPoint.links,
+        breakPoint.flexWraps
       );
       this.componentNodes.push({
         rootNode: rootNode,
@@ -61,7 +63,8 @@ export default class Builder {
     conditions: Condition[],
     loops: Loop[],
     events: Event[],
-    links: Link[]
+    links: Link[],
+    flexWraps: FlexWrap[]
   ): FrameNode {
     const parser = new Parser("ROOT_FRAME", figma);
     const classIdGenerator = new IdGenerator();
@@ -78,7 +81,8 @@ export default class Builder {
       conditions,
       loops,
       events,
-      links
+      links,
+      flexWraps
     );
   }
 

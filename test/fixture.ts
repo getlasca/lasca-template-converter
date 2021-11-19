@@ -10,6 +10,7 @@ export const defaultConvertParams = {
   loops: [],
   events: [],
   links: [],
+  flexWraps: [],
 };
 
 export const simpleFigmaFixture = buildFigmaFixture({

@@ -15,11 +15,13 @@ import {
   Loop,
   Event,
   Link,
+  FlexWrap,
 } from "../types";
 
 export default class GroupNode extends BaseNode {
   children: BaseNode[] = [];
   style: GroupStyle;
+  flexWraps: FlexWrap[];
 
   constructor(
     parser: Parser,
@@ -38,7 +40,8 @@ export default class GroupNode extends BaseNode {
     conditions: Condition[] = [],
     loops: Loop[] = [],
     events: Event[] = [],
-    links: Link[] = []
+    links: Link[] = [],
+    flexWraps: FlexWrap[] = []
   ) {
     super(
       figma.id,
@@ -54,6 +57,7 @@ export default class GroupNode extends BaseNode {
     );
 
     this.style = parser.groupStyle(figma);
+    this.flexWraps = flexWraps;
     const childParser = relativeParser || parser;
 
     let childLayoutModeAsChild = this.layoutModeAsChild;
@@ -88,7 +92,8 @@ export default class GroupNode extends BaseNode {
             conditions,
             loops,
             events,
-            links
+            links,
+            flexWraps
           );
           break;
         case "GROUP":
@@ -104,7 +109,8 @@ export default class GroupNode extends BaseNode {
             conditions,
             loops,
             events,
-            links
+            links,
+            flexWraps
           );
           break;
         case "RECTANGLE":

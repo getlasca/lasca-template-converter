@@ -316,3 +316,42 @@ test("horizontal fill container vertically", () => {
       ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 100%; position: relative; }"
   );
 });
+
+test("horizontal flex wrap", () => {
+  const figmaFixture = buildFigmaFixture({
+    type: "FRAME",
+    id: "0:0",
+    children: [
+      {
+        type: "FRAME",
+        id: "10:0",
+        layoutMode: "HORIZONTAL",
+        children: [
+          {
+            type: "RECTANGLE",
+            id: "10:1",
+            layoutAlign: "STRETCH",
+          },
+        ],
+      },
+    ],
+  });
+  const output = convert([
+    {
+      ...defaultConvertParams,
+      figma: figmaFixture,
+      flexWraps: [
+        {
+          nodeId: "10:0",
+          gap: 50,
+        },
+      ],
+    },
+  ]);
+  expect(output.css).toBe(
+    ".breakpoint-1 { position: relative; } " +
+      ".class-1 { background-color: rgba(255,255,255,1); }" +
+      ".class-2 { background-color: rgba(255,255,255,1); box-sizing: border-box; display: flex; flex-direction: row; padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; flex-wrap: wrap; row-gap: 50px; justify-content: flex-start; column-gap: 0px; align-items: flex-start; position: absolute; top: 100px; height: 500px; left: 100px; min-width: 500px; }" +
+      ".class-3 { background-color: rgba(255,255,255,1); width: 500px; height: 100%; position: relative; }"
+  );
+});
