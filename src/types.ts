@@ -9,6 +9,7 @@ export interface Breakpoint {
   loops: Loop[];
   events: Event[];
   links: Link[];
+  flexWraps: FlexWrap[];
 }
 
 export interface MixedText {
@@ -82,6 +83,11 @@ export interface Link {
   nodeId: string;
   isTargetBlank: boolean;
   variableSet: VariableSet;
+}
+
+export interface FlexWrap {
+  nodeId: string;
+  gap: number;
 }
 
 export interface Output {

@@ -15,11 +15,13 @@ import {
   Loop,
   Event,
   Link,
+  FlexWrap,
 } from "../types";
 
 export default class FrameNode extends BaseNode {
   isRoot: boolean;
   style: FrameStyle;
+  flexWraps: FlexWrap[];
   children: BaseNode[] = [];
 
   constructor(
@@ -40,7 +42,8 @@ export default class FrameNode extends BaseNode {
     conditions: Condition[] = [],
     loops: Loop[] = [],
     events: Event[] = [],
-    links: Link[] = []
+    links: Link[] = [],
+    flexWraps: FlexWrap[] = []
   ) {
     super(
       figma.id,
@@ -56,6 +59,7 @@ export default class FrameNode extends BaseNode {
     );
     this.isRoot = isRoot;
     this.style = parser.frameStyle(figma);
+    this.flexWraps = flexWraps;
     const childParser = relativeParser || parser;
 
     figma.children.forEach((node: any) => {
@@ -79,7 +83,8 @@ export default class FrameNode extends BaseNode {
             conditions,
             loops,
             events,
-            links
+            links,
+            flexWraps
           );
           break;
         }
@@ -98,7 +103,8 @@ export default class FrameNode extends BaseNode {
             conditions,
             loops,
             events,
-            links
+            links,
+            flexWraps
           );
           break;
         }
@@ -199,6 +205,17 @@ export default class FrameNode extends BaseNode {
       css += ` padding-bottom: ${this.style.paddingBottom}px;`;
       css += ` padding-left: ${this.style.paddingLeft}px;`;
       css += ` padding-right: ${this.style.paddingRight}px;`;
+
+      const flexWrap = this.flexWraps.find((v) => {
+        return this.nodeId === v.nodeId;
+      });
+
+      if (flexWrap) {
+        css += ` flex-wrap: wrap;`;
+        css += ` ${
+          this.style.layoutMode === "HORIZONTAL" ? "row-gap" : "column-gap"
+        }: ${flexWrap.gap}px;`;
+      }
 
       const gapProperty =
         this.style.layoutMode === "HORIZONTAL" ? "column-gap" : "row-gap";
