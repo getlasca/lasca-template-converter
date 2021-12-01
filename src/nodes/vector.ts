@@ -56,9 +56,7 @@ export default class VectorNode extends BaseNode {
     let css = this.buildBaseLayoutCss(this.style) + this.buildCursorCss();
     const image = this.nodeImages.find((image) => this.nodeId === image.nodeId);
     if (image) {
-      css += `background: no-repeat center center url(${
-        process.env.LASCA_ASSETS_URL || "https://assets.lasca.app"
-      }/node_images/node-${image.imageId}.svg);`;
+      css += `background: no-repeat center center url('~/lasca/assets/image/${image.imageId}.svg');`;
     }
     return `.class-${this.className} { ${css} }`;
   }
